@@ -1,3 +1,3 @@
 # CheatSheets
 
-CheatSheets for different programing languages.
+CheatSheets for different programming languages.

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Phaser.js Cheat Sheet</title>
+</head>
+<body class="container">
+    <h1>Boiler plate</h1>
+	<p>Inside index.html</p>
+<pre class="file-content">
+&lthtml&gt
+    &lthead&gt
+    	&ltmeta name="viewport" content="user-scalable=0, initial-scale=1,minimum-scale=1, maximum-scale=1, width=device-width, minimal-ui=1"&gt
+        &lttitle&gtPhaser.js Project&lt/title&gt
+        &ltscript type="text/javascript" src="js/phaser.min.js"&gt&lt/script&gt
+    &lt/head&gt
+&ltbody&gt
+    &ltscript type="text/javascript" src="js/app.js"&gt&lt/script&gt
+&lt/body&gt
+&lt/html&gt
+</pre>
+
+	<p>Inside app.js</p>
+
+<pre class="file-content">
+var game;
+window.onload = function()
+{
+    var config = {
+        type: Phaser.AUTO,       // can be either Phaser.CANVAS, Phaser.WEBGL or Phaser.AUTO
+        width: 800,
+        height: 600,
+        parent: 'phaser-game',   // &ltdiv&gt tag name
+        scene: [                 // game scenes array, if there is only one scene, [] can be omitted
+            SceneMain
+        ],
+        physics: {               // set physics object
+            default: 'arcade',
+            arcade: {
+                gravity: {
+                    y: 200
+                },
+                debug: true      // change it to false in production mode
+            }
+        }
+    };
+    game = new Phaser.Game(config);
+}
+</pre>
+
+	<p class="tip">Use the following conditionals for setting different config for mobile, table, etc.</p>
+	<ul>
+		<li>
+			<code class="javascript">isMobile = navigator.userAgent.indexOf("Mobile") == -1 ? false : true;</code>
+		</li>
+		<li>
+			<code class="javascript">isTablet = navigator.userAgent.indexOf("Tablet") == -1 ? false : true;</code>
+		</li>
+	</ul>
+
+	<p>Blank Scene Object</p>
+
+<pre class="file-content">
+class SceneMain extends Phaser.Scene {
+    constructor() {
+        super('SceneMain');
+    }
+
+    preload()
+    {
+        this.load.setPath('assets');
+    }
+
+    create() {
+        console.log("Ready!");
+    }
+
+    update() {}
+}	
+</pre>
+
+You might get the following warning, which is totally fine.
+<p clas="warning">
+	The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page.
+</p>
+
+    <h1>Loading Assets</h1>
+    <p>Inside <code>preload</code> function</p>
+
+	<dl class="dl-1-1">
+		<code class="javascript">this.load.setBaseURL([<span class="datatype-string">STRING url</span>])</code>
+		<span class="description">leave url empty to reset</span>
+
+		<code class="javascript">this.load.setPath([<span class="datatype-string">STRING path</span>])</code>
+		<span class="description">path is added before the filename but after the baseURL (if set) - leave path empty to reset</span>
+
+		<code class="javascript">this.load.image(<span class="datatype-string">STRING key</span> [, <span class="datatype-string">STRING url</span>])</code>
+		<span class="description">if url is undefined or null it will be set to &ltkey&gt.png</span>
+
+		<pre><code>
+this.load.spritesheet(<span class="datatype-string">STRING key</span> [, <span class="datatype-string">STRING url</span>] [, <span class="datatype-object">OBJECT frameConfig</span>])
+or
+this.load.spritesheet({
+    key: <span class="datatype-string">STRING</span>,
+    url: <span class="datatype-string">STRING</span>,
+    frameConfig: {
+        frameWidth: <span class="datatype-number">NUMBER</span>,
+        frameHeight: <span class="datatype-number">NUMBER</span>,
+        startFrame: <span class="datatype-number">NUMBER</span>,
+        endFrame: <span class="datatype-number">NUMBER</span>,
+    }
+});</code>
+		</pre>
+    	<span class="description">at a minimum frameConfig object should have a frameWidth property</span>
+
+		<code class="javascript">this.load.audio(<span class="datatype-string">STRING key</span> [, <span class="datatype-array">Array urls</span>])</code>
+		<span class="description">loads an audio file, if the array consists of a single file then it can be replace by a single url string, array may contain .wav, .ogg, .mp3</span>
+
+		<code class="javascript">this.load.bitmapFont(<span class="datatype-string">STRING key</span> [, <span class="datatype-string">STRING imageUrl</span>] [, <span class="datatype-string">STRING XMLUrl</span>])</code>
+		<span class="description">loads a bitmap font</span>
+	</dl>
+
+	<h1>Grid Object</h1>
+	<dl class="dl-1-1">
+
+		<pre>
+<code class="javascript">
+this.alignGrid = new AlignGrid({
+	scene: this,
+	rows: <span class="datatype-number">NUMBER</span>,
+	cols: <span class="datatype-number">NUMBER</span>,
+});
+</code>			
+		</pre>
+		<span class="description">create new grid</span>
+
+		<code class="javascript">this.alignGrid.showNumbers()</code>
+		<span class="description">show numbers in grid cells</span>
+
+		<code class="javascript">this.alignGrid.placeAtIndex(<span class="datatype-number">NUMBER cell-index</span>, <span class="datatype-object">OBJECT GameObject</span>)</code>
+		<span class="description">places the game object at the specified cell</span>
+	</dl>
+
+    <h1>Images, sprites and texts</h1>
+
+    <span class="tip">If your sprites include animation use sprite otherwise use image.</span>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">this.&ltimageName&gt = this.add.image(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING key</span>)</code>
+    	<span class="description">Adds an image. Note that image objects has their origin at (0.5, 0.5)</span>
+
+		<code class="javascript">this.&ltimageName&gt = this.add.sprite(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING key</span>)</code>
+    	<span class="description">Adds a sprite. Note that sprite objects has their origin at (0.5, 0.5)</span>
+		<pre>
+<code class="javascript">this.&lttextName&gt = this.add.text(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING text</span>, {
+	font: <span class="datatype-string">STRING</span>,
+	fontSize: <span class="datatype-number">NUMBER</span>,
+	align: <span class="datatype-string">STRING</span>, // can be center, ...
+	color: <span class="datatype-string">STRING</span>,
+	fill: <span class="datatype-string">STRING</span>
+})
+</code>
+		</pre>
+		<span class="description">Adds a text. Note that text objects has their origin at (0, 0)</span>
+
+	    <code class="javascript">&ltTextObject&gt.setText(<span class="datatype-string">STRING text</span>)</code>
+	    <span class="description">resets the text of the text object</span>
+
+		<code class="javascript">&ltTextObject&gt.setInteractive()</code>
+	    <span class="description">Makes it interactive to accept events</span>
+
+		<code class="javascript">&ltTextObject&gt.on('pointerdown', <span class="datatype-function">FUNCTION callback</span>, this)</code>
+	    <span class="description">Click event listener</span>
+
+	    <code class="javascript">this.add.bitmapText(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING fontKey</span>, <span class="datatype-string">STRING text</span>, <span class="datatype-number">NUMBER fontSize</span>)</code>
+	    <span class="description">creates a bitmap text</span>
+	</dl>
+
+    <h1>Physics</h1>
+    if the Physics body is constructed by the physics factory the body property can be omitted
+
+    <dl class="dl-1-1">
+    	<code class="javascript">this.&ltimageName&gt = this.physics.add.image(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING key</span>)</code>
+    	<span class="description">adds an image with physics</span>
+
+		<code class="javascript">this.&ltimageName&gt = this.physics.add.sprite(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING key</span>)</code>
+    	<span class="description">adds a sprite with physics</span>
+
+    	<code class="javascript">this.physics.add.existing(&ltGameObject&gt, <span class="datatype-boolean">BOOLEAN isStatic</span>)</code>
+    	<span>Adds an Arcade Physics Body to the given Game Object, static if isStatic = true, dynamic otherwise</span>
+
+    	<code class="javascript">this.&ltgroupName&gt = this.physics.add.group()</code>
+    	<span class="description">creates a physics group object. <span class="tip">Always add the physics body to the group before applying any physics to it like velocity, etc.</span> </span>
+
+    	<code class="javascript">&ltGroupObject&gt.children.iterate(function(child) {}.bind(this))</code>
+    	<span class="description">if children might be destroyed somehow in the game always check for existence by <code class="javascript">if (child) {}</code></span>
+
+    	<code class="javascript">&ltPhysicsBody&gt.setVelocityX(<span class="datatype-number">Number X-velocity</span>)</code>
+    	<span class="description">sets the velocity of physics body align x-axis</span>
+
+    	<code class="javascript">&ltPhysicsBody&gt.setVelocityY(<span class="datatype-number">Number Y-velocity</span>)</code>
+    	<span class="description">sets the velocity of physics body align y-axis</span>
+
+    	<code class="javascript">&ltPhysicsBody&gt.setVelocity(<span class="datatype-number">Number X-velocity</span>, <span class="datatype-number">Number Y-velocity</span>)</code>
+    	<span class="description">sets the velocity of physics body</span>
+
+    	<code class="javascript">&ltObjectWithBody&gt.body.velocity.x</code>
+    	<span class="description">self explanatory</span>
+
+    	<code class="javascript">&ltObjectWithBody&gt.body.velocity.y</code>
+    	<span class="description">self explanatory</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.maxVelocity.x</code>
+    	<span class="description">sets the maximum velocity along x-axis</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.maxVelocity.y</code>
+    	<span class="description">sets the maximum velocity along y-axis</span>
+
+		<pre>
+<code class="javascript">
+this.physics.add.collider({
+	object1: <span class="datatype-object">OBJECT GameObject or GroupObject</span>,
+	object2: <span class="datatype-object">OBJECT GameObject or GroupObject</span>,
+	collideCallback: <span class="datatype-function">FUNCTION</span> // Optional, object1 and object2 are always passed as arguments to this function
+	processCallback: <span class="datatype-function">FUNCTION</span> // Optional,
+	callbackContext: this // Optional, the scope in which to call the callbacks
+})</code>
+		</pre>
+    	<span class="description">allows objects to collide each other</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.setCollideWorldBounds([<span class="datatype-boolean">BOOLEAN value</span>] [,<span class="datatype-number">NUMBER bounceX</span>] [,<span class="datatype-number">NUMBER bounceY</span>])</code>
+    	<span class="description">value is true by default, bounceX, bounceY if given will replace worldBounce.x, worldBounce.y respectively</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.collideWorldBounds</code>
+    	<span class="description">Boolean</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.bounce.x</code>
+    	<span class="description">Proportional number</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.bounce.y</code>
+    	<span class="description">Proportional number</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.bounce.setTo(<span class="datatype-number">NUMBER bounceX</span>, <span class="datatype-number">NUMBER bounceY</span>);</code>
+    	<span class="description">bounceX, bounceY are proportional</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.setBounce(<span class="datatype-number">NUMBER bounceX</span>, <span class="datatype-number">NUMBER bounceY</span>);</code>
+    	<span class="description">bounceX, bounceY are proportional</span>
+
+    	<code class="javascript">&ltPhysicsBody&gt.destroy()</code>
+    	<span class="description">Destroys the object</span>
+
+    	<code class="javascript">&ltBodtWithPhysics&gt.refreshBody()</code>
+    	<span class="description">Syncs the Body's position and size with its parent Game Object. You don't need to call this for Dynamic Bodies, as it happens automatically.</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.blocked</code>
+    	<span class="description">Whether this Body is colliding with a Static Body, a tile, or the world boundary. In a collision with a Static Body, if this Body has zero velocity then embedded will be set instead. It has 5 properties left, right, up, down, none</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.immovable</code>
+    	<span class="description">Whether this Body can be moved by collisions with another Body.</span>
+    </dl>
+
+    	
+
+    <h1>Align Class</h1>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">Align.scaleToGameW(<span class="datatype-object">OBJECT GameObject</span>, <span class="datatype-number">NUMBER proportion</span>)</code>
+    	<span class="description">scales the game object proportionally, proposrtion number must be in rage [0, 1]</span>
+
+    	<code class="javascript">Align.center(<span class="datatype-object">OBJECT GameObject</span>)</code>
+    	<span class="description">Put game object in the center of the screen</span>
+    </dl>
+    </dl>
+
+    <h1>Phaser.Math Class</h1>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">Phaser.Math.Between(<span class="datatype-number">Number min</span>, <span class="datatype-number">Number max</span>)</code>
+    	<span class="description">Returns a number</span>
+    </dl>
+
+    <h1>General GameObject Properties</h1>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">&ltGameObject&gt.x</code>
+    	<span class="description">its x-coordinate</span>
+
+    	<code class="javascript">&ltGameObject&gt.y</code>
+    	<span class="description">its y-coordinate</span>
+
+    	<code class="javascript">&ltGameObject&gt.height</code>
+    	<span class="description">its original height without scaling</span>
+
+    	<code class="javascript">&ltGameObject&gt.width</code>
+    	<span class="description">its original width without scaling</span>
+
+    	<code class="javascript">&ltGameObject&gt.displayHeight</code>
+    	<span class="description">its displaying height</span>
+
+    	<code class="javascript">&ltGameObject&gt.displayWidth</code>
+    	<span class="description">its displaying width</span>
+
+    	<code class="javascript">&ltGameObject&gt.depth</code>
+    	<span class="description">its layer depth, default value is 0</span>
+
+    	<code class="javascript">&ltGameObject&gt.originX</code>
+    	<span class="description">its anchor along x-axis, value is proportional in range [0, 1]</span>
+
+    	<code class="javascript">&ltGameObject&gt.originY</code>
+    	<span class="description">its anchor along y-axis, value is proportional in range [0, 1]</span>
+
+    	<code class="javascript">&ltGameObject&gt.setOrigin(<span class="datatype-number">NUMBER x-proportion</span>, <span class="datatype-number">NUMBER y-proportion</span>)</code>
+    	<span class="description">sets the anchors, numbers are proportional in the range [0, 1]</span>
+
+    	<code class="javascript">&ltGameObject&gt.setScale(<span class="datatype-number">NUMBER scaleX</span>, <span class="datatype-number">NUMBER scaleY</span>)</code>
+    	<span class="description">scaleX and scaleY are proportional</span>
+    </dl>
+
+    <h1>Input Class</h1>
+
+    <dl class="dl-1-1">
+    	<pre>
+<code>
+this.input.on('pointerdown', <span class="datatype-function">FUNCTION</span>, this)
+</code>    		
+    	</pre>
+    	<span class="description">sends the mousePointer to the function as an argument</span>
+
+    	<code class="javascript">this.input.x</code>
+    	<span class="description">x-coordinate of mouse pointer</span>
+
+    	<code class="javascript">this.input.x</code>
+    	<span class="description">y-coordinate of mouse pointer</span>
+    </dl>
+
+    <h1>Time Class</h1>
+
+    <dl class="dl-1-1">
+    	<pre>
+<code class="javascript">this.time.addEvent({
+	delay: <span class="datatype-number">NUMBER delay-in-miliseconds</span>,
+	callback: <span class="datatype-function">FUNCTION</span>,
+	callbackScope: <span class="datatype-object">OBJECT SceneObject</span>, // input this if in the same scene
+	loop: <span class="datatype-boolean">BOOLEAN</span>
+});</code>
+    	</pre>
+    	<span class="description">Sets up a function to be called in a specified number of miliseconds</span>
+
+    	<code class="javascript">&lttimeEventName&gt.remove();</code>
+    	<span class="description"></span>
+    </dl>
+
+    <h1>Animations</h1>
+
+    <dl class="dl-1-1">
+    	<pre>
+<code class="javascript">
+this.anims.create({
+    key: <span class="dataype-string">STRING</span>,
+    frames: [
+        { key: <span class="datatype-string">STRING spriteKey</span>, frame: <span class="datatype-number">NUMBER first-frameIndex</span> },
+        { key: <span class="datatype-string">STRING spriteKey</span>, frame: <span class="datatype-number">NUMBER second-frameIndex</span> },
+        ...
+
+    ], or 
+    frames: <span class="datatype-array">Array frameNames</span>
+    frameRate: <span class="datatype-number">NUMBER</span>,
+    repeat: -1 // 0 for animating once, ..., -1 for infinity
+});
+</code>    		
+    	</pre>
+    	<span class="description">Create an animation. Add it to 'create' function. If all frames of a sprite are needed, then use the following command.</span>
+
+    	<code class="javascript">var frameNames= this.anims.generateFrameNumbers(<span class="datatype-string">STRING frameKey</span>)</code>
+    	<span>A shortcut command to get all frame numbers</span>
+
+    	<code class="javascript">&ltSpriteObject&gt.play(<span class="datatype-string">StRING animationKey</span>)</code>
+    	<span>Plays the animation on the associated sprite</span>
+
+    	<code class="javascript">&ltSpriteObject&gt.on('animationcomplete', <span class="datatype-funcion">FUNCTION animComplete</span>, this)</code>
+    	<span>triggers animComplete function upon completion of animation. Here this is the scene scope</span>
+
+    	<code class="javascript">&ltSpriteObject&gt.on('animationcomplete', function() {...this...}</code>
+    	<span>triggers animComplete function upon completion of animation. Here this is the sprite</span>
+    </dl>
+
+    <h1>Audio</h1>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">this.&ltsoundName&gt = this.sound.add(<span class="datatype-string">STRING soundKey</span>)</code>
+    	<span class="description">Include this command in 'create' function</span>
+
+    	<code class="javascript">&ltaudioObject&gt.play()</code>
+    	<span class="description">Plays the sound</span>
+    </dl>
+
+    <h1>Scene Class</h1>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">this.scene.start(<span class="datatype-string">STRING sceneName</span>)</code>
+    </dl>
+
+    <h1>Miscellaneous</h1>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">game.config.width</code>
+    	<span class="description">Game's width</span>
+    </dl>
+
+    <h1>Phaser 2 to Phaser 3 Conversion</h1>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">game.load.image()</code>
+    	<code class="javascript">this.load.image()</code>
+
+    	<code class="javascript">&ltGameObject&gt.anchor.setTo(0.5, 0.5)</code>
+    	<code class="javascript">&ltGameObject&gt.setOrigin(0.5, 0.5)</code>
+
+    	<code class="javascript">game.physics.arcade.enable(&ltGameObject&gt)</code>
+    	<code class="javascript">this.physics.add.existing(&ltGameObject&gt, false)</code>
+
+    	<code class="javascript">game.world.?</code>
+    	<code class="javascript">this.physics.world.bounds.?</code>
+
+    	<code class="javascript">game.input.?</code>
+    	<code class="javascript">this.input.?</code>
+
+    	<code class="javascript">game.input.onDown.add(callback, this)</code>
+    	<code class="javascript">???</code>
+
+    	<code class="javascript">game.physics.arcade.collide(...)</code>
+    	<code class="javascript">Even though it is defined in the DOCS but it doesn't work! this.physics.collide(...) or this.physics.world.collide(...) use this.physics.add.collider(...) instead</code>
+    </dl>
+
+</body>
+</html>

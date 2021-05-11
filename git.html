@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Git Cheat Sheet</title>
+</head>
+<body class="container">
+	<h1>Git</h1>
+	<p>Version Control System (VCS) for tracking changes in computer files</p>
+
+	<h1>Installing Git</h1>
+	<ul>
+		<li>
+			Linux
+			<p>(Debian) sudo apt-get install git</p>
+			<p>(Fedora) sudo yum install git</p>
+		</li>
+		<li>
+			Mac and Windows
+			<p>http://git-scm.com</p>
+		</li>
+		<h2>Configuration</h2>
+		<ul>
+			<li>
+				<code class="line-command">git config --global user.name <span class="datatype-string">STRING username</span></code>
+			</li>
+						<li>
+				<code class="line-command">git config --global user.email <span class="datatype-string">STRING email</span></code>
+			</li>
+		</ul>
+	</ul>
+
+	<h1>Basic Commands</h1>
+	<dl class="dl-1-2">
+		<dt><code class="line-command">git init</code></dt>
+		<dd><span class="comment">Initializes local git repository</span></dd>
+		
+		<dt><code class="line-command">git add &ltfile&gt</code></dt>
+		<dd><span class="comment">Add files to staging area</span></dd>
+
+		<dt><code class="line-command">git rm --cached &ltfile&gt</code></dt>
+		<dd><span class="comment">Unstage a file</span></dd>
+
+		<dt><code class="line-command">git status</code></dt>
+		<dd><span class="comment">Check status</span></dd>
+
+		<dt><code class="line-command">git commit</code></dt>
+		<dd><span class="comment">Commit files in staging area to local respository</span></dd>
+
+		<dt><code class="line-command">git push</code></dt>
+		<dd><span class="comment">Push to remote respository</span></dd>
+
+		<dt><code class="line-command">git pull</code></dt>
+		<dd><span class="comment">Pull latest from remote repository</span></dd>		
+
+		<dt><code class="line-command">git clone &lturl&gt</code></dt>
+		<dd><span class="comment">Clone repository into a new directory</span></dd>
+	</dl>
+
+
+
+	<h1>Other commands</h1>
+	<dl class="dl-1-2">
+		<dt><code class="line-command">git --version</code></dt>
+		<dd>Returns git version</dd>
+
+		<dt><code class="line-command">git commit -m <span class="datatype-string">STRING comment</span></code></dt>
+		<dd>Commit staged files</dd>
+	</dl>
+
+	<h2>Information given by <code class="line-command">git status</code></h2>
+	<dl class="dl-1-2">
+		<dt>On branch &ltbranchname&gt</dt>
+		<dd>Shows the current working branch</dd>
+		<dt>Untracked files</dt>
+		<dd>New files which are not staged</dd>
+		<dt>Changes to be committed</dt>
+		<dd>New or modified files which are staged</dd>
+		<dt>Changes not staged for commit</dt>
+		<dd>Staged files which contain chenges that are not staged</dd>
+	</dl>
+
+	<h2>.gitignore file</h2>
+	This file should be put in root directory (same as .git folder) and each line contains the name of the file/folder that should be ignored by <code class="line-command">git add .</code>
+
+	<p>
+		Example: Inside of .gitignore
+		<pre>
+			log.txt
+			/node_modules
+			*.jpg
+		</pre>
+	</p>
+
+	<h1>Branching</h1>
+
+	<dl class="dl-1-2">
+		<dt><code class="line-command">git branch &ltbranchname&gt</code></dt>
+		<dd>Create new branch</dd>
+
+		<dt><code class="line-command">git checkout &ltbranchname&gt</code></dt>
+		<dd>Switch branches</dd>
+
+		<dt><code class="line-command">git merge &ltbranchname&gt</code></dt>
+		<dd>Merges specified branch to the current branch</dd>
+	</dl>
+
+	<h1>Remote repository</h1>
+
+	<dl class="dl-1-2">
+		<dt><code class="line-command">echo <span class="datatype-string">String content</span> >> README.md</code></dt>
+		<dd>Create a README file</dd>
+
+		<dt><code class="line-command">git remote add origin &lturl&gt</code></dt>
+		<dd>Add the remote repository which is named origin</dd>
+
+		<dt><code class="line-command">git remote</code></dt>
+		<dd>Returns name of the remote repository</dd>
+
+		<dt><code class="line-command">git push -u origin master</code></dt>
+		<dd>Pushes the master branch to the remote repository (runs for the first time)</dd>
+
+		<dt><code class="line-command">git push</code></dt>
+		<dd>Pushes the master branch to the remote repository</dd>
+	</dl>
+</body>
+</html>

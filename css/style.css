@@ -1,0 +1,74 @@
+.comment {
+	color: green;
+}
+
+.line-command {
+	padding: 1pt;
+	background: white;
+	border: solid black 1pt;
+	border-radius: 5px;
+	font-family: Consolas;
+	font-weight: bold
+}
+
+.dl-1-1 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.dl-1-2 {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+}
+
+.dl-2-1 {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+}
+
+.datatype-string {
+	color: orange;
+	padding: 1pt;
+	border-radius: 5px;
+}
+
+.datatype-number {
+	color: purple;
+	padding: 1pt;
+	border-radius: 5px;
+}
+
+.datatype-object {
+	color: green;
+	padding: 1pt;
+	border-radius: 5px;
+}
+
+.datatype-array {
+	color: red;
+	padding: 1pt;
+	border-radius: 5px;
+}
+
+.datatype-boolean {
+	color: pink;
+	padding: 1pt;
+	border-radius: 5px;
+}
+
+.datatype-function {
+	color: blue;
+	padding: 1pt;
+	border-radius: 5px;
+}
+
+.file-content {
+	background: #f0f0f0;
+	padding: 5px 10px;
+	border-radius: 5px
+}
+
+.tip {
+	background: #00f500;
+	border-radius: 5px;
+}

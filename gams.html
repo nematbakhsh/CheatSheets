@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GAMS Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body class="container">
+	<h1>GAMS</h1>
+	<p>General Algebraic Modeling System</p>
+
+	<h1>Installation</h1>
+	<ul>
+		<li>
+			Download from www.gams.com
+		</li>
+	</ul>
+
+	<h1>Commands in order of Appearance</h1>
+
+	<dl class="dl-1-1">
+		<code class="gams">$Title &ltTitle&gt</code>
+		<span class="description">Title of the Problem comes afterwards</span>
+		
+		<code class="gams">* &ltComment&gt</code>
+		<span class="description">Single line comment</span>
+
+		<code class="gams">$Ontext &ltComments&gt $Offtext</code>
+		<span class="description">Block of comments</span>
+	</dl>
+	
+	<h1>Sets</h1>	
+
+	<dl class="dl-1-1">
+		<div>
+			<p>
+				<code class="gams">set[s] set_name ["text"] [/element [text] {,element [text]} /]</code>
+			</p>
+			<p>
+				<code class="gams">{,set_name ["text"] [/element [text] {,element [text]} /] } ;</code>
+			</p>
+		</div>
+		<span class="description">Note that each element in a set must be separated from other elements by a comma or by an end-of-line, and each element is separated from any associated text by a blank.</span>
+	</dl>
+
+	<h1>Data Entry</h1>
+
+	<dl class="dl-1-1">
+<pre>
+<code class="gams">
+scalar[s] scalar_name [text] [/numerical_value/]
+    {scalar_name [text] [/numerical_value/]} ;</code>
+</pre>
+    <span class="description">Defines a 0-dimensional parameter. Note that more than one scalar may be declared in one scalar statement. The entries have to be separated by commas or by end of line.</span>
+
+    	<code class="gams">scalar_name = numerical_value</code>
+    	<span>initializes the scalar with an assignment statement</span>
+
+<pre>
+<code class="gams">
+parameter[s] param_name[(index_list)] [text] [/ element [=] numerical_value
+                                              {,element [=] numerical_value} /]
+           {,param_name[(index_list)] [text] [/ element [=] numerical_value
+                                              {,element [=] numerical_value} /]} ;
+</code>
+</pre>
+		<span class="description">Element is an element of the defining set or - if there is more than one defining set - a combination of the elements of the defining sets. The default value of a parameter is 0. Several parameters may be declared in one parameter statement.</span>
+
+<pre>
+<code class="gams">
+table table_name[(index_list)]  [text] [EOL
+                element               { element }     EOL
+  element    numerical_value       { numerical_value} EOL
+ {element    numerical_value       { numerical_value} EOL}] ;
+</code>
+</pre>
+		<span>Element is an element of one of the driving sets.</span>
+	</dl>
+
+	<h1>Variables</h1>
+
+	<dl class="dl-1-1">
+<pre>
+<code class="gams">
+[var_type] variable[s] var_name [(index_list)] [text] [/var_data/] 
+    {, var_name [(index_list)] [text] [/var_data/]}
+</code>
+</pre>
+		<span class="description">var_type can be <code>free(default), positive/nonnegative, negative, binary, integer, etc.</code></span>
+	</dl>
+
+	<h1>Equations</h1>
+
+	<dl class="dl-1-1">
+<pre>
+<code class="gams">
+Equation[s] eqn_name [(index_list)] [explanatory text] [/eqn_data/]
+    {, eqn_name [(index_list)] [explanatory text] [/eqn_data/]} ;
+</code>
+</pre>
+		<span class="description">Declare equation</span>
+
+		<code class="gams">eqn_name(index_list)[$logical_condition(s)].. expression eqn_type expression ;</code>
+		<span>Define equation. eqn_type can be =e=, =l=, =g= , etc.</span>
+	</dl>
+</body>
+</html>

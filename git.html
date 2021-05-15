@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<title>Git Cheat Sheet</title>
 </head>
 <body class="container">
@@ -113,7 +113,7 @@
 		<dd>Create a README file</dd>
 
 		<dt><code class="line-command">git remote add origin &lturl&gt</code></dt>
-		<dd>Add the remote repository which is named origin</dd>
+		<dd>Add the remote repository which is named origin. <span class="tip">Typical url on github.com &lturl&gt = https://github.com/&ltProfileName&gt/&ltRepositoryName&gt.git</span></dd>
 
 		<dt><code class="line-command">git remote</code></dt>
 		<dd>Returns name of the remote repository</dd>
@@ -123,6 +123,9 @@
 
 		<dt><code class="line-command">git push</code></dt>
 		<dd>Pushes the master branch to the remote repository</dd>
+
+		<dt><code class="line-command">git push --set-upstream origin master</code></dt>
+		<dd>To push the current branch and set the remote as upstream.1</dd>
 	</dl>
 </body>
 </html>

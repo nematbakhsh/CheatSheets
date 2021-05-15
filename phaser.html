@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<title>Phaser.js Cheat Sheet</title>
 </head>
 <body class="container">
@@ -64,7 +64,9 @@ window.onload = function()
 <pre class="file-content">
 class SceneMain extends Phaser.Scene {
     constructor() {
-        super('SceneMain');
+        super({
+            key: 'SceneMain'
+        });
     }
 
     preload()
@@ -121,26 +123,7 @@ this.load.spritesheet({
 		<span class="description">loads a bitmap font</span>
 	</dl>
 
-	<h1>Grid Object</h1>
-	<dl class="dl-1-1">
 
-		<pre>
-<code class="javascript">
-this.alignGrid = new AlignGrid({
-	scene: this,
-	rows: <span class="datatype-number">NUMBER</span>,
-	cols: <span class="datatype-number">NUMBER</span>,
-});
-</code>			
-		</pre>
-		<span class="description">create new grid</span>
-
-		<code class="javascript">this.alignGrid.showNumbers()</code>
-		<span class="description">show numbers in grid cells</span>
-
-		<code class="javascript">this.alignGrid.placeAtIndex(<span class="datatype-number">NUMBER cell-index</span>, <span class="datatype-object">OBJECT GameObject</span>)</code>
-		<span class="description">places the game object at the specified cell</span>
-	</dl>
 
     <h1>Images, sprites and texts</h1>
 
@@ -152,20 +135,60 @@ this.alignGrid = new AlignGrid({
 
 		<code class="javascript">this.&ltimageName&gt = this.add.sprite(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING key</span>)</code>
     	<span class="description">Adds a sprite. Note that sprite objects has their origin at (0.5, 0.5)</span>
+
+<pre>
+<code class="javascript">
+this.&ltimageName&gt = this.add.tileSprite({
+	x:
+	y:
+	width:
+	height:
+	key:
+	frame:
+})
+</code>
+</pre>
+<span class="description">frame is an optional frame from the Texture this Tile Sprite is rendering with.</span>
+
 		<pre>
 <code class="javascript">this.&lttextName&gt = this.add.text(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING text</span>, {
 	font: <span class="datatype-string">STRING</span>,
+	fontFamily: <span class="datatype-string">STRING</span>,
 	fontSize: <span class="datatype-number">NUMBER</span>,
+	fontWeight: 
+	fontStyle :string
 	align: <span class="datatype-string">STRING</span>, // can be center, ...
 	color: <span class="datatype-string">STRING</span>,
-	fill: <span class="datatype-string">STRING</span>
-})
+	backgroundColor: <span class="datatype-string">STRING</span>,
+	fill: <span class="datatype-string">STRING</span>,
+	shadowColor: <span class="datatype-string">STRING</span>,
+	shadowFill: <span class="datatype-boolean">BOOLEAN</span>,
+	shadowOffsetX : <span class="datatype-number">NUMBER</span>,
+	shadowOffsetY : <span class="datatype-number">NUMBER</span>,
+	shadowStroke : <span class="datatype-boolean">BOOLEAN</span>,
+	rtl :boolean
+	stroke :string
+	strokeThickness :number
 </code>
 		</pre>
 		<span class="description">Adds a text. Note that text objects has their origin at (0, 0)</span>
 
+		<code class="javascript">setShadow( [x] [, y] [, color] [, blur] [, shadowStroke] [, shadowFill])</code>
+		<span class="description">Above shadows does not work , use this one</span>
+
 	    <code class="javascript">&ltTextObject&gt.setText(<span class="datatype-string">STRING text</span>)</code>
 	    <span class="description">resets the text of the text object</span>
+
+	    <code class="javascript">&ltTextObject&gt.setFontSize(<span class="datatype-number">NUMBER fontSize</span>)</code>
+	    <span class="description">sets the font size</span>
+
+	    <code class="javascript">&ltTextObject&gt.setFill(<span class="datatype-string">STRING color</span>)</code>
+	    <span class="description">This can be any valid CanvasRenderingContext2D fillStyle value, such as a color (in hex, rgb, rgba, hsl or named values), a gradient or a pattern.</span>
+
+	    <code class="javascript">var grd = &ltTextObject&gt.context.createLinearGradient(x0, y0, x1, y1);grd.addColorStop(0, '#8ED6FF');   
+    grd.addColorStop(1, '#004CB3');</code>
+    	<span class="description"></span>
+
 
 		<code class="javascript">&ltTextObject&gt.setInteractive()</code>
 	    <span class="description">Makes it interactive to accept events</span>
@@ -182,7 +205,10 @@ this.alignGrid = new AlignGrid({
 
     <dl class="dl-1-1">
     	<code class="javascript">this.&ltimageName&gt = this.physics.add.image(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING key</span>)</code>
-    	<span class="description">adds an image with physics</span>
+    	<span class="description">adds an image with physics body</span>
+
+    	<code class="javascript">this.&ltimageName&gt = this.physics.add.staticImage(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING key</span>)</code>
+    	<span class="description">adds an static image with physics body</span>
 
 		<code class="javascript">this.&ltimageName&gt = this.physics.add.sprite(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-string">STRING key</span>)</code>
     	<span class="description">adds a sprite with physics</span>
@@ -247,9 +273,6 @@ this.physics.add.collider({
     	<code class="javascript">&ltBodyObject&gt.body.setBounce(<span class="datatype-number">NUMBER bounceX</span>, <span class="datatype-number">NUMBER bounceY</span>);</code>
     	<span class="description">bounceX, bounceY are proportional</span>
 
-    	<code class="javascript">&ltPhysicsBody&gt.destroy()</code>
-    	<span class="description">Destroys the object</span>
-
     	<code class="javascript">&ltBodtWithPhysics&gt.refreshBody()</code>
     	<span class="description">Syncs the Body's position and size with its parent Game Object. You don't need to call this for Dynamic Bodies, as it happens automatically.</span>
 
@@ -258,6 +281,12 @@ this.physics.add.collider({
 
     	<code class="javascript">&ltBodyObject&gt.body.immovable</code>
     	<span class="description">Whether this Body can be moved by collisions with another Body.</span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.setSize(<span class="datatype-number">NUMBER width</span>, <span class="datatype-number">NUMBER height</span>, <span class="datatype-boolean">BOOLEAN putInCenter</span>)</code>
+    	<span class="description"></span>
+
+    	<code class="javascript">&ltBodyObject&gt.body.setOffset(<span class="datatype-number">NUMBER offsetX</span>, <span class="datatype-number">NUMBER offsetY</span>)</code>
+    	<span class="description">The offset numbers are from the top-left corner</span>
     </dl>
 
     	
@@ -315,6 +344,9 @@ this.physics.add.collider({
 
     	<code class="javascript">&ltGameObject&gt.setScale(<span class="datatype-number">NUMBER scaleX</span>, <span class="datatype-number">NUMBER scaleY</span>)</code>
     	<span class="description">scaleX and scaleY are proportional</span>
+
+    	<code class="javascript">&ltGameObject&gt.destroy()</code>
+    	<span class="description">Destroys the object</span>
     </dl>
 
     <h1>Input Class</h1>
@@ -366,13 +398,17 @@ this.anims.create({
     ], or 
     frames: <span class="datatype-array">Array frameNames</span>
     frameRate: <span class="datatype-number">NUMBER</span>,
-    repeat: -1 // 0 for animating once, ..., -1 for infinity
+    repeat: <span class="datatype-number">NUMBER</span> // 0 for animating once, ..., -1 for infinity
 });
 </code>    		
     	</pre>
     	<span class="description">Create an animation. Add it to 'create' function. If all frames of a sprite are needed, then use the following command.</span>
-
-    	<code class="javascript">var frameNames= this.anims.generateFrameNumbers(<span class="datatype-string">STRING frameKey</span>)</code>
+<pre>
+<code class="javascript">var frameNames= this.anims.generateFrameNumbers(<span class="datatype-string">STRING frameKey</span>, {
+	start: <span class="datatype-number">NUMBER frameNumber</span>,
+	end: <span class="datatype-number">NUMBER frameNumber</span>
+})</code>
+</pre>
     	<span>A shortcut command to get all frame numbers</span>
 
     	<code class="javascript">&ltSpriteObject&gt.play(<span class="datatype-string">StRING animationKey</span>)</code>
@@ -388,7 +424,12 @@ this.anims.create({
     <h1>Audio</h1>
 
     <dl class="dl-1-1">
-    	<code class="javascript">this.&ltsoundName&gt = this.sound.add(<span class="datatype-string">STRING soundKey</span>)</code>
+    	<pre>
+<code class="javascript">this.&ltsoundName&gt = this.sound.add(<span class="datatype-string">STRING soundKey</span>, {
+    volume: <span class="datatype-number">NUMBER</span>,
+    loop: <span class="datatype-boolean">BOOLEAN</span>
+})</code>
+    	</pre>
     	<span class="description">Include this command in 'create' function</span>
 
     	<code class="javascript">&ltaudioObject&gt.play()</code>
@@ -399,6 +440,16 @@ this.anims.create({
 
     <dl class="dl-1-1">
     	<code class="javascript">this.scene.start(<span class="datatype-string">STRING sceneName</span>)</code>
+    	<span class="description">sceneName is optional, default current scene i.e. this</span>
+
+    	<code class="javascript">this.scene.stop(<span class="datatype-string">STRING sceneName</span>)</code>
+    	<span class="description"></span>
+
+    	<code class="javascript">this.scene.pause(<span class="datatype-string">STRING sceneName</span>)</code>
+    	<span class="description">Tricky this one .. it seems it pauses even events</span>
+
+    	<code class="javascript">this.scene.resume(<span class="datatype-string">STRING sceneName</span>)</code>
+    	<span class="description">Tricky this one .. it seems it pauses even events</span>
     </dl>
 
     <h1>Miscellaneous</h1>
@@ -420,6 +471,9 @@ this.anims.create({
     	<code class="javascript">game.physics.arcade.enable(&ltGameObject&gt)</code>
     	<code class="javascript">this.physics.add.existing(&ltGameObject&gt, false)</code>
 
+    	<code class="javascript">this.physics.enable(&ltGameObject&gt, Phaser.Physics.ARCADE);</code>
+    	<span class="description">As above</span>
+
     	<code class="javascript">game.world.?</code>
     	<code class="javascript">this.physics.world.bounds.?</code>
 
@@ -433,5 +487,136 @@ this.anims.create({
     	<code class="javascript">Even though it is defined in the DOCS but it doesn't work! this.physics.collide(...) or this.physics.world.collide(...) use this.physics.add.collider(...) instead</code>
     </dl>
 
+    <h1>Phaser Loader Events</h1>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">this.load.on('progress', function(progress) {})</code>
+    	<span class="description">The progress parameter is a number between 0 and 1</span>
+    	
+    	<code class="javascript">this.load.on('fileprogress', function(file, percentComplete) {});</code>
+    	<span class="description">	file parameter is a reference to the File which errored during load.</span>
+
+    	<code class="javascript">this.load.on('complete', function(loader, totalComplete, totalFailed) {});</code>
+    	<span class="description">totalComplete and totalFailed returns the total number of successfully loaded or failed files.</span>
+    </dl>
+
+    <h1>GameObjects.Graphics</h1>
+
+    <dl class="dl-1-1">
+<pre>
+<code class="javascript">this.&ltGraphicsObject&gt = this.add.graphics({
+    x: <span class="datatype-number">NUMBER</span>,
+    y: <span class="datatype-number">NUMBER</span>,
+    fillStyle: {
+        color: <span class="datatype-number">NUMBER</span>,
+        alpha: <span class="datatype-number">NUMBER</span>,
+    },
+    lineStyle: {
+        width: <span class="datatype-number">NUMBER</span>,
+        color: <span class="datatype-number">NUMBER</span>,
+        alpha: <span class="datatype-number">NUMBER</span>,
+    }
+})</code>
+</pre>
+<span class="description">create a graphics object</span>
+
+<pre>
+<code class="javascript">&ltGraphicsObject&gt.lineStyle({
+	width: <span class="datatype-number">NUMBER</span>,
+	color: <span class="datatype-number">NUMBER</span>,
+	alpha: <span class="datatype-number">NUMBER</span>,
+})</code>
+</pre>
+<span class="description"></span>
+
+	<code class="javascript">&ltGraphicsObject&gt.fillRect(x, y, width, height);</code>
+	<span class="description"></span>
+
+	<code class="javascript">&ltGraphicsObject&gt.fillGradientStyle(topLeft, topRight, bottomLeft, bottomRight [, alphaTopLeft] [, alphaTopRight] [, alphaBottomLeft] [, alphaBottomRight]);</code>
+	<span class="description"></span>
+
+	<code class="javascript">&ltGraphicsObject&gt.lineGradientStyle(lineWidth, topLeft, topRight, bottomLeft, bottomRight [, alpha]);</code>
+	<span class="description">WebGL only</span>
+
+	<code class="javascript">&ltGraphicsObject&gt.fillTriangle(x0, y0, x1, y1, x2, y2);</code>
+	<span class="description"></span>
+
+	<code class="javascript">&ltGraphicsObject&gt.strokeRect(x, y, width, height);</code>
+	<span class="description"></span>
+
+	<code class="javascript">&ltGraphicsObject&gt.clear();</code>
+	<span class="description">Clears the object</span>
+
+<pre>
+<code class="javascript">graphics.lineStyle(5, 0xFF00FF, 1.0);
+graphics.beginPath();
+graphics.moveTo(100, 100);
+graphics.lineTo(200, 200);
+graphics.closePath();
+graphics.strokePath();
+
+graphics.lineStyle(5, 0xFF00FF, 1.0);
+graphics.fillStyle(0xFFFFFF, 1.0);
+graphics.fillRect(50, 50, 400, 200);
+graphics.strokeRect(50, 50, 400, 200);
+</code>
+</pre>
+<span class="description">An example for graphics class</span>
+    </dl>
+
+    <h1>Camera Object</h1>
+
+    <dl class="dl-1-1">
+    	<code class="javascript">this.cameras.main.width</code>
+    	<span class="description">returns width of the current viewable area of our game.</span>
+
+    	<code class="javascript">this.cameras.main.height</code>
+    	<span class="description">returns height of the current viewable area of our game.</span>
+
+    	<code class="javascript">this.cameras.main.setBackgroundColor("rgba(150, 30, 0, 1)");</code>
+    	<span class="description">Set background color</span>
+    </dl>
+
+    	<h1>Grid Object Snippet</h1>
+
+<pre class="filecontent">
+<code class="javascript">
+	
+</code>	
+</pre>    	
+
+	<dl class="dl-1-1">
+		<pre>
+<code class="javascript">
+this.alignGrid = new AlignGrid({
+	scene: this,
+	rows: <span class="datatype-number">NUMBER</span>,
+	cols: <span class="datatype-number">NUMBER</span>,
+});
+</code>			
+		</pre>
+		<span class="description">create new grid</span>
+
+		<code class="javascript">this.alignGrid.showNumbers()</code>
+		<span class="description">show numbers in grid cells</span>
+
+		<code class="javascript">this.alignGrid.placeAtIndex(<span class="datatype-number">NUMBER cell-index</span>, <span class="datatype-object">OBJECT GameObject</span>)</code>
+		<span class="description">places the game object at the specified cell</span>
+	</dl>
+
+	<h1>Events</h1>
+
+	<dl class="dl-1-1">
+		<code class="javascript">this.events.on('pause', callback, scope)</code>
+		<span class="description">triggered when scene is paused .. here this is scene</span>
+	</dl>
 </body>
 </html>
+
+make command makes an object but does not render it ... good for texts.
+It seems that make works only for text
+game.context = CanvasRenderingContext2D|WebGLRenderingContext
+
+
+to access other scenes in game use something lik
+<p>game.scene.scenes[1].physics.add.sprite(bomb.x, bomb.y, 'exploion');</p>

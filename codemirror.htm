@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>CodeMirror Cheat Sheet</title>
+</head>
+<body class="container">
+	<h1>CodeMirror</h1>
+	<p>CodeMirror is a versatile text editor (specialized for editing code) implemented in JavaScript for the browser.</p>
+
+	<h1>Installation</h1>
+	<p>Download from <a href="https://codemirror.net/">codemirror.net</a></p>
+
+	<h1>Boiler Plate</h1>
+<pre class="file-content">
+	<code class="html">
+&lthtml&gt
+&lthead&gt
+	&lttitle&gt>CodeMirror Sample&lt/title>
+	&ltlink rel="stylesheet" href="codemirror/lib/codemirror.css"&gt
+	&ltscript src="codemirror/lib/codemirror.js"&gt&lt/script&gt
+&lt/head>
+&ltbody>
+    &lttextarea id="editor">&gt/textarea>
+    &ltscript&gt
+        const myTextArea = document.getElementById('editor');
+        var cm = CodeMirror.fromTextArea();
+     &lt/script&gt
+&lt/body>
+&lt/html>
+</code>
+</pre>
+	<h1>Initialization Methods</h1>
+	<p>CodeMirror editor can be initialized in two ways.Firstly, it can be appended to a DOM element</p>
+<code class="html">
+    var myCodeMirror = CodeMirror(&ltDOM Element&gt, [<span class="datatype-obect">OBJECT configurations</span>]);
+</code>
+	<p>Secondly, replace a DOM element</p>
+<pre>
+<code class="html">var myCodeMirror = CodeMirror(function(elt) {
+    myTextArea.parentNode.replaceChild(elt, &ltDOM Element&gt);
+}, [<span class="datatype-obect">OBJECT configurations</span>]);
+// or if &ltDOM Element&gt is a TextArea element, with shortcut
+var myCodeMirror = CodeMirror.fromTextArea(<span class="datatype-obect">DOM-OBJECT textarea node</span>);
+</code>
+</pre>
+	<h1>Configurations</h1>
+<pre>
+<code class="javascript">
+var configurations = {
+    value : <span class="datatype-string">STRING</span> // set starting value
+    mode : <span class="datatype-string">STRING</span> // set the language mode, javascript php, html, ... The value "null" indicates no highlighting should be applied. it coul be an object You must make sure the CSS file defining the corresponding .cm-s-[name] styles is loaded
+    mode : {
+        name : <span class="datatype-string">STRING</span> 
+    }
+    theme : <span class="datatype-string">STRING</span> // set the theme, dracula, ... You must make sure the CSS file defining the corresponding .cm-s-[name] styles is loaded
+    lineNumbers : <span class="datatype-boolean">BOOLEAN</span>,
+    firstLineNumber: integer
+    indentUnit : <span class="datatype-number"></span> // default value is 2
+    tabSize : <span class="datatype-number"></span> // default value is 4
+    direction: "ltr" | "rtl"
+    lineNumberFormatter: function(line: integer) → string // A function used to format line numbers. The function is passed the line number, and should return a string that will be shown in the gutter.
+    autocorrect: boolean
+    extraKeys : {'Ctrl-Space' : 'autocomplete'} // for this you need to load hint addon
+}
+</code>
+</pre>
+
+	<h1>Programming API</h1>
+	<dl class="dl-1-1">
+		<code class="javascript">cm.setSize(width: number|string, height: number|string)</code>
+		<span class="description"></span>
+
+		<h3>Static Properties</h3>
+		<span></span>
+
+		<code class="javascript">CodeMirror.fromTextArea(textArea: TextAreaElement, ?config: object)</code>
+		<span class="description">It will replace the textarea with a CodeMirror instance, and wire up the form of that textarea (if any) to make sure the editor contents are put into the textarea when the form is submitted. A CodeMirror instance created this way has three additional methods: cm.save(), cm.toTextArea(), cm.getTextArea() → TextAreaElement</span>
+	</dl>
+
+	<h1>Addons</h1>
+	<p>Before using each addon should be loaded using a script tag</p>
+
+</body>
+</html>

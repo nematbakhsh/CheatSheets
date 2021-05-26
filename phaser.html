@@ -307,6 +307,9 @@ this.physics.add.collider({
     <dl class="dl-1-1">
     	<code class="javascript">Phaser.Math.Between(<span class="datatype-number">Number min</span>, <span class="datatype-number">Number max</span>)</code>
     	<span class="description">Returns a number</span>
+
+        <code class="javascript">Phaser.Math.RND.integerInRange(<span class="datatype-number">Number min</span>, <span class="datatype-number">Number max</span>)</code>
+        <span class="description">Returns a number</span>
     </dl>
 
     <h1>General GameObject Properties</h1>
@@ -347,6 +350,12 @@ this.physics.add.collider({
 
     	<code class="javascript">&ltGameObject&gt.destroy()</code>
     	<span class="description">Destroys the object</span>
+
+        <code class="javascript">&ltGameObject&gt.setVisible(<span class="datatype-boolean">BOOLEAN visibility</span>)</code>
+        <span class="description">Hide or show an object</span>
+
+        <code class="javascript">&ltGameObject&gt.setAngle(<span class="datatype-number">NUMBEr degrees</span>)</code>
+        <span class="description">Rotates around origin</span>
     </dl>
 
     <h1>Input Class</h1>
@@ -396,7 +405,7 @@ this.anims.create({
         ...
 
     ], or 
-    frames: <span class="datatype-array">Array frameNames</span>
+    frames: <span class="datatype-array">Array frameNames</span>,
     frameRate: <span class="datatype-number">NUMBER</span>,
     repeat: <span class="datatype-number">NUMBER</span> // 0 for animating once, ..., -1 for infinity
 });

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<head>Express Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="container">
+
+	<h1>Boiler Plate</h1>
+
+	<div class="dl-1-2">
+		<code class="command-line">npm init -y</code>
+		<span class="description"></span>
+		<code class="command-line">npm install --save express</code>
+		<span class="description"></span>
+		<code class="command-line">npm install --save-dev nodemon</code>
+		<span class="description"></span>
+
+		
+	</div>
+
+<p>Inside package.json</p>
+<pre class="file-content">
+"scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+},
+</pre>
+
+<p>Inside index.js</p>
+<pre class="file-content">
+const express = require('express');
+const path = require('path');
+
+const app = express();
+
+app.get('/', function (req, res) {
+	// res.sendStatus(200)
+	res.send('Hello World!')
+})
+
+app.listen(5000, function () {
+	console.log('Server is running on port 5000');
+})
+
+
+</pre>
+
+	<h1>Body Parser Module and Middleware</h1>
+
+	<code class="command-line">npm install --save body-parser</code>
+
+<pre class="file-content">
+// Body-parser Middleware
+// without it the req.body would be undefined
+
+// Old Method
+app.use(bodyParser()); //Now deprecated
+
+// 1st Method with body-parser module
+const bodyParser = require('body-parser');
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ 
+    extended : false // does not have a default value, therefore should be passed
+}))
+// parse application/json
+app.use(bodyParser.json())
+
+// 2nd Method
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({
+	extended : false
+}))
+// parse application/json
+app.use(express.json())
+</pre>
+
+	<h1>Pug Template</h1>
+
+	<h2>Installation</h2>
+	<code class="line-command">npm install --save pug</code>
+
+	<div class="dl-1-2">
+		<code class="javascript">app.set('views', path.join(__dirname, 'views'));</code>
+		<span class="description"></span>
+
+		<code class="javascript">app.set('view engine', 'pug');</code>
+		<span class="description"></span>
+
+		<code class="javascript">res.render(<span class="datatype-string">STRING file</span>, <span class="datatype-object">OBJECT object-of-values</span>)</code>
+		<span class="description"></span>
+
+		<code class="javascript">#{&ltvarName&gt}</code>
+		<span class="description">inserts varName value in the template</span>
+
+		<code class="javascript">extends layout ... block content</code>
+		<span class="description">for layouting</span>
+
+		<code class="javascript">each &ltelement&gt, i in &ltelements&gt</code>
+	</div>
+
+	<h2>List of Laws</h2>
+	<ul>
+		<li>Normal JavaScript expressions work fine,</li>
+		<li>'=' is used to declare variable and not string to pug compiler</li>
+		<li>'//' compiles to %lt!-- --&gt</li>
+		<li>Text at the start of a line (or after only white space) represents an HTML tag. (by default)</li>
+		<li>Indentation implies nesting</li>
+		<li>element : element represents the inline syntax for nested tags.</li>
+		<li>You can self close a tag by appending "/" character. (img, meta and link tags are automatically self closing unless you change doctype to XML)</li>
+		<li>Attributes come inside parantheses delimited by whitespaces or commas
+			<br>
+			Exceptions:
+			<ul>
+				<li>Class Literals: may be defined using .classname syntax (div tag can be omitted)</li>
+				<li>ID Literals: may be defined using a #idname syntax</li>
+				<li>Class Attributes: The class attribute can be a string, but it can also be an array of class names</li>
+			</ul>
+		</li>
+	</ul>
+
+	<h1>MongoDB</h1>
+
+	<h2>Installation</h2>
+	<code class="line-command">npm install --save mongoose</code>
+
+	<h2>Boiler Plate</h2>
+
+<pre class="file-content">
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/&ltdatabaseName&gt');
+
+let db = mongoose.connection;
+
+//check connection
+db.once('open', function() {
+	console.log('Connected to MongoDB');
+})
+
+//Check for db errors
+db.on('error', function(err) {
+	console.log(err);
+})
+
+// bring in Models
+let &ltModel&gt = require('./models/article');
+</pre>
+
+<h2>Models</h2>
+<p>Inside /Models/model.js</p>
+<pre class="file-content">
+const mongoose = require('mongoose');
+
+// Model
+let modelSchema = mongoose.Schema(<span class="datatype-object">OBJECT columns</span>)
+
+let columns = {
+	&ltcolumnName&gt : {
+		type: String|Number|Boolean,
+		required: true|false
+	}
+}
+
+let &ltmodelName&gt = modile.exports = mongoose.<modelspan class="datatype-string">STRING modelName</modelspan>, modelSchema);
+</pre>
+	
+	<h2>Line Commands</h2>
+	
+	<div class="dl-1-2">
+		<code class="line-command">show dbs</code>
+		<span class="description">shows databases</span>
+
+		<code class="line-command">use &ltdatabaseName&gt</code>
+		<span class="description">switch to a database</span>
+
+		<code class="line-command">db.createCollection(<span class="datatype-string">STRING collectionName</span>)</code>
+		<span class="description">creates collection</span>
+
+		<code class="line-command">show collections</code>
+		<span class="description">shows collections</span>
+
+		<code class="line-command">db.&ltcollection&gt.insert(<span class="datatype-object">OBJECT data-row</span>)</code>
+		<span class="description">inserts a row</span>
+
+		<code class="line-command">db.&ltcollection&gt.find(<span class="datatype-string">STRING id</span>)</code>
+		<span class="description">if id is not given, shows all rows</span>
+
+		<code class="line-command">pretty()</code>
+		<span class="description">Pretty method, styles the output</span>
+	</div>
+
+	<h2>Model methods</h2>
+
+	<div class="dl-1-2">
+		<code class="javascript">&ltModel&gt.</code>
+		<span class="description"></span>
+
+<pre class="javascript">
+&ltModel&gt.find({}, function(err, res) {
+	if (err) {
+		console.log(err)
+	} else {
+		// your code
+	}
+});</pre>
+<span class="description"></span>
+
+<pre class="javascript">
+&ltModel&gt.findById({}, function(err, res) {
+	if (err) {
+		console.log(err)
+	} else {
+		// your code
+	}
+});</pre>
+<span class="description"></span>
+
+<pre class="javascript">
+&ltModel&gt.save( function(err, res) {
+	if (err) {
+		console.log(err);
+		return;
+	} else {
+		// your code
+		//res.redirect('/');
+	}
+});</pre>
+<span class="description"></span>
+
+<pre class="javascript">
+&ltModel&gt.update(query, object, function(err) {
+	if (err) {
+		console.log(err);
+		return;
+	} else {
+		// your code
+		//res.redirect('/');
+	}
+});</pre>
+<span class="description"></span>
+
+<pre class="javascript">
+&ltModel&gt.remove(query, function(err) {
+	if (err) {
+		console.log(err);
+		return;
+	} else {
+		// your code
+		//res.send('Success');
+	}
+});</pre>
+<span class="description"></span>
+	</div>
+
+	<h1>Routing</h1>
+
+	<p>Making request from shell
+		<span class="line-command">Invoke-RestMethod http://localhost:5000</span>
+	</p>
+
+	<h2>Single Routes</h2>
+
+<pre class="javascript">
+app.get('url/:parameter', function(req, res) {
+	// your logic
+	// access parameter by req.params.parameter
+	// or const { parameter } = req.params
+})
+app.post('url', function(req, res) {
+	// post request have an object req.body
+})
+</pre>
+
+	<h2>Request and Response Methods</h2>
+
+	<p class="tip">Get requests do not contain a body</p>
+
+	<div class="dl-1-2">
+		<code class="javascript">req.params</code>
+		<span class="description">object of parameters in the url</span>
+
+		<code class="javascript">req.query</code>
+		<span class="description">object of key-value pairs in the query string, i.e. url+'?...'</span>
+
+		<code class="javascript">req.body</code>
+		<span class="description">object of request body (for post requests)</span>
+
+		<code class="javascript">req.headers</code>
+		<span class="description">object of request headers (headers are best used to pass global data of our app)</span>
+
+		<code class="javascript">req.method</code>
+		<span class="description">request method, GET|POST|...</span>
+
+		<code class="javascript">req.url</code>
+		<span class="description">request url</span>
+
+		<code class="javascript">res.send(<span class="datatype-number">NUMBER statusCode</span> | <span class="datatype-string">STRING dataBody</span> | <span class="datatype-json">JSON jsonBody</span>)</code>
+		<span class="description">sending statusCode is derecated use res.sendStatus(status) instead. It seems that object literals are converted to json</span>
+
+		<code class="javascript">res.sendStatus(<span class="datatype-number">NUMBER statusCode</span>)</code>
+		<span class="description"></span>
+
+		<code class="javascript">res.status()</code>
+		<span class="description">Express does this by default</span>
+
+		<code class="javascript">res.json(<span class="datatype-json">JSON jsonData</span>)</code>
+		<span class="description">Send json</span>
+	</div>
+
+	<h2>Setting a static folder</h2>
+
+<pre class="file-content">
+app.use(express.static(path.join(--dirname, 'public')));
+// url does not contain the 'public' in it
+</pre>
+
+	<h2>Routing</h2>
+	<span class="tip">If you have routes with variables in them sometimes the order of definition of aroutes is important</span>
+
+	<p>Inside a myRoute.js file</p>
+<pre class="file-content">
+const express = require('express');
+const router = express.Router();
+
+router.get('url', callback);
+
+module.exports = router;
+
+// inside app.js
+let myRoutes = require('./routes/myRoutes');
+app.use('/myRoutes', myRoutes);
+</pre>
+
+	<h1>Frontend</h1>
+
+	<h2>Installation and Boiler Plate</h2>
+	<code class="line-command">npm install -g bower</code>
+
+<p>Inside .bowerrc</p>
+<pre class="file-content">
+{
+	"directory" : "public/bower_components"
+}
+</pre>
+
+	<code class="line-command">bower install bootstrap</code>
+
+
+	<h1>Messaging</h1>
+
+	<code class="line-command">npm install --save express-messages express-session connect-flash</code>
+
+
+<pre class="file-content">
+// Express Session Middleware
+app.use(session({
+	secret: 'keyboard cat',
+	resave: true, //forces the session to be saved back to the session store, even if the session never modified by request.
+	saveUninitialized: true, // forces an uninitialized session to be saved to the store.
+	//cookie: {
+	//	secure: true
+	//}
+}))
+
+// Express Message Middleware
+app.use(require('connect-flash')());
+app.use(function(req, res, next) {
+	res.locals.messages = require('express-messages')(req, res);
+	next();
+})
+</pre>
+
+<p>Inside message_template.pug template</p>
+<pre class="file-content">
+.messages
+    each type in Object.keys(messages)
+        each message in messages[type]
+            div(class="alert alert-"+type) #{message}
+
+// include the following in your html pages
+// != messages('message_template', locals)
+
+// include this before redirecting
+// req.flash(<span class="datatype-string">STRING message-type</span>, <span class="datatype-string">STRING message</span>)
+</pre>
+
+	<h1>Middlewares</h1>
+
+	<p>Middlewares are typically functions with 3 parameters request and response object plus a function usually called next, which invokes the next middleware function.</p>
+	<p>Middlewares are applied to the routes defined after them.</p>
+	<p>even in app.get('url', callback), the callback is a middleware</p>
+
+<pre>
+//custom middleware function for all forthcoming routes
+app.use(function(req, res, next) {
+	// your code
+	// make sure to add the next() function or your app will halt
+	// either finish with a send() method ir next()
+})
+
+//custom middleware for specific routes
+// first define a function
+function customMiddleware(req, res, next) {
+	// your code
+}
+// add the function as 2nd parameter to your routes
+app.get('url', customMiddleware, callback)
+</pre>
+
+	<h1>Cookies</h1>
+
+	<code class="line-command">npm install cookie-parser</code>
+
+<pre class="file-content">
+const cookieParser = require('cookie-parser')
+
+app.use(cookieParser())
+</pre>
+
+<code class="javascript">res.cookie('key', 'value')</code>
+<span class="description">sets a cookie and sends it to the client-side</span>
+
+<code class="javascript">req.cookies</code>
+<span class="description">cookie object</span>
+
+	<h1>Validation</h1>
+
+	<code class="linec-command">npm install --save express-validator</code>
+
+<pre class="file-content">
+const validator = require('express-validator');
+// Express Validator Middleware
+app.use(expressValidator({
+	errorFormatter: function(param, msg, value) {
+		var namespace = param.split('.')
+		, root = namespace.shift()
+		, formParam = root;
+
+		while(namespace.length) {
+			formParam += '[' + namespace.shift() + ']';
+		}
+		return {
+			param: formParam,
+			msg: msg,
+			value: value
+		};
+	}
+}))
+</pre>
+
+	<div class="dl-1-2">
+		<code class="javascript">req.checkBody(<span class="datatype-string">STRING inputName</span>, <span class="datatype-string">STRING message</span>).notEmpty()</code>
+		<span class="description"></span>
+
+		<code class="javascript">req.checkBody(<span class="datatype-string">STRING inputName</span>, <span class="datatype-string">STRING message</span>).isInt().gte(5)</code>
+		<span class="description"></span>
+
+		<code class="javascript"></code>
+		<span class="description"></span>
+	</div>
+
+<p>After checking for validation, handle errors</p>
+<pre>
+// Handle Errors
+let errors = req.validationErrors();
+
+if (errors) {
+	// res.render('view', {
+		errors : errors
+	})
+} else {
+	// your code
+}
+
+// inside the view
+if errors
+	each error, i in errors
+		div(class="aler alert-danger") #{error.msg}
+</pre>
+
+	<h1>Authentication</h1>
+
+	<code class="line-command">npm install --save passport passport-local bcryptjs</code>
+
+	<h2>User Authentication</h2>
+
+<p>Inside models/user.js model file</p>
+<pre class="file-content">
+const mongoose = require('mongoose');
+
+// User Schema
+const UserSchema = mongoose.Schema({
+	name : {
+		type : String,
+		required : true
+	},
+	email : {
+		type : String,
+		required : true
+	},
+	username : {
+		type : String,
+		required : true
+	},
+	password : {
+		type : String,
+		required : true
+	}
+})
+
+const User = module.exports = mongoose.model('User', UserSchema);
+</pre>
+
+<p>Inside routes/user.js</p>
+<pre class="file-content">
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
+
+// Calling User Model
+let User = require('../models/user');
+
+// Register Form
+router.get('/register', function(req, res) {
+	res.render('register');
+})
+
+// Register Process
+router.post('/register', function(req, res) {
+	const name = req.checkBody('name', 'Name is required').notEmpty();
+	const name = req.checkBody('email', 'Email is required').notEmpty();
+	const name = req.checkBody('email', 'Email is not valid').isEmail();
+	const name = req.checkBody('username', 'Name is required').notEmpty();
+	const name = req.checkBody('password', 'Name is required').notEmpty();
+	const name = req.checkBody('password2', 'Name is required').equals(req.body.password);
+
+	let errors = req.validationErrors();
+
+	if (errors) {
+		res.render('register', {
+			errors : errors
+		})
+	} else {
+		let newUser = new User({
+			name : name,
+			email: email,
+			username : username,
+			password : password
+		});
+
+		bcrypt.genSalt(10, function(err, salt) {
+			bcrypt.hash(newUser.password, salt, function(err, hash) {
+				if (err) {
+					console.log(err);
+				}
+				newUser.password = hash;
+				newUser.save(function(err) {
+					if (err) {
+					console.log(err);
+					return;
+					} else {
+						req.flash('success', 'Registration Complete');
+						res.redirect('/users/login');
+					}
+				}) 
+			})
+		})
+	}
+})
+
+// Login Form
+router.get('/login', function(req, res) {
+	res.render('login');
+})
+
+// Login Process
+router.post('/login', function(req, res, next) {
+	passport.authenticate('local', {
+		successRedirect: '/',
+		failureRedirect: '/users/login',
+		failureFlash: true
+	})(req, res, next);
+})
+
+// Logout
+router.get('/logout', function(req, res) {
+	req.logout();
+	req.flash('success', 'Logged out successfully');
+	res.redirect('/users/login');
+})
+
+module.exports = router;
+</pre>
+
+<p>Inside app.js append</p>
+<pre class="file-content">
+let users = require('./routes/users');
+app.use('/users', users);
+</pre>
+
+<p>Inside views/register.pug append</p>
+<pre class="file-content">
+extends layout
+
+block content
+	h1 Register
+	form(method='POST', action='/users/register')
+		#form-group
+			label Name:
+			input.form-control(name='name', type='text')
+		#form-group
+			label Email:
+			input.form-control(name='email', type='text')
+		#form-group
+			label Username:
+			input.form-control(name='username', type='text')
+		#form-group
+			label Password:
+			input.form-control(name='password', type='password')
+		#form-group
+			label Confirm:
+			input.form-control(name='password2', type='password')
+		br
+		input.btn.btn-primary(type='submit', value='Submit')
+</pre>
+
+<p>Inside views/register.pug append</p>
+<pre class="file-content">
+extends layout
+
+block content
+	h1 Register
+	form(method='POST', action='/users/register')
+		#form-group
+			label Username:
+			input.form-control(name='username', type='text')
+		#form-group
+			label Password:
+			input.form-control(name='password', type='password')
+		br
+		input.btn.btn-primary(type='submit', value='Submit')
+</pre>
+
+<h2>Passport strategy</h2>
+
+<p>Inside config/passport.js</p>
+<pre class="file-content">
+const Local Strategy = require(passport-local).Strategy;
+const User = rquire('../models/user');
+const config = rquire('../config/database');
+const bycrypt = require('bycryptjs');
+
+module.exports = function(passport) {
+	//Local Stratedy
+	passport.use(new LocalStrategy(function(username, password, done) {
+		// Match Username
+		let query = {username: username};
+		User.findOne(query, function(err, user) {
+		if (err) throw err;
+		if (!user) {
+			return done(null, false, {message: 'No user found'});
+		}
+
+		// Match Password
+		bycrypt.compare(password, user.password, function(err, isMatch) {
+			if (err) throw err;
+			if (isMatch) {
+				return done(null, user);
+			} else {
+				return done(null, false, {message: 'Wrong password'});
+			}
+		})
+	})
+	}))
+
+	passport.serializeUser(function(user, done) {
+		done(null, user.id);
+	})
+
+	passport.deserializeUser(function(id, done) {
+		User.findById(id, function(err, user) {
+			done(err, user);
+		})
+	})
+}
+</pre>
+
+<p>Inside app.js</p>
+<pre class="file-content">
+const passport = require('passport');
+
+// Passport Config
+require('./config/passport')(passport);
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('*', function(req, res, next) {
+	// setting a global variable
+	res.locals.user = req.user || null;
+	next();
+})
+
+// Acess Control
+// add the following function as 2nd parameter to any protected router router
+function ensureAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	} else {
+		req.flash('danger', 'Please login first ');
+		res.redirect('/users/login');
+	}
+}
+</pre>
+
+<p>Inside css/style.css</p>
+
+<pre>
+.alert-error {
+	color : #a94442;
+	background-color: #f2dede;
+	border-color : #ebccd1;
+}
+
+.alert-success_msg {
+	color : #3c763d;
+	background-color: #dff0d8;
+	border-color : #d6e9c6;
+}
+
+</pre>
+
+</body>
+</html>

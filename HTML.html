@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>HTML 5 Cheat Sheet</title>
+</head>
+<body class="container">
+<h1>Global Attributes</h1>
+
+<dl class="dl-1-2">
+
+<code class="html">accesskey=<span class="datatype-string">STRING character</span></code>
+<span class="description">Specifies a shortcut key to activate/focus an element</span>
+
+<code class="html">class=<span class="datatype-string">STRING classname(s)</span></code>
+<span class="description">Specifies classname(s) for an element (usually refers to a class in a style sheet)</span>
+
+<code class="html">contenteditable=<span class="datatype-string">STRING true|false</span></code>
+<span class="description">Specifies whether the content is editable or not</span>
+
+<code class="html">data-*=<span class="datatype-string">STRING value</span></code>
+<span class="description">creates custom data attributes</span>
+
+<code class="html">dir=<span class="datatype-string">STRING ltr|rtl|auto</span></code>
+<span class="description">Specifies the text direction</span>
+
+<code class="html">draggable=<span class="datatype-string">STRING true|false|auto</span></code>
+<span class="description">Specifies whether an element is draggable or not (often used in drag and drop operations)</span>
+
+<code class=html>hidden</code>
+<span class="description">Hides an element as if it doesn't exists. It is a boolean attribute</span>
+
+<code class="html">id=<span class="datatype-string">STRING id</span></code>
+<span class="description">Specifies a unique id (usually used by javascript to select the element</span>
+
+<code class="html">lang=<span class="datatype-string">STRING language-code</span></code>
+<span class="description">Specifies the language of the element's content <a href="https://www.w3schools.com/tags/ref_language_codes.asp">Language Codes</a></span>
+
+<code class="html">spellcheck=<span class="datatype-string">STRING true|false</span></code>
+<span class="description">Specifies whether the element's content is to have its spelling and grammar checked or not</span>
+
+<code class="html">style=<span class="datatype-string">STRING style(s)</span></code>
+<span class="description">Specifies inline style(s) (i.e. CSS properties and values) seperated by ';'. Override any style set globally</span>
+
+<code class="html">tabindex=<span class="datatype-string">STRING tab-order</span></code>
+<span class="description">Specifies the tabbing order</span>
+
+<code class="html">title=<span class="datatype-string">STRING </span></code>
+<span class="description">Specifies extra information about an element (This information is often shown as a tooltip text when mouse moves over.)</span>
+
+<code class="html">=<span class="datatype-string">STRING </span></code>
+<span class="description"></span>
+
+<code class="html">translate=<span class="datatype-string">STRING yes|no</span></code>
+<span class="description">Specifies whether the content of an element should be translated or not</span>
+
+</dl>
+
+<h1>Tags</h1>
+
+<div class="dl-1-2">
+<code class="html">
+&lt!DOCTYPE>
+</code>
+<span class="description">Specifies the document type. It is not an HTML tag, but just an "information" to the browser about what document type to expect.</span>
+
+<span></span>
+<div class="dl-1-2">
+
+<code class="html">&lt!DOCTYPE html></code>
+<span class="description">HTML 5 declaration</span>
+
+<code class="html">&lt!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"></code>
+<span class="description">HTML 4.01 declaration</span>
+
+<code class="html">&lt!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"></code>
+<span class="description">XHTML 1.1 declaration</span>
+
+</div>
+</div>
+
+
+
+<div class="dl-1-2">
+	<code class="html">&lthtml> ... &lt/html></code>
+	<span class="description">Defines an HTML document (main root)</span>
+	<span>Attributes</span>
+	<div class="dl-1-2">
+		<code class="html">xmlns="http://www.w3.org/1999/xhtml"</code>
+		<span class="description">Specifies the XML namespace</span>
+	</div>
+
+	<code class="html">&lthead> ... &lt/head></code>
+	<span class="description">Contains metadata and other information for the document</span>
+
+	<code class="html">&lttitle> ... &lt/title></code>
+	<span class="description">Defines a title (The title is very important for SEO.)</span>
+
+	<code class="html">&ltbody> ... &lt/body></code>
+	<span class="description">Defines the document's body</span>
+</div>
+
+<h2>Layouting</h2>
+
+<div class="dl-1-2">
+	<code class="html">&lt!-- ... --></code>
+	<span class="description">Inserts a comment</span>
+
+	<code class="html">&ltbr></code>
+	<span class="description">Inserts a line break</span>
+
+	<code class="html">&lthr></code>
+	<span class="description">Inserts a horizontal rule (useful for thematic break in the page)</span>
+</div>
+
+
+<h2>Formatting</h2>
+
+<div class="dl-1-1-2">
+	<code class="html">&lth1> ... &lt/h1> to &lth6> ... &lt/h6></code>
+	<div>
+		<h1>Heading 1</h1>
+		<h2>Heading 2</h2>
+		<h3>Heading 3</h3>
+		<h4>Heading 4</h4>
+		<h5>Heading 5</h5>
+		<h6>Heading 6</h6>
+	</div>
+	<span class="description">Defines headings</span>
+
+	<code class="html">&ltp> ... &lt/p></code>
+	<p>This is a paragraph.</p>
+	<span class="description">Defines a paragraph</span>
+
+	<code class="html">&ltabbr> ... &lt/abbr></code>
+	<abbr title="Hypertext Markup Language">HTML</abbr>
+	<span class="description">Styles an abbreviation or an acronym (better be used by title attribute)</span>
+
+	<code class="html">&ltaddress> ... &lt/address></code>
+	<address>John Smith<br>No. 1, Isfahan<br>Iran</address>
+	<span class="description">Styles contact information</span>
+
+	<code class="html">&ltb> ... &lt/b></code>
+	<b>Bold</b>
+	<span class="description">Inserts bold text</span>
+
+	<code class="html">&ltdel> ... &lt/del></code>
+	<span><del>deleted text</del> <ins>inserted text</ins></span>
+	<span class="description">Styles text that has been deleted from the document</span>
+
+	<span>Attributes</span>
+	<code class="html">cite=<span class="datatype-string">STRING url/source</span></code>
+	<span class="description">Specifies a URL that explains the reason why the text was deleted or changed</span>
+
+	<span></span>
+	<code class="html">datetime=<span class="datatype-string">STRING YYYY-MM-DD hh:mm:ssTZD</span></code>
+	<span class="description">Specifies the date and time of when the text was deleted or changed</span>
+
+	<code class="html">&ltins> ... &lt/ins></code>
+	<span><del>deleted text</del> <ins>inserted text</ins></span>
+	<span class="description">Styles text that has been inserted into the document</span>
+
+	<span>Attributes</span>
+	<code class="html">cite=<span class="datatype-string">STRING url/source</span></code>
+	<span class="description">Specifies a URL that explains the reason why the text was deleted or changed</span>
+
+	<span></span>
+	<code class="html">datetime=<span class="datatype-string">STRING YYYY-MM-DD hh:mm:ssTZD</span></code>
+	<span class="description">Specifies the date and time of when the text was deleted or changed</span>
+	
+
+	<code class="html">&ltbdi> ... &lt/bdi></code>
+	<span></span>
+	<span class="description">Isolates a part of text that might be formatted in a different direction from other text outside it (useful when embedding user-generated content with an unknown text direction.)</span>
+
+	<code class="html">&ltblockquote> ... &lt/blockquote></code>
+	<blockquote cite="https://www.w3schools.com/tags/tag_blockquote.asp">Defines a section that is quoted from another source</blockquote>
+	<span class="description">Defines a section that is quoted from another source</span>
+
+	<span>Attributes</span>
+	<code class="html">cite=<span class="datatype-string">STRING url/source</span></code>
+	<span class="description">Specifies the source of the quotation (usually only useful for serach engines, does not render)</span>
+
+	<code class="html">&ltq> ... &lt/q></code>
+	<q cite="https://www.w3schools.com/tags/tag_q.asp">Defines a short quotation</q>
+	<span class="description">Defines a short quotation</span>
+
+	<span>Attributes</span>
+	<code class="html">cite=<span class="datatype-string">STRING url/source</span></code>
+	<span class="description">Specifies the source of the quotation (usually only useful for serach engines, does not render)</span>
+
+	<code class="html">&ltcite> ... &lt/cite></code>
+	<span><cite>The Shining</cite> by Stanley Kubrick</span>
+	<span class="description">Styles the title of a creative work</span>
+
+
+	
+</div>
+
+<h1>HTML Document Layout</h1>
+<pre>
+&lt!DOCTYPE html>
+&lthtml>
+&lthead>
+	&lttitle>&gt/title>
+&lt/head>
+&ltbody>
+
+&lt/body>
+&lt/html>
+</pre>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MongoDB Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="container">
+
+	<h1>MongoDB</h1>
+
+	<p>The database for modern applications</p>
+
+	<h1>Installation</h1>
+
+	<p>
+		<ul>
+			<li>Windows: Download MongoDB Community Server from <a href="https://www.mongodb.com/" target="_blank">MongoDB</a> website</li>
+			<li>MacOS: Either from above or by <a href="https://brew.sh" target="_blank">Homebrew</a> (In this case you have to install compass seperately)</li>
+		</ul>
+	</p>
+
+	<h2>Settings (many can be done through installers now)</h2>
+	<p>Inside mongodb/bin folder</p>
+	<div class="dl-1-2">
+		<code class="line-command">mongod</code>
+		<span class="description">runs mongodb shell</span>
+
+		<code class="line-command">exit</code>
+		<span class="description">exits mongodb shell</span>
+
+		<code class="line-command">mongod --directoryperdb</code>
+		<span class="description"></span>
+
+		<code class="line-command">mongod --dbpath <&ltfullpath&gt (usually 'C:\Program Files\MongoDB\Server\4.4\data\db'</code>
+		<span class="description"></span>
+
+		<code class="line-command">mongod --logpath <&ltfullpath&gt --logappend  (usually 'C:\Program Files\MongoDB\Server\4.4\log\mongod.log'</code>
+		<span class="description"></span>
+
+		<code class="line-command">mongod --rest --install</code>
+		<span class="description">intall it as a server (runs in background)</span>
+
+		<code class="line-command">net start mongodb</code>
+		<span class="description">starts mongodb service</span>
+	</div>
+
+	<h1>Line Commands</h2>
+
+	<p>The following commands can be chained (if makes sense of course!)</p>
+	
+	<div class="dl-1-2">
+		<code class="line-command">show dbs</code>
+		<span class="description">shows databases</span>
+
+		<code class="line-command">use &ltdatabaseName&gt</code>
+		<span class="description">switch to a database (if the database does not exist, it will create it. Note that, even though it is created but as long as there is no collection inside, it will not show up)</span>
+
+		<code class="line-command">db</code>
+		<span class="description">returns the name of the current database (database in use)</span>
+
+		<code class="line-command">db.dropDatabase()</code>
+		<span class="description">deletes the database in use</span>
+
+		<code class="line-command">db.createCollection(<span class="datatype-string">STRING collectionName</span>)</code>
+		<span class="description">creates collection</span>
+
+		<code class="line-command">show collections</code>
+		<span class="description">shows collections</span>
+
+		<code class="line-command">db.&ltcollection&gt.insert(<span class="datatype-object">OBJECT document-object</span>)</code>
+		<span class="description">inserts a document, the document object is a collection of key-value pairs in which values can be string, number, arrays, objects and dates </span>
+
+		<code class="line-command">db.&ltcollection&gt.insertMany(<span class="datatype-array">ARRAY array-of-document-objects</span>)</code>
+		<span class="description"></span>
+
+		<code class="line-command">db.&ltcollection&gt.find(<span class="datatype-object">OBJECT object</span>)</code>
+		<span class="description">finds all documents which satisfy the key-value pairs of the given object (if object is not given, shows all rows)</span>
+
+		<code class="line-command">db.&ltcollection&gt.findOne(<span class="datatype-object">OBJECT object</span>)</code>
+		<span class="description">finds only one documents which satisfy the key-value pairs of the given object</span>
+
+<pre class="line-command">
+db.posts.find({ title: 'Post One' }, {
+  title: 1,
+  author: 1
+})
+</pre>
+<span class="description">probably 1 stands for true</span>
+
+<pre class="line-command">
+db.posts.find({
+  comments: {
+     $elemMatch: {
+       user: 'Mary Williams'
+       }
+    }
+  }
+)
+</pre>
+<span class="description">Find By Element in Array ($elemMatch) (returns the whole document</span>
+
+		<code class="line-command">&ltresults&gt.pretty()</code>
+		<span class="description">Pretty method, formats the output</span>
+
+		<code class="line-command">&ltresults&gt.sort(<span class="datatype-object">OBJECT object-of-key-value-pairs-as(column : 1|-1)</span>)</code>
+		<span class="description">1 for ascending and -1 for descending</span>
+
+		<code class="line-command">&ltresults&gt.count()</code>
+		<span class="description">counts rows</span>
+
+		<code class="line-command">&ltresults&gt.limit(<span class="datatype-number">NUMBER integer</span>)</code>
+		<span class="description">limits rows</span>
+
+<pre class="line-command">
+db.&ltcollection&gt.update(<span class="datataype-object">OBJECT search</span>, (<span class="datataype-object">OBJECT replacement</span>, {
+    upsert : true // creates if not found
+}</pre>
+		<span class="description">updates the rows satisfying the search key-value pairs with the replacement object (not set fileds will be removed)</span>
+
+<pre class="line-command">
+db.posts.update(<span class="datatype-object">OBJECT search</span>,
+{
+    $set : {} // used to update/create specific fields
+    $inc : {} // to increment specified numeric fields by the given value
+    $rename : {} // to rename specified fields
+})
+</pre>
+		<span class="description">updates specific fields</span>
+
+<pre class="line-command">
+&ltresults&gt.forEach(function(doc) {
+  print("Blog Post: " + doc.title)
+})
+</pre>
+		<span class="description">loop command</span>
+
+		<code class="line-command">db.posts.remove(<span class="datataype-object">OBJECT search</span>)</code>
+		<span class="description">removes rows that satisfy serach</span>
+
+		<code class="line-command">db.posts.createIndex({ title: 'text' })</code>
+		<span class="description">adds index</span>
+
+		<code class="line-command">db.posts.createIndex({ title: 'text' })</code>
+		<span class="description">adds (text) index to title</span>
+
+<pre class="line-command">
+db.posts.find({
+    $text: {
+        $search: "\"Post O\""
+    }
+})
+</pre>
+<span class="description">Text search</span>
+
+<pre>
+db.posts.find({ views: { $gt: 2 } })
+db.posts.find({ views: { $gte: 7 } })
+db.posts.find({ views: { $lt: 7 } })
+db.posts.find({ views: { $lte: 7 } })
+</pre>
+<span class="description">greater than and less than operators</span>
+	</div>
+
+	<h1>Functions</h1>
+
+	<div class="dl-1-2">
+		<code>Date()</code>
+		<span class="description">returns today</span>
+
+		<code>print()</code>
+		<span class="description">returns outputs</span>
+	</div>
+
+</body>
+</html>

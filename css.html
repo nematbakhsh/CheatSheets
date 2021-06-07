@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSS Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="container">
+	<h1>CSS</h1>
+
+	<p>Cascading Style Sheets</p>	
+
+	<h1>Usage</h1>
+
+	<ul>
+		<li>External styles
+			<code class="html">&ltlink rel="stylesheet" type="text/css" href="&lturl&gt" /></code>
+		</li>
+		<li>Internal styles
+			<code class="html">
+				&ltstyle type="text/css">
+					// css code
+				&lt/style>
+			</code>
+		</li>
+		<li>Inline styles
+			<code class="html">&lttag style="property : value; property : value; ..."> &lt/tag></code>
+		</li>
+	</ul>
+
+	<h1>Syntax</h1>
+<pre class="css">
+selector {
+    propery : value;
+    ...
+}
+</pre>
+	<h1>Selectors</h1>
+
+	<p><i>selector</i> elements means all elements which are selected by <i>selector</i></p>
+
+	<div class="dl-1-2">
+		<code class="css">*</code>
+		<span class="description">all elements</span>
+
+		<code class="css">tag-name</code>
+		<span class="description">all &lttag-name&gt</span>
+
+		<code class="css">.class-name</code>
+		<span class="description">all tags with attribute class="class-name"</span>
+
+		<code class="css">#id-name</code>
+		<span class="description">all tags with id="id-name"</span>
+
+		<code class="css">selector1 , selector2</code>
+		<span class="description">selector1 and selector2 elements</span>
+
+		<code class="css">selector1selector2</code>
+		<span class="description">any element which is both a selector1 and a selector2 element</span>
+
+		<code class="css">selector1 selector2</code>
+		<span class="description">selector2 elements inside selector1 elements</span>
+
+		<code class="css">selector1 > selector2</code>
+		<span class="description">selector2 elements which has a selector1 parent</span>
+
+		<code class="css">selector1 + selector2</code>
+		<span class="description">the first selector2 element which is placed immediately after a selector1 element</span>
+
+		<code class="css">selector1 ~ selector2</code>
+		<span class="description">any selector2 element which is preceded by a selector1 element</span>
+	</div>
+
+	<h2>Attribute Selectors</h2>
+	<p>Here, the value can be a sytring or not</p>
+	<div class="dl-1-2">
+		<code class="css">[attribute-name]</code>
+		<span class="description">all elements with an <code>attribute-name</code> attribute</span>
+
+		<code class="css">[attribute-name = value]</code>
+		<span class="description">all elements with <code>attribute-name=value</code> attribute</span>
+
+		<code class="css">[attribute-name *= value]</code>
+		<span class="description">all elements with an <code>attribute-name</code> attribute which contains the string "value"</span>
+
+		<code class="css">[attribute-name ~= value]</code>
+		<span class="description">all elements with an <code>attribute-name</code> attribute which contains the word "value"</span>
+
+		<code class="css">[attribute-name ^= value]</code>
+		<span class="description">all elements with an <code>attribute-name</code> attribute starting with string "value"</span>
+
+		<code class="css">[attribute-name |= value]</code>
+		<span class="description">all elements with an <code>attribute-name</code> attribute starting with the word "value"</span>
+
+		<code class="css">[attribute-name $= value]</code>
+		<span class="description">all elements with an <code>attribute-name</code> attribute which ends with the string "value"</span>
+	</div>
+
+	<h2>Pseudo Selectors</h2>
+
+	<div class="dl-1-2">
+		<code class="css">selector:active</code>
+		<span class="description">selector elements while activated</span>
+
+		<code class="css">selector:focus</code>
+		<span class="description">selector elements while focused</span>
+
+		<code class="css">selector:hover</code>
+		<span class="description">selector elements while mouse over</span>
+
+		<code class="css">a::link</code>
+		<span class="description">unvisited links</span>
+
+		<code class="css">a:visited</code>
+		<span class="description">visited links</span>
+
+		<code class="css">selector:disabled</code>
+		<span class="description">selector elements which are disabled</span>
+
+		<code class="css">selector:enabled</code>
+		<span class="description">selector elements which are enabled</span>
+
+		<code class="css">selector:checked</code>
+		<span class="description">selector elements which are checked</span>
+
+		<code class="css">:selection or ::selection ?</code>
+		<span class="description">Selects the portion of an element that is selected by a user</span>
+
+		<code class="css">:lang</code>
+		<span class="description">allows the author to specify a language to use in a specified element</span>
+
+		<code class="css">selector:nth-child(<span class="datatype-number">NUMBER</span> | even | odd)</code>
+		<span class="description">selector element which is the n-th child of its parent</span>
+
+		<code class="css">selector::nth-last-child(<span class="datatype-number">NUMBER</span> | even | odd)</code>
+		<span class="description">selector element which is the n-th child of its parent from bottom</span>
+
+		<code class="css">selector:first-child</code>
+		<span class="description">selector element which is the first child of its parent</span>
+
+		<code class="css">selector:last-child</code>
+		<span class="description">selector element which is the last child of its parent</span>
+
+		<code class="css">selector:only-child</code>
+		<span class="description">selector element which is the onlychild of its parent</span>
+
+		<code class="css">selector:first-of-type</code>
+		<span class="description">selector element which is the first selector element of its parent</span>
+
+		<code class="css">selector:last-of-type</code>
+		<span class="description">selector element which is the last selector element of its parent</span>
+
+		<code class="css">:root</code>
+		<span class="description">root element within the document</span>
+
+		<code class="css">:not(selector)</code>
+		<span class="description">every element which is not a selector element</span>
+
+		<code class="css">selector:empty</code>
+		<span class="description">selector elements that have no children (including text nodes)</span>
+
+		<code class="css">selector::placeholder</code>
+		<span class="description">selector elements with the "placeholder" attribute specified</span>
+	</div>
+
+	<h2>Pseudo Elements</h2>
+
+	<div class="dl-1-2">
+		<code class="css">::first-letter</code>
+		<span class="description">Adds special style to the first letter of a text</span>
+
+		<code class="css">::first-line</code>
+		<span class="description">Adds special style to the first line of a text</span>
+
+		<code class="css">::before</code>
+		<span class="description">Inserts some content before the content of an element</span>
+
+		<code class="css">::after</code>
+		<span class="description">Inserts some content after the content of an element</span>
+	</div>
+
+	<h1>Colors</h1>
+	<ul>
+		<li>(HTML 5) Color Names</li>
+		<li>Hexadecimal (#rrggbb)</li>
+		<li>RGB rgb(0-255, 0-255, 0-255)</li>
+		<li>RGB rgb(0%-100%, 0%-100%, 0%-100%)</li>
+		<li>RGBa rgba(0-255, 0-255, 0-255, 0-1)</li>
+		<li>HSL hsl(hue, saturation, lightness)</li>
+	</ul>
+
+	<div class="dl-1-2">
+		<code class="css">color</code>
+		<span class="description">inherit | <span class="datatype-color">COLOR</span></span>
+
+		<code class="css">opacity</code>
+		<span class="description">inherit | <span class="datatype-number">NUMBER</span></span>
+	</div>
+
+	<h1>Measurements</h1>
+
+	<h2>Absolute Measurements</h2>
+
+	<div class="dl-1-2">
+		<code class="css">%</code>
+		<span class="description">percentage</span>
+
+		<code class="css">mm, cm, in</code>
+		<span class="description">milimeter, centimeter, inch</span>
+
+		<code class="css">pc</code>
+		<span class="description">pica (1pc = 12 points)</span>
+
+		<code class="css">pt</code>
+		<span class="description">point (1pt = 1/72 inch)</span>
+
+		<code class="css">pixel</code>
+		<span class="description">pixel (1px = 1/96 inch)</span>
+
+		<code class="css">ms, s</code>
+		<span class="description">mili-second, second</span>
+
+		<code class="css">deg, grad, rad</code>
+		<span class="description">degree, gradian, radian</span>
+
+		<code class="css">Hz, kHz</code>
+		<span class="description">hertz, kilo-hertz</span>
+	</div>
+
+	<h2>Relative Measurements</h2>
+
+	<div class="dl-1-2">
+		<code class="css">ch</code>
+		<span class="description">width of the “0” glyph found in the font for the font size used to render</span>
+
+		<code class="css">em</code>
+		<span class="description">1em = current font size of current element</span>
+
+		<code class="css">rem</code>
+		<span class="description">1rem = font size of the root element</span>
+
+		<code class="css">ex</code>
+		<span class="description">x-height of the element’s font</span>
+
+		<code class="css">gd</code>
+		<span class="description">the grid defined by 'layout-grid'</span>
+
+		<code class="css">vh, vw</code>
+		<span class="description">viewport’s height, viewport’s width</span>
+
+		<code class="css">vm</code>
+		<span class="description">viewport’s height or width, whichever is smaller</span>
+	</div>
+
+	<h1>Positioning</h1>
+
+	<div class="dl-1-2">
+		<code class="css">position</code>
+		<span class="description">static | relative | absolute | fixed</span>
+
+		<code class="css">top <br> right <br> bottom <br> left</code>
+		<span class="description">auto | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">clip</code>
+		<span class="description">auto | shape</span>
+
+		<code class="css">z-index</code>
+		<span class="description">auto | <span class="datatype-number">NUMBER</span></span>
+	</div>
+
+	<h1>Properties</h1>
+
+	<h2>Background</h2>
+	<div class="dl-1-2">
+		<code class="css">background-image</code>
+		<span class="description">url | gradients | none</span>
+
+		<code class="css">background-position</code>
+		<span class="description">top left | top center | top right | center left | center center | <br> center right | bottom left | bottom center | bottom right <br> x-% y-% <br> x-pos y-pos</span>
+
+		<code class="css">background-size</code>
+		<span class="description">length | % <br> auto | cover | contain </span>
+
+		<code class="css">background-repeat</code>
+		<span class="description">repeat | repeat-x | repeat-y | no-repeat </span>
+
+		<code class="css">background-attachment</code>
+		<span class="description">scroll | fixed | local</span>
+
+		<code class="css">background-origin</code>
+		<span class="description">border-box | padding-box | content-box</span>
+
+		<code class="css">background-clip</code>
+		<span class="description">border-box | padding-box | content-box</span>
+
+		<code class="css">background-color</code>
+		<span class="description"><span class="datatype-color">COLOR</span> | transparent </span>
+	</div>
+
+	<h2>Font</h2>
+	<h3>Generic font families</h3>
+	<ul>
+		<li><strong>Serif</strong> have small strokes at the edges of each letter. (Formal/Elegant look)</li>
+		<li><strong>Sans-serif</strong> have clean lines (no small strokes). (Modern/Simple/Minimalistic look)</li>
+		<li><strong>Monospace</strong> all the letters have the same fixed width. (Mechanical/Old/Code look) </li>
+		<li><strong>Cursive</strong> imitate human handwriting. (Friendly/Casual look)</li>
+		<li><strong>Fantasy</strong> decorative/playful fonts. (Decorations/Games)</li>
+	</ul>
+
+	<h3>Web Safe Fonts</h3>
+	<p>Fonts that are almost certainly available on all browsers</p>
+
+	<ul>
+		<li>Arial (sans-serif)</li>
+		<li>Verdana (sans-serif)</li>
+		<li>Helvetica (sans-serif)</li>
+		<li>Tahoma (sans-serif)</li>
+		<li>Trebuchet MS (sans-serif)</li>
+		<li>Times New Roman (serif)</li>
+		<li>Georgia (serif)</li>
+		<li>Garamond (serif)</li>
+		<li>Courier New (monospace)</li>
+		<li>Brush Script MT (cursive)</li>
+	</ul>
+
+	<div class="dl-1-2">
+		<code class="css">font</code>
+		<span class="description">font-style <br> font-variant <br> font-weight <br> font-size/line-height <br> font-family <br> caption | icon | menu | messagebox | small-caption | status-bar</span>
+
+		<code class="css">font-size-adjust</code>
+		<span class="description">none | inherit <br> number</span>
+
+		<code class="css">font-family</code>
+		<span class="description">serif | sans-serif | Font Name(s) (seperated by ',')</span>
+		
+		<code class="css">font-style</code>
+		<span class="description">normal | italic | oblique | inherit</span>
+
+		<code class="css">font-variant</code>
+		<span class="description">normal | small-caps | inherit</span>
+
+		<code class="css">font-size</code>
+		<span class="description">xx-small | x-small | small | medium | large | x-large | xxlarge | <br> smaller | larger | <br> inherit <br> length <br> % </span>
+
+		<code class="css">font-weight</code>
+		<span class="description">normal | bold | bolder | lighter | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | inherit </span>
+	</div>
+
+	<h1>Box Model</h1>
+	
+	<img src="img/box-model.png" style="display:block;margin:auto;">
+	<div class="dl-1-2">
+		<code class="css">display</code>
+		<span class="description">none | inline | block | inline-block | flex | inline-flex | grid |
+			inline-grid | contents | list-item |run-in | compact | table |
+			inline-table | table-row-group | table-header-group |
+			table-footer-group | table-row | table-column-group | table-column |
+			table-cell | table-caption | ruby | ruby-base | ruby-text |
+			ruby-base-group | ruby-text-group
+		</span>
+
+		<code class="css">box-sizing</code>
+		<div>
+			<span class="description">content-box | border-box | initial | inherit</span>
+			<p>By default, the width and height of an element is calculated like this:
+				<br>width + padding + border = actual width of an element
+				<br>height + padding + border = actual height of an element
+			</p>
+		</div>
+
+		<code class="css">float</code>
+		<span class="description">left | right | none</span>
+
+		<code class="css">clear</code>
+		<span class="description">left | right | both | none</span>
+
+		<code class="css">height</code>
+		<span class="description">auto | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">width</code>
+		<span class="description">auto | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">min-height</code>
+		<span class="description">none | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">min-width</code>
+		<span class="description">none | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">max-height</code>
+		<span class="description">none | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">max-width</code>
+		<span class="description">none | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">margin</code>
+		<span class="description"> 
+			<span class="datatype-css-proxy">margin-top</span> 
+			<span class="datatype-css-proxy">margin-right</span>
+			<span class="datatype-css-proxy">margin-bottom</span>
+			<span class="datatype-css-proxy">margin-left</span> |
+			<br>
+			<span class="datatype-css-proxy">margin-top = margin-bottom</span>
+			<span class="datatype-css-proxy">margin-right = margin-left</span> |
+			<br>
+			<span class="datatype-css-proxy">margin-top = margin-right = margin-bottom = margin-left</span>
+		</span>
+
+		<code class="css">margin-top <br> margin-right <br> margin-bottom <br> margin-left</code>
+		<span class="description">auto | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">padding</code>
+		<span class="description">
+			<span class="datatype-css-proxy">padding-top</span>
+			<span class="datatype-css-proxy">padding-right</span>
+			<span class="datatype-css-proxy">padding-bottom</span>
+			<span class="datatype-css-proxy">padding-left</span> |
+			<br>
+			<span class="datatype-css-proxy">padding-top = padding-bottom</span>
+			<span class="datatype-css-proxy">padding-right = padding-left</span> |
+			<br>
+			<span class="datatype-css-proxy">padding-top = padding-right = padding-bottom = padding-left</span>
+		</span>
+
+		<code class="css">padding-top <br> padding-right <br> padding-bottom <br> padding-left</code>
+		<span class="description">auto | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">overflow</code>
+		<span class="description">visible | hidden | scroll | <br> auto | no-display | no-content <br> overflow-x <be> overflow-y</span>
+
+		<code class="css">overflow-style</code>
+		<span class="description">auto | marquee-line | marqueeblock</span>
+
+		<code class="css">overflow-x</code>
+		<span class="description">visible | hidden | scroll | <br> auto | no-display | no-content</span>
+
+		<code class="css">visibility</code>
+		<span class="description">visible | hidden | collapse</span>
+	</div>
+
+	<h1>Line Box</h1>
+
+	<div class="dl-1-2">
+		<code class="css">alignment-adjust</code>
+		<span class="description">auto | baseline | before-edge | text-before-edge | middle | central |
+			after-edge | textafter-edge | ideographic | alphabetic | hanging | mathematical
+			<br>
+			<span class="datatype-length">LENGTH</span> | %
+		</span>
+
+		<code class="css">alignment-baseline</code>
+		<span class="description">baseline | ise-script | beforeedge | text-before-edge | afteredge |
+			text-after-edge | central | middle | ideographic | alphabetic | hanging | mathematical</span>
+
+		<code class="css">baseline-shift</code>
+		<span class="description">baseline | sub | super
+			<br>
+			<span class="datatype-length">LENGTH</span> | %
+		</span>
+
+		<code class="css">inline-box-align</code>
+		<span class="description">initial | last | INTEGER</span>
+
+		<code class="css">line-height</code>
+		<span class="description">normal |
+			<span class="datatype-number">NUMBER</span> |
+			<span class="datatype-number">LENGTH</span> | %
+		</span>
+
+		<code class="css">text-height</code>
+		<span class="description">auto | font-size | text-size | max-size</span>
+	</div>
+
+	<h1>Border</h1>
+
+	<div class="dl-1-2">
+		<code class="css">border</code>
+		<span class="description"><span class="datatype-css-proxy">border-width</span>
+			<span class="datatype-css-proxy">border-style</span>
+			<span class="datatype-css-proxy">border-color</span>
+		</span>
+
+		<code class="css">border-top</code>
+		<span class="description">
+			<span class="datatype-css-proxy">border-top-width</span>
+			<span class="datatype-css-proxy">border-style</span>
+			<span class="datatype-css-proxy">border-color</span>
+		</span>
+
+		<code class="css">border-right</code>
+		<span class="description">
+			<span class="datatype-css-proxy">border-right-width</span>
+			<span class="datatype-css-proxy">border-style</span>
+			<span class="datatype-css-proxy">border-color</span>
+		</span>
+
+		<code class="css">border-bottom</code>
+		<span class="description">
+			<span class="datatype-css-proxy">border-bottom-width</span>
+			<span class="datatype-css-proxy">border-style</span>
+			<span class="datatype-css-proxy">border-color</span>
+		</span>
+
+		<code class="css">border-left</code>
+		<span class="description">
+			<span class="datatype-css-proxy">border-left-width</span>
+			<span class="datatype-css-proxy">border-style</span>
+			<span class="datatype-css-proxy">border-color</span>
+		</span>
+
+		<code class="css">border-width <br> border-top-width <br> border-right-width <br> border-bottom-width <br> border-left-width</code>
+		<span class="description">thin | medium | thick | <span class="datatype-length">LENGTH</span></span>
+
+		<code class="css">border-style <br> border-top-style <br> border-right-style <br> border-bottom-style <br> border-left-style</code>
+		<span class="description">none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset</span>
+
+		<code class="css">border-color <br> border-top-color <br> border-right-color <br> border-bottom-color <br> border-left-color</code>
+		<span class="description"><span class="datatype-color">COLOR</span></span>
+		
+
+
+		<code class="css">border-radius</code>
+		<span class="description">
+			<span class="datatype-css-proxy">border-top-right-radius</span>
+			<span class="datatype-css-proxy">border-bottom-right-radius</span>
+			<span class="datatype-css-proxy">border-bottom-left-radius</span>
+			<span class="datatype-css-proxy">border-top-left-radius</span>
+			| <span class="datatype-length">LENGTH</span>
+		</span>
+
+		<code class="css">border-top-right-radius <br> border-bottom-right-radius <br> border-bottom-left-radius <br> border-top-left-radius</code>
+		<span class="description"><span class="datatype-length">LENGTH</span></span>
+	</div>
+
+	<h1>Text</h1>
+
+	<div class="dl-1-2">
+		<code class="css">direction</code>
+		<span class="description">ltr | rtl | inherit</span>
+
+		<code class="css">hanging-punctuation</code>
+		<span class="description">none | [ start | end | endedge ]</span>
+
+		<code class="css">letter-spacing</code>
+		<span class="description">normal | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">text-outline</code>
+		<span class="description">none | <span class="datatype-length">LENGTH</span> | <span class="datatype-color">COLOR</span></span>
+
+		<code class="css">white-space</code>
+		<span class="description">normal | pre | nowrap | pre-wrap | pre-line</span>
+
+		<code class="css">text-align</code>
+		<span class="description">start | end | left | right | center | justify</span>
+
+		<code class="css">text-align-last</code>
+		<span class="description">start | end | left | right | center | justify</span>
+
+		<code class="css">text-decoration</code>
+		<span class="description">none | underline | overline | line-thorugh | blink</span>
+
+		<code class="css">text-shadow</code>
+		<span class="description">none | <span class="datatype-length">LENGTH</span> | <span class="datatype-color">COLOR</span></span>
+
+		<code class="css">word-break</code>
+		<span class="description">normal | keep-all | loose | break-strict | break-all</span>
+
+		<code class="css">word-wrap</code>
+		<span class="description">normal | nowrap </span>
+
+		<code class="css">word-spacing</code>
+		<span class="description">normal | <span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">text-emphasis</code>
+		<span class="description">none | [ [ accent | dot | circle | disc | [ before | after ]?]</span>
+
+		<code class="css">text-indent</code>
+		<span class="description"><span class="datatype-length">LENGTH</span> | %</span>
+
+		<code class="css">text-justify</code>
+		<span class="description">auto | inter-word | interideograph | inter-cluster | distribute | kashida | tibetan</span>
+
+		<code class="css">text-transform</code>
+		<span class="description">none | capitalize | uppercase | lowercase</span>
+
+		<code class="css">text-wrap</code>
+		<span class="description">normal | unresrricted | none | suppress</span>
+	</div>
+
+	<h1>List</h1>
+
+	<div class="dl-1-2">
+		<code class="css">list-style</code>
+		<span class="description">
+			<span class="datatype-css-proxy">list-style-type</span>
+			<span class="datatype-css-proxy">list-style-position</span>
+			<span class="datatype-css-proxy">list-style-image</span>
+		</span>
+
+		<code class="css">list-style-type</code>
+		<span class="description">none | asterisks | box | check | circle | diamond | disc | hyphen |
+			square | decimal | decimalleading-zero | lower-roman | upper-roman |
+			lower-alpha | upper-alpha | lower-greek | lower-latin | upper-latin |
+			hebrew | armenian | georgian | cjk-ideographic | hiragana | katakana |
+			hiragana-iroha | katakana-iroha | footnotes
+		</span>
+
+		<code class="css">list-style-image</code>
+		<span class="description">none | url()</span>
+
+		<code class="css">marker-offset</code>
+		<span class="description">auto | <span class="datatype-length">LENGTH</span></span>
+	</div>
+
+	<h1>CSS @media Query</h1>
+
+<pre class="css">
+@media not|only mediatype and (mediafeature and|or|not mediafeature) {
+  CSS-Code;
+}
+// mediafeature: min-width:468px
+</pre>
+	
+	<h1>Flexbox</h1>
+
+	<p>Flex container's margins do not collapse with the margin of its contents</p>
+
+	<h2>Flexbox Container Properties</h2>
+	<div class="dl-1-2">
+		<code class="css">display</code>
+		<span class="description">flex | inline-flex</span>
+
+		<code class="css">flex-direction</code>
+		<span class="description">row | column</span>
+
+		<code class="css">flex-wrap</code>
+		<span class="description">wrap</span>
+
+		<code class="css">align-items</code>
+		<span class="description">flex-start | flex-center | flex-end | stretch(default value)</span>
+
+		<code class="css">justify-content</code>
+		<span class="description">flex-start(default) | flex-center | flex-end | space-between | space-around</span>
+	</div>
+
+	<h2>Flexbox Item Properties</h2>
+	<div class="dl-1-2">
+		<code class="css">flex</code>
+		<span class="description"><span class="datatype-number">NUMBER</span></span>
+
+		<code class="css">order</code>
+		<span class="description"><span class="datatype-number">NUMBER</span></span>
+
+		<code class="css">flex-basis</code>
+		<span class="description"><span class="datatype-length">LENGTH</span> | %</span>
+	</div>
+
+	<h1>Animation</h1>
+
+	<h2>Keyframes</h2>
+
+	<p>Animations Steps:
+		<ol>
+			<li>Bind the animation to an element by animation-name</li>
+			<li>Specify CSS styles inside the @keyframes rule for gradual change</li>
+		</ol>
+	</p>
+
+	<p>Note that a moving animated element should have position:relative ?</p>
+
+	<div class="dl-1-2">
+		<code class="css">animation-name</code>
+		<span class="description">&ltanimation-name&gt</span>
+
+		<code class="css">animation-duration</code>
+		<span class="description">TIME</span>
+
+		<code class="css">animation-delay</code>
+		<span class="description">TIME</span>
+
+		<code class="css">animation-iteration-count</code>
+		<span class="description"><span class="datatype-number">INTEGER</span> | infinity</span>
+
+		<code class="css">aanimation-direction</code>
+		<span class="description">normal | reverse | alternate | alternate-reverse</span>
+
+		<code class="css">animation-timing-function</code>
+		<span class="description">ease (default) | ease-in-out | ease-in | ease-out| linear | cubic-bezier(n,n,n,n)</span>
+
+		<code class="css">animation-fill-mode</code>
+		<span class="description">none | forwards | backwards | both</span>
+
+		<code class="css">animation</code>
+		<span class="description">
+			<span class="datatype-css-proxy">animation-name</span>
+			<span class="datatype-css-proxy">animation-duration</span>
+			<span class="datatype-css-proxy">animation-timing-function</span>
+			<span class="datatype-css-proxy">animation-delay</span>
+			<span class="datatype-css-proxy">animation-iteration-count</span>
+			<span class="datatype-css-proxy">animation-direction</span>
+		</span>
+	</div>
+
+<pre>
+@keyframes &ltanimation-name&gt {
+	0% {}
+	// other transition points
+	100% {}
+}
+</pre>
+	
+	<h2>Transitions</h2>
+
+	<p>Transition steps:
+		<ol>
+			<li>Specify the CSS property you want to add an effect to by transition-property</li>
+			<li>Set the duration of the effect bu transition-duration</li>
+		</ol>
+	</p>
+
+	<p>More than one transitions can be defined seperated by commas (all related transition properties keep the same order seperated by commas)</p>
+
+	<div class="dl-1-2">
+		<code class="css">transition-property</code>
+		<span class="description">CSS property (properties which has mid-points) | all</span>
+
+		<code class="css">transition-duration</code>
+		<span class="description">TIME</span>
+
+		<code class="css">transition-delay</code>
+		<span class="description">TIME</span>
+
+		<code class="css">transition-timing-function</code>
+		<span class="description">ease (default) | ease-in-out | ease-in | ease-out| linear | cubic-bezier(n,n,n,n)</span>
+
+		<code class="css">transition</code>
+		<span class="description">
+			<span class="datatype-css-proxy">transition-property</span>
+			<span class="datatype-css-proxy">transition-duration</span>, ...
+		</span>
+	</div>
+
+	<h2>Transforms</h2>
+
+	<p>These are not animations but when combined with transitions they form animations</p>
+
+	<div class="dl-1-2">
+		<code class="css">transform</code>
+		<span class="description">
+			translate(x, y) | rotate(angle) | scale(x, y) | scaleX(x) | scaleY(y) | skey(x-angle, y-angle) | skeyX(x-angle) | skewY(y-angle) <br>
+			matrix(scaleX(),skewY(),skewX(),scaleY(),translateX(),translateY())
+		</span>
+
+		<code class="css">transform-origin</code>
+		<span class="description">x-axis y-axis z-axis | initial | inherit</span>
+	</div>
+
+	<h1>Tips</h1>
+	<p>Properties that accept length but not percentages: text-shadow, border, letter-spacing</p>
+	<p>Properties that accept percentages but not length: text-size-adjust</p>
+	<p>Good Practice to set pading and margin to zero for all elements first</p>
+	<p>To center elements horizontally (along y-axis)
+<pre class="css">
+// for texts use text-align:center
+.center-horizontally {
+    display : block;
+    margin-left : auto;
+    margin-right : auto;
+    width : ? // note that if width is not set or set to 100% then horizontal aligning has no effect
+}
+</pre>
+	</p>
+	<p>To center elements verically (along x-axis)
+<pre class="css">
+// Method 1
+.center-vertically {
+    padding-top : <span class="datatype-length">LENGTH l</span>
+    padding-bottom : <span class="datatype-length">LENGTH l</span>
+}
+// Method 2
+.centering-vertically-parent {
+	position: relative;
+}
+.centering-vertically-element {
+	margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+</pre>
+	</p>
+
+	<p>To center horizontally and vertically
+<pre class="css">
+// Method 1
+.centering-parent {
+	position: relative;
+}
+.centering-element {
+	margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+// Method 2
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</pre>
+	</p>
+	<p>ClearFix Hack to remove previous floats</p>
+<pre class="css">
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+</pre>
+
+	<h1>Technicalities</h1>
+
+	<h2>Margin Collapsing</h2>
+	<p>Margin collapsing occurs in these three basic cases:
+		<ul>
+			<li>Adjacent siblings</li>
+			<li>No content separating parent and descendants</li>
+			<li>Empty blocks</li>
+		</ul>
+		Technics to prevent this:
+		<ul>
+			<li>Float either of div elements</li>
+			<li>Change either of your elements' disply to inline-blocks
+			<li>Set overflow of parent to auto (or any value other than visible)</li>
+		</ul>
+	</p>
+</body>
+</html>

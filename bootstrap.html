@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bootstrap Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="container">
+	<h1>Bootstrap</h1>
+
+	<p>Bootstrap is a free and open-source CSS framework directed at responsive, mobile-first front-end web development.</p>
+
+	<h1>Installation</h1>
+
+	<ul>
+		<li>Download from <a href="https://getbootstrap.com/docs/5.0/getting-started/download/" target="_blank">Boostrap Website</a></li>
+		<li>NPM :
+			<br>
+			<code class="line-command">npm install bootstrap</code>
+			<br>
+			<code class="line-command">npm i bootstrap-icons</code>
+			<p>
+				const bootstrap = require('bootstrap') or import bootstrap from 'bootstrap' will load all of Bootstrap’s plugins onto a bootstrap object. The bootstrap module itself exports all of our plugins. You can manually load Bootstrap’s plugins individually by loading the /js/dist/*.js files under the package’s top-level directory.
+			</p>
+<pre class="javascript">
+// How to bring in with Express.js
+app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))); // <- This will use the contents of 'bootstrap/dist/css' which is placed in your node_modules folder as if it is in your '/styles/css' directory.
+app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
+app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap-icons/font")));
+app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap-icons")));
+</pre>
+		</li>
+	</ul>
+	<h1>Layout</h1>
+
+	<h2>Breakpoints (grid tiers)</h2>
+
+	<div class="dl-1-2">
+		<code class="bootstrap">xs or &ltno-class-name&gt</code>
+		<span>X-Small (< 576px)</span>
+
+		<code class="bootstrap">sm</code>
+		<span>Small (&#8805 576px)</span>
+
+		<code class="bootstrap">md</code>
+		<span>Medium (&#8805 768px)</span>
+
+		<code class="bootstrap">lg</code>
+		<span>Large (&#8805 992px)</span>
+
+		<code class="bootstrap">xl</code>
+		<span>X-Large (&#8805 1200px)</span>
+
+		<code class="bootstrap">xxl</code>
+		<span>XX-Large (&#8805 1400px)</span>
+	</div>
+
+	<h2>Containers</h2>
+
+	<div class="dl-1-2">
+		<code class="bootstrap">container</code>
+		<span>wsets a max-width at each responsive breakpoint (a little less than the breakpoint width except X-Small which is <code class="css">width : 100%</code>)</span>
+
+		<code class="bootstrap">container-fluid</code>
+		<span> is <code class="css">width : 100%</code> at all breakpoints</span>
+
+		<code class="bootstrap">container-{breakpoint}</code>
+		<span>is <code class="css">width : 100%</code> until the specified breakpoint</span>
+	</div>
+
+	<h2>Grid</h2>
+
+	<h3>Usage</h3>
+<div class="dl-1-1">
+<pre class="file-content">
+&ltdiv class="container">
+    &ltdiv class="row">
+        &ltdiv class="col">
+            Column
+        &lt/div>
+        &ltdiv class="col">
+            Column
+        &lt/div>
+    &lt/div>
+&lt/div>
+</pre>
+<div class="output">
+	<div class="container">
+	  <div class="row">
+	    <div class="col">
+	      Column
+	    </div>
+	    <div class="col">
+	      Column
+	    </div>
+	  </div>
+	</div>	
+</div>
+</div>
+	<div class="dl-1-2">
+		<code class="bootstrap">row</code>
+		<span class="description">sets a row (flex-container)</span>
+
+		<code class="bootstrap">row-cols-&ltbreakpoint>-&lt<span class="datatype-number">NUMBER</span>></code>
+		<span class="description">sets a row with specified number of columns at sepecified breakpoint (&ltbreakpoint> omitted means for all width)</span>
+
+		<code class="bootstrap">col</code>
+		<span class="description">auto width specified column</span>
+
+		<code class="bootstrap">col--&ltbreakpoint>-&lt<span class="datatype-number">NUMBER</span> | auto></code>
+		<span class="description">column with specified width at specified breakpoint (&ltbreakpoint> omitted means for all width, &ltbreakpoint> and &lt<span class="datatype-number">NUMBER</span>> omitted means column width is automatically specified due to the number of children) (the auto option will size column based on the natural width of its content.</span>
+	</div>

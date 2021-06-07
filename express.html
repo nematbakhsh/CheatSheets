@@ -86,6 +86,9 @@ app.listen(5000, function () {
 				</ul>
 			</div>
 		</div>
+
+		<code class="javascript">app.locals</code>
+		<span class="description">The app.locals object has properties that are local variables within the application.</span>
 	</div>
 
 	<h1>Body Parser Module and Middleware</h1>
@@ -110,10 +113,12 @@ app.use(bodyParser.json())
 
 // 2nd Method
 // parse application/x-www-form-urlencoded
+// parses req.body for form data
 app.use(express.urlencoded({
 	extended : false
 }))
 // parse application/json
+// parses req.body for json data
 app.use(express.json())
 </pre>
 
@@ -420,14 +425,23 @@ app.post('url', function(req, res) {
 		<code class="javascript">req.headers</code>
 		<span class="description">object of request headers (headers are best used to pass global data of our app)</span>
 
+		<code class="javascript">req.rewHeaders</code>
+		<span class="description">object of ??</span>
+
+		<code class="javascript">req.header(<span class="datatype-string">STRING header</span>)</code>
+		<span class="description">returns the value of header key</span>
+
 		<code class="javascript">req.method</code>
 		<span class="description">request method, GET|POST|...</span>
 
 		<code class="javascript">req.url</code>
 		<span class="description">request url</span>
 
+		<code class="javascript">req.app.locals</code>
+		<span class="description">Local variables are available in middleware via req.app.locals (? is the same as app.locals)</span>
+
 		<code class="javascript">res.send(<span class="datatype-number">NUMBER statusCode</span> | <span class="datatype-string">STRING dataBody</span> | <span class="datatype-json">JSON jsonBody</span>)</code>
-		<span class="description">sending statusCode is derecated use res.sendStatus(status) instead. It seems that object literals are converted to json</span>
+		<span class="description">sending statusCode is derecated use res.sendStatus(status) instead. Object literals are sent with content-type "application/json" | strings are send with content-type "text/html"</span>
 
 		<code class="javascript">res.sendStatus(<span class="datatype-number">NUMBER statusCode</span>)</code>
 		<span class="description"></span>
@@ -436,10 +450,13 @@ app.post('url', function(req, res) {
 		<span class="description"></span>
 
 		<code class="javascript">res.status()</code>
-		<span class="description">Express does this by default</span>
+		<span class="description">Express does this by default (usually used as res.status().send())</span>
 
 		<code class="javascript">res.json(<span class="datatype-json">JSON jsonData</span>)</code>
-		<span class="description">Send json</span>
+		<span class="description">Send json (better be used for sending json than res.send())</span>
+
+		<code class="javascript">res.locals</code>
+		<span class="description">An object that contains response local variables scoped to the request, and therefore available only to the view(s) rendered during that request / response cycle (if any). Otherwise, this property is identical to app.locals.</span>
 	</div>
 
 	<h2>Setting a static folder</h2>
@@ -1162,6 +1179,10 @@ function ensureAuthenticated(req, res, next) {
 }
 
 </pre>
+
+	<h1>Tips</h1>
+
+	<p>Use return before functions like next() or res.send() when you want to make sure to leave the middleware and not execute the rest. It is fine if you use it as the last statement with no return</p>
 
 </body>
 </html>

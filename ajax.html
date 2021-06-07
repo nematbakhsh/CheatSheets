@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAX Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="container">
+	<h1>AJAX</h1>
+
+	<p>Asynchronous JavaScript And XML</p>
+
+	<p>It uses XmlHttpRequest (XHR) Object, which is an API in the form of an object.</p>
+
+	<h1>Typical Usage</h1>
+
+<pre>
+// Create XHR object
+var xhr = new XMLHttpRequest()
+// Initialize it
+xhr.open ('GET'|'POST', url-or-filepath, true|false)
+
+// New Method
+xhr.onload = function () {
+    if (this.status == 200) {
+    	// request successful
+    	// response in this.responseText
+    } else if (this.status == 404) {
+        // handle error (optional)
+    }
+}
+// Old Method
+xhr.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+         // request successful
+    }
+}
+
+xhr.onerror = function() {
+	console.log('Something gone wrong ...')
+}
+
+// Send request
+xhr.send()
+
+</pre>
+
+	<h1>XHR Object</h1>
+
+	<div class="dl-1-2">
+		<code class="javascript">var xhr = new XMLHttpRequest()</code>
+		<span class="description">instantiate an XHR object</span>
+
+		<code class="javascript">xhr.open(<span class="datatype-string">STRING request-type</span>, <span class="datatype-string">STRING url-or-filepath</span>, <span class="datatype-boolean">BOOLEAN isAsynchronous</span>)</code>
+		<span class="description">initializes a request (readyState 0 to 1). request-type = 'GET'|'POST'</span>
+
+		<code class="javascript">xhr.onload = <span class="datatype-function">FUNCTION</span></code>
+		<span class="description">it is trigerred whrn readyState is 4</span>
+
+		<code class="javascript">xhr.onreadystatechange = <span class="datatype-function">FUNCTION</span></code>
+		<span class="description">it is trigerred when readyState changes</span>
+
+		<code class="javascript">xhr.onprogress = <span class="datatype-function">FUNCTION</span></code>
+		<span class="description">it is trigerred when readyState is 3 (useful for some kind of loader if request takes long)</span>
+
+		<code class="javascript">xhr.onerror = <span class="datatype-function">FUNCTION</span></code>
+		<span class="description">it is trigerred when there is an error</span>
+
+		<code class="javascript">xhr.send([<span class="datatype-string">STRING request-body-parameters</span>])</code>
+		<span class="description">sends the request</span>
+
+		<code class="javascript">xhr.readyState</code>
+		<span class="description">returns the readystate value
+			<br>
+			ready-state values:
+			<ul>
+				<li>0 : request not initialized</li>
+				<li>1 : server connection established</li>
+				<li>2 : request received</li>
+				<li>3 : processing request</li>
+				<li>4 : request finished and response is ready</li>
+			</ul>
+		</span>
+
+		<code class="javascript">xhr.status</code>
+		<span class="description">returns the request status</span>
+
+		<code class="javascript">xhr.responseText</code>
+		<span class="description">if responseText is json you need to parse it before using it</span>
+
+		<code class="javascript">xhr.setRequestHeader(<span class="datatype-string">STRING header-key</span>, <span class="datatype-string">STRING header-value</span>)</code>
+		<span class="description">sets a single header key-value pair</span>
+	</div>
+
+	<h1>AJAX and PHP</h1>
+
+<pre class="file-content">
+&lt!-- Normal GET Form -->
+&ltform method="GET" action="process.php">
+    &ltinput type="text" name="name">
+    &ltinput type="submit" value="Submit">
+&lt/form>
+&lt!-- Upon submit it sends a get request to 'procsss.php?name=...' -->
+
+&lt!-- Normal POST Form -->
+&ltform method="POST" action="process.php">
+    &ltinput type="text" name="name">
+    &ltinput type="submit" value="Submit">
+&lt/form>
+</pre>
+
+<pre class="file-content">
+lt!-- AJAX GET Form -->
+&ltform id="ajaxGEtForm">
+    &ltinput type="text" name="name" id="name">
+    &ltinput type="submit" value="Submit">
+&lt/form>
+
+&ltscript type="text/javascript">
+    document.getElementByID('ajaxGetForm').addEventListener('submit', ajaxSubmit)
+
+    function ajaxSubmit(event) {
+        event.preventDefault()
+        var name = document.getElementByID('name').value
+
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', 'process.php?name=' + name, true)
+        xhr.onload = function() {
+            // your code
+        }
+        xhr.send()
+    }
+&lt/script>
+</pre>
+
+<pre class="file-content">
+lt!-- AJAX POST Form -->
+&ltform id="ajaxPostForm">
+    &ltinput type="text" name="name" id="name">
+    &ltinput type="submit" value="Submit">
+&lt/form>
+
+&ltscript type="text/javascript">
+    document.getElementByID('ajaxPostForm').addEventListener('submit', ajaxSubmit)
+
+    function ajaxSubmit(event) {
+        event.preventDefault()
+        var name = document.getElementByID('name').value
+        var params = "name="+name
+
+        var xhr = new XMLHttpRequest()
+        xhr.open('POST', 'process.php', true)
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        xhr.onload = function() {
+            // your code
+        }
+        xhr.send(params)
+    }
+&lt/script>
+</pre>
+</body>
+</html>

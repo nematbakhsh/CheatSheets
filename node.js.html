@@ -68,5 +68,35 @@
 	<span class="description">npm will refuse to publish private apps</span>
 </div>
 
+	<h1>Path module</h1>
+
+	<div class="dl-1-2">
+		<code class="javascript">const path = require('path')</code>
+		<span class="description">calls the module</span>
+
+		<code class="javascript">path.basename(<span class="datatype-string">STRING filepath</span>)</code>
+		<span class="description">returns only the base filename with extension</span>
+
+		<code class="javascript">path.dirname(<span class="datatype-string">STRING filepath</span>)</code>
+		<span class="description">returns only the directory</span>
+
+		<code class="javascript">path.extname(<span class="datatype-string">STRING filepath</span>)</code>
+		<span class="description">return file extension with dot</span>
+
+		<code class="javascript">path.parse(<span class="datatype-string">STRING filepath</span>)</code>
+		<span class="description">rturns path object (an object with keys: root, dir, base, ext and name)</span>
+
+		<code class="javascript">path.join(...paths)</code>
+		<span class="description">concatenates paths</span>
+
+		<code class="javascript">path.sep</code>
+		<span class="description">Provides the platform-specific path segment separator: '\' for windows and '/' for POSIX</span>
+
+		<code class="javascript">path.resolve([...paths])</code>
+		<span class="description">The given sequence of paths is processed from right to left, with each subsequent path prepended until an absolute path is constructed</span>
+	</div>	
+
+	<p>Tip: path.resolve(__dirname, '..') returns the parent directory</p>
+
 </body>
 </html>

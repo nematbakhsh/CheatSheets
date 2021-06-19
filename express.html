@@ -280,115 +280,6 @@ const db = require('../database')
 		<span class="description">You might need to use const results = await db.promise().query(`QUERY STATEMENT`)</span>
 	</div>
 
-	<h1>Mongoose</h1>
-
-	<h2>Installation</h2>
-	<code class="line-command">npm install --save mongoose</code>
-
-	<h2>Boiler Plate</h2>
-
-<pre class="file-content">
-const mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/&ltdatabaseName&gt');
-
-let db = mongoose.connection;
-
-//check connection
-db.once('open', function() {
-	console.log('Connected to MongoDB');
-})
-
-//Check for db errors
-db.on('error', function(err) {
-	console.log(err);
-})
-
-// bring in Models
-let &ltModel&gt = require('./models/&ltmodel&gt');
-</pre>
-
-<h2>Models</h2>
-<p>Inside /Models/model.js</p>
-<pre class="file-content">
-const mongoose = require('mongoose');
-
-// Model Schema
-let columns = {
-	&ltcolumnName&gt : {
-		type: String|Number|Boolean,
-		required: true|false
-	}
-}
-
-let modelSchema = mongoose.Schema(<span class="datatype-object">OBJECT columns</span>)
-
-let &ltmodelName&gt = module.exports = mongoose.model(<span class="datatype-string">STRING modelName</span>, modelSchema);
-</pre>
-
-	<h2>Model methods</h2>
-
-	<div class="dl-1-2">
-		<code class="javascript">&ltModel&gt.</code>
-		<span class="description"></span>
-
-<pre class="javascript">
-&ltModel&gt.find({}, function(err, res) {
-	if (err) {
-		console.log(err)
-	} else {
-		// your code
-	}
-});</pre>
-<span class="description"></span>
-
-<pre class="javascript">
-&ltModel&gt.findById({}, function(err, res) {
-	if (err) {
-		console.log(err)
-	} else {
-		// your code
-	}
-});</pre>
-<span class="description"></span>
-
-<pre class="javascript">
-&ltModel&gt.save( function(err, res) {
-	if (err) {
-		console.log(err);
-		return;
-	} else {
-		// your code
-		//res.redirect('/');
-	}
-});</pre>
-<span class="description"></span>
-
-<pre class="javascript">
-&ltModel&gt.update(query, object, function(err) {
-	if (err) {
-		console.log(err);
-		return;
-	} else {
-		// your code
-		//res.redirect('/');
-	}
-});</pre>
-<span class="description"></span>
-
-<pre class="javascript">
-&ltModel&gt.remove(query, function(err) {
-	if (err) {
-		console.log(err);
-		return;
-	} else {
-		// your code
-		//res.send('Success');
-	}
-});</pre>
-<span class="description"></span>
-	</div>
-
 	<h1>Routing</h1>
 
 	<p>Making request from shell
@@ -1179,10 +1070,46 @@ function ensureAuthenticated(req, res, next) {
 }
 
 </pre>
+	
+	<h1>Security</h1>
+	<h2>CSRF Attack</h2>
+
+	<h3>Install</h3>
+	<p>npm install --save csurf</p>
+
+	<p>Inside app.js</p>
+
+<pre class="javascript">
+const csrf = rquire('csurf')
+const csrfProtection = csrf()
+
+// after session initialization
+app.use(csrfProtection)
+</pre>
+
+<p>in the views, the following should be passed along with the view to render</p>
+
+<pre>
+res.render('...', {
+	_token : req.csrfToken()
+})
+
+// or inside index.js after csurf middleware use
+app.use(function(request,response,next){
+    app.locals._token = request.csrfToken()
+    next() 
+})
+
+// then inside the view
+input(type="hidden", name="_csrf" value=csrfToken)
+
+</pre>
 
 	<h1>Tips</h1>
 
 	<p>Use return before functions like next() or res.send() when you want to make sure to leave the middleware and not execute the rest. It is fine if you use it as the last statement with no return</p>
+
+
 
 </body>
 </html>

@@ -130,6 +130,8 @@ db.posts.update(<span class="datatype-object">OBJECT search</span>,
     $set : {} // used to update/create specific fields
     $inc : {} // to increment specified numeric fields by the given value
     $rename : {} // to rename specified fields
+    $push : { <field1>: <value1>, ... } // appends a specified value to an array
+
 })
 </pre>
 		<span class="description">updates specific fields</span>
@@ -176,6 +178,124 @@ db.posts.find({ views: { $lte: 7 } })
 
 		<code>print()</code>
 		<span class="description">returns outputs</span>
+	</div>
+
+	<hr>
+
+	<h1>Mongoose.js ODM</h1>
+
+	<p>elegant mongodb object modeling for node.js</p>
+
+	<h2>Installation</h2>
+	<code class="line-command">npm install --save mongoose</code>
+
+	<h2>Boiler Plate</h2>
+
+<pre class="file-content">
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/&ltdatabaseName&gt');
+
+let db = mongoose.connection;
+
+//check connection
+db.once('open', function() {
+	console.log('Connected to MongoDB');
+})
+
+//Check for db errors
+db.on('error', function(err) {
+	console.log(err);
+})
+
+// bring in Models
+let &ltModel&gt = require('./models/&ltmodel&gt');
+</pre>
+
+<h2>Models</h2>
+<p>Inside /Models/model.js</p>
+<pre class="file-content">
+const mongoose = require('mongoose');
+// or
+import mongoose from 'mongoose';
+
+const modelStructure = {
+    &ltdocumentProperty> : {
+        type : String | Number | Date | Buffer | Boolean | Mixed | ObjectId | Array | Decimal128 | Map
+        required : true | false
+        default : &ltdefaultValue>
+    }, 
+    ...
+    // if a property only requires a type, it can be specified using a shorthand notation
+    &ltdocumentProperty> : String | Number | Date | Buffer | Boolean | Mixed | ObjectId | Array | Decimal128 | Map
+}
+
+const { Schema } = mongoose;
+const modelSchema = new Schema(<span class="datatype-object">OBJECT modelStructure</span>)
+// or
+const modelSchema = mongoose.Schema(<span class="datatype-object">OBJECT modelStructure</span>)
+
+let &ltmodelName&gt = module.exports = mongoose.model(<span class="datatype-string">STRING modelName</span>, modelSchema);
+</pre>
+
+	<h2>Model methods</h2>
+
+	<div class="dl-1-2">
+<pre class="javascript">
+&ltModel&gt.find({}, function(err, res) {
+	if (err) {
+		console.log(err)
+	} else {
+		// your code
+	}
+});</pre>
+<span class="description"></span>
+
+<pre class="javascript">
+&ltModel&gt.findById({}, function(err, res) {
+	if (err) {
+		console.log(err)
+	} else {
+		// your code
+	}
+});</pre>
+<span class="description"></span>
+
+<pre class="javascript">
+&ltModel&gt.save( function(err, res) {
+	if (err) {
+		console.log(err);
+		return;
+	} else {
+		// your code
+		//res.redirect('/');
+	}
+});</pre>
+<span class="description"></span>
+
+<pre class="javascript">
+&ltModel&gt.update(query, object, function(err) {
+	if (err) {
+		console.log(err);
+		return;
+	} else {
+		// your code
+		//res.redirect('/');
+	}
+});</pre>
+<span class="description"></span>
+
+<pre class="javascript">
+&ltModel&gt.remove(query, function(err) {
+	if (err) {
+		console.log(err);
+		return;
+	} else {
+		// your code
+		//res.send('Success');
+	}
+});</pre>
+<span class="description"></span>
 	</div>
 
 </body>

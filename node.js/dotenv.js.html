@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dotenv.js Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>dotenv</h1>
+
+	<p>Dotenv module is a zero dependency module that adds environment variables (<code>key = value</code> pairs) inside <span class="filename">.env</span> file to <code>process.env</code> object.</p>
+
+	<h1>Installation</h1>
+
+	<div class="dl-1-2">
+		<code class="command-line">npm install --save dotenv</code>
+		<span class="description">install dotenv as a dependency</span>
+	</div>
+
+	<h2>Usage</h2>
+
+<div class="file">
+<div class="file-header"><span class="filename">.env</span></div>
+<pre class="file-content">
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header filename">index.js</div>
+<pre class="file-content">
+// express module
+const express = require('express')
+const app = express()
+
+const port = process.env.PORT || 3000
+
+// dotenv module
+// reads the content of .env file and adds it to process.env
+require('dotenv').config()
+
+app.get('/', function (req, res) {
+	res.status(200).send('Hello World!')
+})
+
+app.listen(port, function () {
+	console.log('Server is running on port', port);
+})
+</pre>
+</div>
+
+	<h2>Error handling</h2>
+
+<div class="file">
+<div class="file-header filename">index.js</div>
+<pre class="file-content">
+const result = dotenv.config()
+
+if (result.error) {
+  throw result.error
+}
+
+console.log(result.parsed)
+</pre>
+</div>
+	<h2>Config Method</h2>
+
+	<div class="dl-1-2">
+		<code class="javascript">const result = require('dotenv').config(<span class="datatype-object">OBJECT options</span>)</code>
+		<span class="description">config will read the .env file, parse the contents, assign it to process.env, and return an Object with a parsed key and an error key if it failed</span>
+
+		<code class="javascript">result.parsed</code>
+		<span class="description">contains the loaded content</span>
+
+		<code class="javascript">result.error</code>
+		<span class="description">contains the error if config method failed</span>
+	</div>	
+	
+
+	<h3>Config Method Options</h3>
+	<div class="dl-1-2">
+		<code>path</code>
+		<span class="description">.env file path (Default: path.resolve(process.cwd(), '.env'))</span>
+
+		<code>encoding</code>
+		<span class="description">(Default: utf8)</span>
+
+		<code>debug</code>
+		<span class="description">turns on logging to help debug why certain keys or values are not being set as expected (Default: false)</span>
+	</div>
+</body>
+</html>

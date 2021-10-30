@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head>Express Cheat Sheet</title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+<head>
+	<title>Express Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body class="container">
 
@@ -20,9 +21,21 @@
 
 	<code class="command-line">npm init</code>
 	<span class="description">initializes an app by creating a package.json file</span>
+
+	<code class="command-line">npm install</code>
+	<span class="description">Install all dependency and dev-dependency packages in package.json file</span>
+
+	<code class="command-line">npm install --production</code>
+	<span class="description">Install all dependency and packages in package.json file</span>
+
+	<code class="command-line">npm install (--save || --save-dev) &ltPackage></code>
+	<span class="description">Install a package (as dependency || dev-dependency)</span>
+
+	<code class="command-line">npm uninstall (--save || --save-dev) &ltPackage></code>
+	<span class="description">Uninstall a package</span>
 </div>
 
-<h1>packaje.json content</h1>
+<h1>package.json content</h1>
 
 <div class="dl-1-2">
 	<code>"name" : <span class="datatype-string">STRING</span></code>
@@ -67,6 +80,24 @@
 	<code>"private" : true</code>
 	<span class="description">npm will refuse to publish private apps</span>
 </div>
+	<br>
+	<p>In order to change default values of <code>init</code> use the <code>set</code> command</p>
+
+	<div class="dl-1-2">
+		<code class="command-line">npm set init.author.name "&ltYour Name>"</code>
+		<span class="description"></span>
+
+		<code class="command-line">npm set init.author.email "you@example.com"</code>
+		<span class="description"></span>
+
+		<code class="command-line">npm set init.author.url "example.com"</code>
+		<span class="description"></span>
+
+		<code class="command-line">npm set init.license "MIT"</code>
+		<span class="description"></span>
+	</div>
+
+	<hr>
 
 	<h1>Path module</h1>
 

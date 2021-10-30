@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Csurf Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Node.js Csurf</h1>
+
+	<p>Node.js CSRF protection middleware.</p>
+
+	<p class="tip">Requires either a session middleware or cookie-parser to be initialized first.</p>
+
+	<h1>Installation</h1>
+
+	<code class="line-command">npm install csurf --save</code>
+
+	<h1>Usage</h1>
+
+<div class="file">
+<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+var cookieParser = require('cookie-parser')
+var csrf = require('csurf')
+var bodyParser = require('body-parser')
+var express = require('express')
+ 
+// setup route middlewares
+var csrfProtection = csrf({ cookie: true })
+var parseForm = bodyParser.urlencoded({ extended: false })
+ 
+// create express app
+var app = express()
+ 
+// parse cookies
+// we need this because "cookie" is true in csrfProtection
+app.use(cookieParser())
+ 
+app.get('/form', csrfProtection, function (req, res) {
+  // pass the csrfToken to the view
+  res.render('send', { csrfToken: req.csrfToken() })
+})
+ 
+app.post('/process', parseForm, csrfProtection, function (req, res) {
+  res.send('data is being processed')
+})
+
+// or provide token to all views by
+// This could be moved to view-helpers :-)
+app.use(function(req, res, next) {
+	res.locals.csrf_token = req.csrfToken();
+	next();
+});
+</pre>
+</div>
+
+	<h2>For Ajax</h2>
+<div class="file">
+	<div class="file-header">Inside your view</div>
+<pre class="file-content">
+&ltmeta name="csrf-token" content="{{csrfToken}}">	
+</pre>
+</div>
+<div class="file">
+<div class="file-header">Inside your view (handlebars template used here)</div>
+<pre class="file-content">
+&ltform action="/process" method="POST">
+  &ltinput type="hidden" name="_csrf" value="{{csrfToken}}">
+  
+  Favorite color: &ltinput type="text" name="favoriteColor">
+  &ltbutton type="submit">Submit&lt/button>
+&lt/form>
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">scripts</div>
+<div class="file-content">
+// Read the CSRF token from the <meta> tag
+var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+ 
+// Make a request using the Fetch API
+fetch('/process', {
+  credentials: 'same-origin', // <-- includes cookies in the request
+  headers: {
+    'CSRF-Token': token // <-- is the csrf token as a header
+  },
+  method: 'POST',
+  body: {
+    favoriteColor: 'blue'
+  }
+})
+</div>
+</div>
+	<h1>Methods</h1>
+
+	<div class="dl-1-2">
+		<code class="javascript">var csurf = require('csurf')</code>
+		<span class="description">API</span>
+
+		<code class="javascript">app.use(csurf(<span class="datatype-object">OBJECT options</span>))</code>
+		<span class="description">Creates a middleware for CSRF token creation and validation. This middleware adds a req.csrfToken() function to make a token which should be added to requests which mutate state, within a hidden form field, query-string etc. This token is validated against the visitor's session or csrf cookie.</span>
+	</div>
+
+	<h1>Options</h1>
+
+	<div class="dl-1-2">
+		<code>cookie</code>
+		<span class="description">Determines if the token secret for the user should be stored in a cookie or in req.session. (defaults to false)</span>
+
+		<code>ignoreMethods</code>
+		<span class="description">sets an array of the methods for which CSRF token checking will disabled. (defaults to ['GET', 'HEAD', 'OPTIONS'].)</span>
+
+		<code>sessionKey</code>
+		<span class="description"></span>
+
+		<code>value</code>
+		<span class="description">Provide a function that the middleware will invoke to read the token from the request for validation. (is called as value(req))</span>
+	</div>
+
+	<h1>Custom Error Handling</h1>
+
+	<p>When the CSRF token validation fails, an error is thrown that has err.code === 'EBADCSRFTOKEN'. This can be used to display custom error messages.</p>
+
+<div class="file">
+	<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+// error handler
+app.use(function (err, req, res, next) {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err)
+ 
+  // handle CSRF token errors here
+  res.status(403)
+  res.send('form tampered with')
+})
+</pre>
+</div>
+</body>
+</html>

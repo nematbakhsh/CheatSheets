@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Body-Parser Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Node.js Body-Parser</h1>
+
+	<p>Parse incoming request bodies in a middleware before your handlers, available under the <code>req.body</code> property. (without it the req.body would be undefined
+)</p>
+
+	<h1>Installation</h1>
+
+	<code class="command-line">npm install --save body-parser</code>
+	<h1>Usage</h1>
+<div class="file">
+	<div class="file-header">Add to <span class="filename">index.js</span></div>
+<pre class="file-content">
+// body-parser API
+const bodyParser = require('body-parser')
+//
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ 
+    extended : false // does not have a default value, therefore should be passed
+}))
+//
+// parse application/json
+app.use(bodyParser.json())
+</pre>
+</div>
+	
+	<h1>Body-Parser Methods</h1>
+
+	<div class="dl-1-2">
+		<code class="javascript">bodyParser.json([options])</code>
+		<span class="description">Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option. (Here default type value is "application/json")</span>
+
+		<code class="javascript">bodyParser.text([options])</code>
+		<span class="description">Returns middleware that parses all bodies as a string and only looks at requests where the Content-Type header matches the type option. (Here default type value is "text/plain")</span>
+
+		<code class="javascript">bodyParser.urlencoded([options])</code>
+		<span class="description">Returns middleware that only parses urlencoded bodies and only looks at requests where the Content-Type header matches the type option. (Here default type value is "application/x-www-form-urlencoded")</span>
+
+		<code class="javascript">bodyParser.raw([options])</code>
+		<span class="description">Returns middleware that parses all bodies as a Buffer and only looks at requests where the Content-Type header matches the type option. (Here default type value is "application/octet-stream")</span>
+	</div>
+
+	<h1>Body-Parser Methods Options</h1>
+
+	<div class="dl-1-2">
+		<code>inflate</code>
+		<span class="description"></span>
+
+		<code>limit</code>
+		<span class="description"></span>
+
+		<code>type</code>
+		<span class="description"></span>
+
+		<code>verify</code>
+		<span class="description"></span>
+
+		<code>extended</code>
+		<span class="description">(only for <code>urlencoded</code> method)allows to choose between parsing the URL-encoded data with the querystring library (when false) or the qs library (when true)</span>
+	</div>
+	
+</body>
+</html>

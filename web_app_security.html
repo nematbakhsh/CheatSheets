@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas API Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="container">
+	<h1>Dangerous file extension naming for includes</h1>
+	<h2>Plot</h2>
+
+<div class="card">
+	<div class="card-header">
+		index.php
+	</div>
+	<div class="card-body">
+<pre class="file-content">
+require "inc/db.inc"; //which contains database setting
+</pre>
+	</div>
+</div>
+	<p>
+		Now, if someone goes to <code>~/inc/db.inc</code>, then Apache will render this file as a plain text and reveals its content. But if "db.inc" was named "db.php" then it would be rendered as php file and not revealing any php code.
+	</p>
+
+	<h2>Solution</h2>
+	Name your include and sensitive files properly, ike "db.php" and avoid "db.inc", etc.
+</body>
+</html>

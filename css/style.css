@@ -14,11 +14,13 @@
 .dl-1-1 {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+	padding: 2px;
 }
 
 .dl-1-2 {
 	display: grid;
 	grid-template-columns: 1fr 2fr;
+	padding: 0px 10px;
 }
 
 .dl-2-1 {
@@ -79,11 +81,7 @@
 	border-radius: 5px;
 }
 
-.file-content {
-	background: #f0f0f0;
-	padding: 5px 10px;
-	border-radius: 5px
-}
+
 
 .output {
 	background: #f0f0ff;
@@ -95,4 +93,27 @@
 .tip {
 	background: #00f500;
 	border-radius: 5px;
+}
+
+.file {
+	margin: 2px 0px;
+	background: #f0f0f0;
+	padding: 5px 10px;
+	border-radius: 10px
+}
+
+.file-header {
+	border-bottom: 1px solid #808080;
+	padding: 2px;
+}
+
+.file-content {
+	background: #f0f0f0;
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+
+.filename {
+	color: darkblue;
+	font-weight: bold;
 }

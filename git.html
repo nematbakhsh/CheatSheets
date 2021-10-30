@@ -93,6 +93,10 @@
 		</pre>
 	</p>
 
+	<h2>.gitkeep file</h2>
+
+	<p>By convention, empty directories that contain no files are not committed to Git repositories. However, a single .gitkeep (empty file) file in a directory causes Git to preserve the directory in the repository.</p>
+
 	<h1>Branching</h1>
 
 	<dl class="dl-1-2">
@@ -122,7 +126,13 @@
 		<dd>Add the remote repository which is named origin. <span class="tip">Typical url on github.com &lturl&gt = https://github.com/&ltProfileName&gt/&ltRepositoryName&gt.git</span></dd>
 
 		<dt><code class="line-command">git remote</code></dt>
-		<dd>Returns name of the remote repository</dd>
+		<dd>Shows a list of existing remote repositories</dd>
+
+		<dt><code class="line-command">git remote -v|--verbose</code></dt>
+		<dd>Shows remote url after name</dd>
+
+		<code class="line-command">git remote set-url origin &lturl&gt</code>
+		<dd>sets the remote url</dd>
 
 		<dt><code class="line-command">git push -u origin master</code></dt>
 		<dd>Pushes the master branch to the remote repository (runs for the first time)</dd>
@@ -133,5 +143,18 @@
 		<dt><code class="line-command">git push --set-upstream origin master</code></dt>
 		<dd>To push the current branch and set the remote as upstream.1</dd>
 	</dl>
+
+	<h1>Multiple Accounts</h1>
+
+	<div class="dl-1-2">
+		<code class="line-command">git config user.name <span class="datatype-string">STRING username</span></code>
+		<span class="description">The difference is that here you must leave out the --global flag</span>
+
+		<code class="line-command">git config user.email <span class="datatype-string">STRING email</span></code>
+		<span class="description">The difference is that here you must leave out the --global flag</span>
+
+		<code class="line-command">git remote set-url origin https://USERNAME@github.com/USERNAME/PROJECTNAME.git</code>
+		<span>Set the remote url as above, then everything would be fine (the ceredential manager would run)</span>
+	</div>
 </body>
 </html>

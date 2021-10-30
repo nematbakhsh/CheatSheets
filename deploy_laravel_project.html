@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>Deploy Laravel Project to 000Webhosting</title>
+</head>
+<body class="container">
+	<ul>
+		<li>Build a database on the shared host</li>
+		<li>Export the database on your local machine and import it to the database just created on shared host</li>
+		<li>Upload anything to the folder /&ltproject_name&gt except the following to the root folder (alongside with /public_html folder)</li>
+		<ul>
+			<li>git folder</li>
+			<li>public folder</li>
+			<li>node_modules folder</li>
+		</ul>
+		<li>Upload the public folder to the root folder</li>
+		<li>Copy the content of /public_html/.htaccess into /public/.htaccess</li>
+		<li>Delete public_html folder</li>
+		<li>Rename public folder to public_html</li>
+		<li>edit /public/index.php</li>
+<pre class="file-content">
+require __DIR__.'/../vendor/autoload.php';
+
+$app = require_once __DIR__.'/../bootstrap/app.php';
+</pre>
+		to
+<pre class="file-content">
+require __DIR__.'/../&ltproject_name&gt/vendor/autoload.php';
+
+$app = require_once __DIR__.'/../&ltproject_name&gt/bootstrap/app.php';
+
+//the following is necessary for file storage! It will overwrite the public_path
+$app->bind('path.public', function() {
+    return __DIR__;
+});
+
+// this one did not work when I put rest of files in &ltproject_name&gt it only works when all laravel files and folders are in the public_html folder
+//$app->bind('path.public', function() {
+//    return base_path('public_html');
+//});
+</pre>
+	<li>Open .env file and change the database keys</li>
+	<li>In .env file change APP_DEBUG to false</li>
+	<li>create the file makelink.php in public folder</li>
+<pre class="file-content">
+&lt?php
+symlink('/home/&ltdomain-name&gt/&ltproject-name&gt/storage/app/public', '/home/&ltdomain-name&gt/public_html/storage');
+</pre>
+	or add route
+<pre class="filecontent">
+use Illuminate\Support\Facades\Artisan;
+
+//...
+
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
+
+or 
+
+Route::get('linkstorage', function() {
+    app('files')->link(storage_path('app/public'), public_path('storage'));
+});
+</pre>
+	
+
+	<li>
+		<p>In case you get an error like symlink() has been disabled for security reasons, it means that you cannot do it without SSH access. Now do the following</p>
+		<ul>
+			<li>make a folder named storage in public_html folder</li>
+			<li>inside config/filesystems.php, chnage</li>
+<pre class="filecontent">
+'public' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+</pre>
+to
+<pre class="filecontent">
+'public' => [
+            'driver' => 'local',
+            'root' => public_path('storage'),
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],	
+</pre>
+		<li>Move all files in &lproject-nae&gt/storage/app/public to public_html/storage</li>
+		<li>(DO Not Do This! it seems to conflict with the approach above ... it might be needed on other approaches like what I did on byet.host by changing the .htaccess file and adding this environment variable) Adding ASSET_URL=&ltdomain-name&gt/storage is not needed! and sometimes makes problems!!</li>
+		</ul>
+		<li>Delete files in &ltprojct-name&gt/bootstrap/cache</li>
+	</li>
+	</ul>
+
+
+	Other approach changing ASSET_URL and the htaccess file to
+<pre class="file-content">
+DirectoryIndex public/index.php
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ public/index.php [L]
+</IfModule>
+
+</pre>
+</body>
+</html>

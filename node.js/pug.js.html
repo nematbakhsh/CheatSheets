@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pug Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Node.js Pug</h1>
+
+	<P>Pug is a node.js html template</P>
+
+	<h1>Installation</h1>
+	<code class="line-command">npm install --save pug</code>
+
+	<p>Use <a href="https://html2jade.org/" target="_blank">HTML2JADE Convertor</a></p>
+	<p>Use <a href="https://pughtml.com/" target="_blank">Pug/HTML Convertor</a></p>
+
+	<h1>Usage</h1>
+
+<div class="file">
+	<div class="file-header">Create your template file e.g. <span class="filename">template.pug</span></div>
+<pre class="file-content">
+//- template.pug
+h1 Hello World
+p THis is #{name}'s Pug source code!
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">Inside your app</div>
+<pre class="file-content">
+// pug API
+const pug = require('pug');
+
+// Compile the source code
+const compiledFunction = pug.compileFile('template.pug');
+
+// Render a set of data
+console.log(compiledFunction({
+  name: 'Timothy'
+}));
+// "<p>Timothy's Pug source code!</p>"
+
+//or  combine compiling and rendering into one step
+// Compile template.pug, and render a set of data
+console.log(pug.renderFile('template.pug', {
+  name: 'Timothy'
+}));
+// "<p>Timothy's Pug source code!</p>"
+</pre>
+</div>
+
+	<h2>Express Integration</h2>
+
+<div class="file">
+	<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+// pug API
+const pug = require('pug')
+//
+app.set('views', path.join(__dirname, 'views'))
+//
+app.set('view engine', 'pug')
+
+// compile and render pug templates inside your routes
+app.get('/', function (req, res) {
+  res.render('index', { title: 'Hey', message: 'Hello there!' })
+})
+</pre>
+</div>
+
+	<h1>Pug Methods</h1>
+
+	<div class="dl-1-2">
+		<code class="javascript">var pug = require('pug');</code>
+		<span class="description">pug API</span>
+
+		<code class="javascript">var fn = pug.compile(<span class="datatype-string">STRING source</span>, ?options)</code>
+		<span class="description">compiles the pug template source</span>
+
+		<code class="javascript">var fn = pug.compileFile(<span class="datatype-string">STRING path</span>, ?options)</code>
+		<span class="description">compiles the pug template file in the given path</span>
+
+		<code class="javascript">var html = fn(locals)</code>
+		<span class="description">Renders the compiled function with given local variables</span>
+
+		<code class="javascript">var fn = pug.compileClient(<span class="datatype-string">STRING source</span>, ?options)</code>
+		<span class="description">compiles a Pug template to a string of JavaScript, which can be used client side.</span>
+
+		<code class="javascript">var fn = pug.compileFileClient(<span class="datatype-string">STRING path</span>, ?options)</code>
+		<span class="description">compiles a Pug template file to a string of JavaScript, which can be used client side.</span>
+
+		<code class="javascript">var html = pug.render('string of pug', ?options, ?callback);</code>
+		<span class="description"></span>
+
+		<code class="javascript">var html = pug.renderFile('path/to/file.pug', ?options, ?callback)</code>
+		<span class="description"></span>
+		
+		<code class="javascript">res.render(<span class="datatype-string">STRING file</span>, <span class="datatype-object">OBJECT object-of-values</span>)</code>
+		<span class="description">(Inside Express routes)</span>
+	</div>
+
+	<h2>Above method Options</h2>
+
+	<div class="dl-1-2">
+		<code>filename: string</code>
+		<span class="description"></span>
+
+		<code>basedir: string</code>
+		<span class="description"></span>
+
+		<code>filters: object</code>
+		<span class="description"></span>
+
+		<code>self: boolean</code>
+		<span class="description">Use a self namespace to hold the locals. It will speed up the compilation, but instead of writing variable you will have to write self.variable to access a property of the locals object. Defaults to false.</span>
+
+		<code>debug: boolean</code>
+		<span class="description">If set to true, the tokens and function body are logged to stdout.</span>
+
+		<code>globals: Array<string></code>
+		<span class="description">Add a list of global names to make accessible in templates.</span>
+
+		<code>cache: boolean</code>
+		<span class="description">If set to true, compiled functions are cached. filename must be set as the cache key. Only applies to render functions. Defaults to false.</span>
+	</div>
+
+	<div class="dl-1-2">
+		
+	</div>
+
+	<h1>List of Laws</h1>
+	<ul>
+		<li>Normal JavaScript expressions work fine,</li>
+		<li>'=' is used to declare variable and not string to pug compiler</li>
+		<li>'//' compiles to %lt!-- --&gt</li>
+		<li>Text at the start of a line (or after only white space) represents an HTML tag. (by default)</li>
+		<li>Indentation implies nesting</li>
+		<li>element : element represents the inline syntax for nested tags.</li>
+		<li>You can self close a tag by appending "/" character. (img, meta and link tags are automatically self closing unless you change doctype to XML)</li>
+		<li>Attributes come inside parantheses delimited by whitespaces or commas
+			<br>
+			Exceptions:
+			<ul>
+				<li>Class Literals: may be defined using .classname syntax (div tag can be omitted)</li>
+				<li>ID Literals: may be defined using a #idname syntax</li>
+				<li>Class Attributes: The class attribute can be a string, but it can also be an array of class names</li>
+			</ul>
+		</li>
+	</ul>
+
+	<h2>Pug Language</h2>
+
+	<div class="dl-1-2">
+		<code class="pug">include &ltfilepath></code>
+		<span class="description">includes the pug file (Including non-Pug files simply includes their raw text)</span>
+
+		<code class="javascript">extends layout ... block content</code>
+		<span class="description">for layouting</span>
+
+		<code class="pug">- &ltjavascript-code></code>
+		<span class="description">Unbuffered code (no output)</span>
+
+		<code class="pug">= &ltjavascript-code></code>
+		<span class="description">Buffered code (javascript-code shall be evaluated and outputed)</span>
+
+		<code class="pug">!= &ltjavascript-code></code>
+		<span class="description">Unescaped buffered code (javascript-code shall be evaluated and outputed without escaping (Dangerous for user outputs))</span>
+
+		<code class="pug">#{&ltjavascript-code>}</code>
+		<span class="description">the javascript-code is evaluated, escaped, and the result buffered into the output of the template being rendered</span>
+
+		<code class="pug">| &ltstring></code>
+		<span class="description">Used for whitespace control</span>
+
+<pre class="pug">
+if &ltcondition>
+    ...
+else if
+    ...
+else
+    ...
+</pre>
+<span class="description">Conditional</span>
+
+<pre class="pug">
+unless &ltcondition>
+    ...
+</pre>
+<span class="description">Negative if</span>
+
+<pre class="pug">
+each value [, index] in &ltarray>
+    ...
+[else]
+    ...
+</pre>
+<span class="description">Iteration</span>
+
+<pre class="pug">
+each value, key in &ltobject>
+    ...
+[else]
+    ...
+</pre>
+<span class="description">Iteration</span>
+
+<pre class="pug">
+while &ltcondition>
+    ... 
+</pre>
+<span class="description">Conditional iteration</span>
+	</div>
+</body>
+</html>

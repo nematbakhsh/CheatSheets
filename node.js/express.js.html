@@ -2,8 +2,8 @@
 <html>
 <head>
 	<title>Express Cheat Sheet</title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body class="container">
 
@@ -13,43 +13,139 @@
 
 	<h1>Boiler Plate</h1>
 
+	<h2>express.js and nodemon modules</h2>
+
 	<div class="dl-1-2">
 		<code class="command-line">npm init -y</code>
-		<span class="description"></span>
+		<span class="description">makes <span class="filename">package.json</span> file</span>
 		<code class="command-line">npm install --save express</code>
-		<span class="description"></span>
+		<span class="description">installs express as a dependency</span>
 		<code class="command-line">npm install --save-dev nodemon</code>
-		<span class="description"></span>
-
-		
+		<span class="description">installs nodemon as a dev-dependency (this package automatically runs our app upon change)</span>
 	</div>
 
-<p>Inside package.json</p>
+<div class="file">
+<div class= "file-header">Add to <span class="filename">package.json</span></div>
 <pre class="file-content">
 "scripts": {
     "start": "node index",
     "dev": "nodemon index"
 },
+"license": "UNLICENSED"
 </pre>
+</div>
 
-<p>Inside index.js</p>
+<div class="file">
+<div class="file-header filename">index.js</div>
 <pre class="file-content">
-const express = require('express');
-const path = require('path');
+// express module
+const express = require('express')
+const app = express()
 
-const app = express();
+const port = process.env.PORT || 3000
 
 app.get('/', function (req, res) {
-	// res.sendStatus(200)
-	res.send('Hello World!')
+	res.status(200).send('Hello World!')
 })
 
-app.listen(5000, function () {
-	console.log('Server is running on port 5000');
+app.listen(port, function () {
+	console.log('Server is running on port', port);
 })
-
-
 </pre>
+</div>
+
+	<h2>dotenv module</h2>
+
+	<p>Dotenv module is a zero dependency module that adds environment variables (<code>key = value</code> pairs) inside <span class="filename">.env</span> file to <code>process.env</code> object.</p>
+
+	<code class="command-line">npm install --save dotenv</code>
+
+<div class="file">
+<div class="file-header"><span class="filename">.env</span></div>
+<pre class="file-content">
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">Add to <span class="filename">index.js</span></div>
+<pre class="file-content">
+// dotenv module
+const dotenvResult = require('dotenv').config()
+//
+if (dotenvResult.error) {
+  throw result.error
+}
+</pre>
+</div>
+
+	<h2>Body Parser Module or Middleware</h2>
+
+	<p>You can either use express methods or body-parser API to parse incoming request bodies. Both will parse and make it available under <code>req.body</code> property</p>
+
+	<code class="command-line">npm install --save body-parser</code>
+
+<div class="file">
+	<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+// Body-parser Middleware
+// without it the req.body would be undefined
+
+// Old Method
+app.use(bodyParser()); //Now deprecated
+
+// 1nd Method
+// parse application/x-www-form-urlencoded
+// parses req.body for form data
+//
+app.use(express.urlencoded({
+	extended : false
+}))
+// parse application/json
+// parses req.body for json data
+//
+app.use(express.json())
+
+// 2t Method with body-parser module
+const bodyParser = require('body-parser');
+// parse application/x-www-form-urlencoded
+//
+app.use(bodyParser.urlencoded({ 
+    extended : false // does not have a default value, therefore should be passed
+}))
+// parse application/json
+//
+app.use(bodyParser.json())
+</pre>
+</div>
+
+	<h2>Pug Module</h2>
+
+	<p>Pug Template Engine</p>
+
+	<code class="line-command">npm install --save pug</code>
+
+	<p>Use <a href="https://html2jade.org/" target="_blank">HTML2JADE Convertor</a></p>
+	<p>Use <a href="https://pughtml.com/" target="_blank">Pug/HTML Convertor</a></p>
+
+<div class="file">
+	<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+// pug API
+const pug = require('pug')
+//
+app.set('views', path.join(__dirname, 'views'))
+//
+app.set('view engine', 'pug')
+
+// compile and render pug templates inside your routes
+app.get('/', function (req, res) {
+  res.render('index', { title: 'Hey', message: 'Hello there!' })
+})
+</pre>
+</div>
 
 	<h1>App Object</h1>
 
@@ -91,137 +187,9 @@ app.listen(5000, function () {
 		<span class="description">The app.locals object has properties that are local variables within the application.</span>
 	</div>
 
-	<h1>Body Parser Module and Middleware</h1>
 
-	<code class="command-line">npm install --save body-parser</code>
 
-<pre class="file-content">
-// Body-parser Middleware
-// without it the req.body would be undefined
 
-// Old Method
-app.use(bodyParser()); //Now deprecated
-
-// 1st Method with body-parser module
-const bodyParser = require('body-parser');
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ 
-    extended : false // does not have a default value, therefore should be passed
-}))
-// parse application/json
-app.use(bodyParser.json())
-
-// 2nd Method
-// parse application/x-www-form-urlencoded
-// parses req.body for form data
-app.use(express.urlencoded({
-	extended : false
-}))
-// parse application/json
-// parses req.body for json data
-app.use(express.json())
-</pre>
-
-	<h1>Pug Template</h1>
-
-	<h2>Installation</h2>
-	<code class="line-command">npm install --save pug</code>
-
-	<p>Use <a href="https://html2jade.org/" target="_blank">HTML2JADE Convertor</a></p>
-	<p>Use <a href="https://pughtml.com/" target="_blank">Pug/HTML Convertor</a></p>
-
-	<div class="dl-1-2">
-		<code class="javascript">app.set('views', path.join(__dirname, 'views'));</code>
-		<span class="description"></span>
-
-		<code class="javascript">app.set('view engine', 'pug');</code>
-		<span class="description"></span>
-
-		<code class="javascript">res.render(<span class="datatype-string">STRING file</span>, <span class="datatype-object">OBJECT object-of-values</span>)</code>
-		<span class="description"></span>
-
-		<code class="javascript">#{&ltvarName&gt}</code>
-		<span class="description">inserts varName value in the template</span>
-
-		<code class="javascript">extends layout ... block content</code>
-		<span class="description">for layouting</span>
-
-		<code class="javascript">each &ltelement&gt, i in &ltelements&gt</code>
-	</div>
-
-	<h2>List of Laws</h2>
-	<ul>
-		<li>Normal JavaScript expressions work fine,</li>
-		<li>'=' is used to declare variable and not string to pug compiler</li>
-		<li>'//' compiles to %lt!-- --&gt</li>
-		<li>Text at the start of a line (or after only white space) represents an HTML tag. (by default)</li>
-		<li>Indentation implies nesting</li>
-		<li>element : element represents the inline syntax for nested tags.</li>
-		<li>You can self close a tag by appending "/" character. (img, meta and link tags are automatically self closing unless you change doctype to XML)</li>
-		<li>Attributes come inside parantheses delimited by whitespaces or commas
-			<br>
-			Exceptions:
-			<ul>
-				<li>Class Literals: may be defined using .classname syntax (div tag can be omitted)</li>
-				<li>ID Literals: may be defined using a #idname syntax</li>
-				<li>Class Attributes: The class attribute can be a string, but it can also be an array of class names</li>
-			</ul>
-		</li>
-	</ul>
-
-	<h2>Pug Language</h2>
-
-	<div class="dl-1-2">
-		<code class="pug">include &ltfilepath></code>
-		<span class="description">includes the pug file (Including non-Pug files simply includes their raw text)</span>
-
-		<code class="pug">- &ltjavascript-code></code>
-		<span class="description">Unbuffered code (no output)</span>
-
-		<code class="pug">= &ltjavascript-code></code>
-		<span class="description">Buffered code (javascript-code shall be evaluated and outputed)</span>
-
-		<code class="pug">!= &ltjavascript-code></code>
-		<span class="description">Unescaped buffered code (javascript-code shall be evaluated and outputed without escaping (Dangerous for user outputs))</span>
-
-<pre class="pug">
-if &ltcondition>
-    ...
-else if
-    ...
-else
-    ...
-</pre>
-<span class="description">Conditional</span>
-
-<pre class="pug">
-unless &ltcondition>
-    ...
-</pre>
-<span class="description">Negative if</span>
-
-<pre class="pug">
-each value [, index] in &ltarray>
-    ...
-[else]
-    ...
-</pre>
-<span class="description">Iteration</span>
-
-<pre class="pug">
-each value, key in &ltobject>
-    ...
-[else]
-    ...
-</pre>
-<span class="description">Iteration</span>
-
-<pre class="pug">
-while &ltcondition>
-    ... 
-</pre>
-<span class="description">Conditional iteration</span>
-	</div>
 
 	<h1>MySql</h1>
 

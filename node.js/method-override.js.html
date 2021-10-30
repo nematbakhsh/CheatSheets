@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Method-Override Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Node.js Method-Override</h1>
+
+	<h1>Installation</h1>
+
+	<p>Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn’t support it.</p>
+
+	<p class="tip">must be used prior to the csurf module</p>
+
+	<code class="line-command">npm install method-override --save</code>
+
+	<h1>Usage</h1>
+
+	<h2>Override using a header</h2>
+<div class="file">
+	<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+var methodOverride = require('method-override')
+
+// override with different headers; last one takes precedence
+app.use(methodOverride('X-HTTP-Method')) //          Microsoft
+app.use(methodOverride('X-HTTP-Method-Override')) // Google/GData
+app.use(methodOverride('X-Method-Override')) //      IBM
+</pre>
+</div>
+
+<div class="file">
+	<div class="file-header">scripts</div>
+<pre class="file-content">
+var xhr = new XMLHttpRequest()
+xhr.onload = onload
+xhr.open('post', '/resource', true)
+xhr.setRequestHeader('X-HTTP-Method-Override', 'DELETE')
+xhr.send()
+
+function onload () {
+  alert('got response: ' + this.responseText)
+}
+</pre>
+</div>
+
+	<h2>override using a query value</h2>
+
+<div class="file">
+	<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+var express = require('express')
+var methodOverride = require('method-override')
+var app = express()
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
+</pre>
+</div>
+
+<div class="file">
+	<div class="file-header">Inside view</div>
+<pre class="file-content">
+&ltform method="POST" action="/resource?_method=DELETE">
+  &ltbutton type="submit">Delete resource&lt/button>
+&lt/form>
+</pre>
+</div>
+
+	<h2>Use custom logic</h2>
+
+<div class="file">
+	<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+var bodyParser = require('body-parser')
+var express = require('express')
+var methodOverride = require('method-override')
+var app = express()
+
+// NOTE: when using req.body, you must fully parse the request body
+//       before you call methodOverride() in your middleware stack,
+//       otherwise req.body will not be populated.
+app.use(bodyParser.urlencoded())
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
+</pre>
+</div>
+
+<div class="file">
+	<div class="file-header">Inside view</div>
+<pre class="file-content">
+<!-- enctype must be set to the type you will parse before methodOverride() -->
+&ltform method="POST" action="/resource" enctype="application/x-www-form-urlencoded">
+  &ltinput type="hidden" name="_method" value="DELETE">
+  &ltbutton type="submit">Delete resource&lt/button>
+&lt/form>
+</pre>
+</div>
+
+	<h1>Commands</h1>
+
+	<div class="dl-1-2">
+		<code class="javascript">var methodOverride = require('method-override')</code>
+		<span class="description">API</span>
+
+		<code class="javascript">app.use(methodOverride(getter, options))</code>
+		<div class="description">reate a new middleware function to override the req.method property with a new value. This value will be pulled from the provided getter.
+			<div class="dl-1-2">
+				<code>getter</code>
+				<span class="description">The getter to use to look up the overridden request method for the request. (default: X-HTTP-Method-Override)</span>
+
+				<code>options.methods</code>
+				<span class="description">The allowed methods the original request must be in to check for a method override value. (default: ['POST'])</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

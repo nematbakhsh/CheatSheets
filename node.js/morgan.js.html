@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Morgan.js Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Morgan</h1>
+
+	<h1>Installation</h1>
+
+	<code class="line-command">npm install --save morgan</code>
+
+	<h1>Usage</h1>
+<div class="file">
+	<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+// morgan API
+var morgan = require('morgan')
+
+// log to console
+app.use(morgan('combined'))
+
+// log to single file
+var fs = require('fs')
+var path = require('path')
+//
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+//
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }))
+
+// log file rotation
+var path = require('path')
+var rfs = require('rotating-file-stream') // version 2.x
+//
+// create a rotating write stream (this example logs all requests in the Apache combined format to one log file per day in the log/ directory)
+var accessLogStream = rfs.createStream('access.log', {
+  interval: '1d', // rotate daily
+  path: path.join(__dirname, 'log')
+})
+//
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }))
+
+// can also log multiple times based on different situations, for example
+// log only 4xx and 5xx responses to console
+app.use(morgan('dev', {
+  skip: function (req, res) { return res.statusCode < 400 }
+}))
+</pre>
+</div>
+	<h1>Commands and Methods</h1>
+
+	<div class="dl-1-2">
+		<code class="javascript">var morgan = require('morgan')</code>
+		<span class="description">API</span>
+
+		<code class="javascript">morgan(format, options)</code>
+		<span class="description"></span>
+
+		<code class="javascript">morgan.token('name', function (req, res) { 'should return a string' })</code>
+		<span class="description">Creates new tokens</span>
+
+		<code class="javascript">morgan.compile(format)</code>
+		<span class="description"></span>
+
+	</div>
+
+	<h2>Formats</h2>
+
+	<div class="dl-1-2">
+		<code>'combined' | 'common' | 'dev' | 'short' | 'tiny'</code>
+		<span class="description">predefined format string</span>
+
+		<code>':date[format] :http-version :method :referrer :remote-addr :remote-user :req[header] :res[header] :response-time[digits] :status
+ :total-time[digits] :url :user-agent - :response-time ms'</code>
+		<span class="description">format string of predefined tokens</span>
+
+<pre>
+morgan(function (tokens, req, res) {
+  return [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms'
+  ].join(' ')
+})
+</pre>
+<span class="description">custom format function</span>
+	</div>
+
+	<h2>Options</h2>
+
+	<div class="dl-1-2">
+		<code>immediate</code>
+		<span class="description">Writes log line on request instead of response</span>
+
+		<code>skip</code>
+		<span class="description">Function to decide if logging is skipped, defaults to false, called as skip(req, res)</span>
+
+		<code>stream</code>
+		<span class="description">Output stream for writing log lines (defaults to process.stdout)</span>
+	</div>
+
+</body>
+</html>

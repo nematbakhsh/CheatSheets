@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas API Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="container">
+	<h1>Boiler Plate</h1>
+	<p>Inside html file</p>
+<pre class="file-content">
+&ltcanvas id="canvas" width="300" height="150">&ltFallback Content&gt&lt/canvas>
+</pre>
+<p>Inside scripts file</p>
+<pre class="file-content">
+var canvas = document.getElementById('canvas');
+// getting the CanvasRenderingContext2D interface which provides the 2D rendering context for the drawing surface of a canvas element
+if (canvas.getContext) {
+  var ctx = canvas.getContext('2d');
+  // drawing code here
+} else {
+  // canvas-unsupported code here
+}
+</pre>
+<p class=tip>Set canvas size by <code>height</code> and <code>weight</code> attributes instead of CSS. Since if the CSS sizing doesn't respect the ratio of the initial canvas, it will appear distorted.</p>
+
+<h1>Drawing Commands</h1>
+<div class="dl-1-2">
+	<code class="javascript">ctx.fillRect(<span class="datatype-number">Number x</span>, <span class="datatype-number">Number y</span>, <span class="datatype-number">Number width</span>, <span class="datatype-number">Number height</span>)</code>
+	<span class="description">Draws a filled rectangle</span>
+
+	<code class="javascript">ctx.strokeRect(<span class="datatype-number">Number x</span>, <span class="datatype-number">Number y</span>, <span class="datatype-number">Number width</span>, <span class="datatype-number">Number height</span>)</code>
+	<span class="description">Draws a rectangle</span>
+
+	<code class="javascript">ctx.clearRect(<span class="datatype-number">Number x</span>, <span class="datatype-number">Number y</span>, <span class="datatype-number">Number width</span>, <span class="datatype-number">Number height</span>)</code>
+	<span class="description">Clears the specified rectangular area, making it fully transparent.</span>
+
+	<code class="javascript">ctx.beginPath()</code>
+	<span class="description">(Optional) Creates a new path, all succusive path methods are added to this path. It resets the previous built-up sub-path.</span>
+
+	<code class="javascript">ctx.closePath()</code>
+	<span class="description">(Path Method) closes a path by moving back to the start of the current sub-path</span>
+
+	<code class="javascript">ctx.moveTo(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>)</code>
+	<span class="description">(Path Method) Moves the starting point of a new sub-path to given coordinates</span>
+
+	<code class="javascript">ctx.lineTo(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>)</code>
+	<span class="description">(Path Method) Connects the last point in the current sub-path to the specified point by a straight line</span>
+
+	<code class="javascript">ctx.rect(<span class="datatype-number">NUMBER x</span>, <span class="datatype-number">NUMBER y</span>, <span class="datatype-number">NUMBER width</span>, <span class="datatype-number">NUMBER height</span>)</code>
+	<span class="description">(Path Method) Adds a rectangular path whose starting point is at (x, y) and whose size is specified by width and height</span>
+
+	<code class="javascript">ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)</code>
+	<span class="description">(Path Method) Adds a cubic Bézier curve to the current path</span>
+
+	<code class="javascript">ctx.quadraticCurveTo(cpx, cpy, x, y);</code>
+	<span class="description">(Path Method) Adds a quadratic Bézier curve to the current path</span>
+
+	<code class="javascript">ctx.arc(x, y, radius, startAngle, endAngle [, counterclockwise])</code>
+	<span class="description">(Path Method) Adds a circular arc to the current path</span>
+
+	<code class="javascript">ctx.arcTo(x1, y1, x2, y2, radius)</code>
+	<span class="description">(Path Method) Adds a circular arc to the current sub-path, using the given control points and radius (usually used to create rounded corners)</span>
+
+	<code class="javascript">ctx.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle [, counterclockwise]);</code>
+	<span class="description">(Path Method) Adds an elliptical arc to the current path</span>
+
+	<code class="javascript">ctx.fillStyle = <span class="datatype-color">COLOR</span></code>
+	<span class="description"></span>
+
+	<code class="javascript">ctx.strokeStyle = <span class="datatype-color">COLOR</span></code>
+	<span class="description"></span>
+
+	<code class="javascript">ctx.globalAlpha = <span class="datatype-number">transparencyValue</span></code>
+	<span class="description"></span>
+
+	<code class="javascript">ctx.lineWidth = <span class="datatype-number">NUMBER value</span></code>
+	<span class="description">Sets the width of lines drawn in the future</span>
+
+	<code class="javascript">ctx.lineCap = "butt" | "round" | "square"</code>
+	<span class="description">Sets the appearance of the ends of lines</span>
+
+	<code class="javascript">ctx.lineJoin = "bevel" | "round" | "miter"</code>
+	<span class="description">Sets the appearance of the "corners" where lines meet</span>
+
+	<code class="javascript">ctx.setLineDash(segments)</code>
+	<span class="description">Sets the current line dash pattern</span>
+
+	<code class="javascript">ctx.getLineDash()</code>
+	<span class="description">Returns the current line dash pattern array containing an even number of non-negative numbers</span>
+
+	<code class="javascript">ctx.fill(path [, fillRule])</code>
+	<span class="description">Fills the given path (current sub-paths, if path is omitted) with the current fill style. fillRile algorithm is "nonzero" or "evenodd"</span>
+
+	<code class="javascript">ctx.stroke()</code>
+	<span class="description">Strokes the current sub-paths with the current stroke style.</span>
+
+	<code class="javascript">ctx.clip()</code>
+	<span class="description">Creates a clipping path from the current sub-paths. Everything drawn after clip() is called appears inside the clipping path only.</span>
+</div>
+
+<p>General Path drawing pattern</p>
+<pre class="file-content">
+let path = new Path2D();
+path.moveTo();
+path.pathMethod();
+...
+ctx.fillStyle = <span class="datatype-color">COLOR</span> // or ctx.strokeStyle
+ctx.fill(path, 'nonzero') // or ctx.stroke()
+
+ctx.beginPath();
+path.moveTo();
+ctx.pathMethod();
+...
+ctx.fillStyle = <span class="datatype-color">COLOR</span> // or ctx.strokeStyle
+ctx.fill() // or ctx.stroke()
+</pre>
+
+<h1>Drawing Texts</h1>
+	<div class="dl-1-2">
+		<code class="javascript">ctx.fillText(text, x, y [, maxWidth])</code>
+		<span class="description">Fills a given text at the given coordinates</span>
+
+		<code class="javascript">ctx.strokeText(text, x, y [, maxWidth])</code>
+		<span class="description">Strokes a given text at the given coordinates</span>
+
+		<code class="javascript">ctx.font = <span class="datatype-string">STRING value</span></code>
+		<span class="description">value is parsed as CSS font. (font size + font name + font weight)</span>
+
+		<code class="javascript">ctx.textAlign = "left" | "right" | "center" | "start" | "end"</code>
+		<span class="description">Text alignment setting (default "start")</span>
+
+		<code class="javascript">ctx.textBaseline = "top" | "hanging" | "middle" | "alphabetic" | "ideographic" | "bottom"</code>
+		<span class="description">Baseline alignment setting (default "alphabetic")</span>
+
+		<code class="javascript">ctx.direction = "ltr" | "rtl" | "inherit"</code>
+		<span class="description">text direction (default "inherit")</span>
+
+		<code class="javascript"></code>
+		<span class="description"></span>
+
+		<code class="javascript"></code>
+		<span class="description"></span>
+
+		<code class="javascript"></code>
+		<span class="description"></span>
+	</div>
+</body>
+</html>

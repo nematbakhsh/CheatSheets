@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Compression.js Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Compression</h1>
+
+	<p>Compression in Node.js and Express decreases the downloadable amount of data that’s served to users.</p>
+
+	<h1>Installation</h1>
+
+	<code class="line-command">npm install compression --save</code>
+
+	<h1>Usage</h1>
+
+<div class="file">
+<div class="file-header">Inside <span class="filename">index.js</span></div>
+<pre class="file-content">
+const compression = require('compression');
+
+// to compress all responses put it at top, if not put it as high as you like
+app.use(compression({
+	filter : shouldCompress,
+	threshold : 512
+}));
+//
+function shouldCompress (req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res)
+}
+</pre>
+</div>
+
+	<h1>Commands and Methods</h1>
+
+	<div class="dl-1-2">
+		<code class="javascript">var compression = require('compression')</code>
+		<span class="description">Compression API</span>
+
+		<code class="javascript">app.use(compression(<span class="datatype-object">OBJECT options</span>))</code>
+		<span class="description">available options are listed below</span>
+
+		<code class="javascript">compression.filter</code>
+		<span class="description">The default filter function. Mainly used to construct custom filter function which extend the default filter function.</span>
+	</div>
+
+	<h1>Options</h1>
+	<div class="dl-1-2">
+		<code>chunkSize</code>
+		<span class="description">The default value is zlib.Z_DEFAULT_CHUNK, or 16384.</span>
+
+		<code>filter</code>
+		<span class="description">A function to determine whether the response should be considered for compression or not. This function is called as filter(req, res) and returns a boolean value. The default filter function uses the compressible module to determine if res.getHeader('Content-Type') is compressible.</span>
+
+		<code>level</code>
+		<span class="description">sets the level of zlib compression</span>
+
+		<code>memLevel</code>
+		<span class="description"></span>
+
+		<code>strategy</code>
+		<span class="description"></span>
+
+		<code>threshold</code>
+		<span class="description">sets the threshold (in byte) for the response body size before compression is considered (defaults to 1kb)</span>
+
+		<code>windowBits</code>
+		<span class="description"></span>
+	</div>
+</body>
+</html>

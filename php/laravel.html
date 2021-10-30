@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Laravel Notes</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Laravel</h1>
+	<p>The PHP Framework for Web Artisans</p>
+
+	<h1>Installation</h1>
+	<p>Install laravel from its official website <a href="https://laravel.com/">Laravel</a> and follow the instructions. (more details here!)</p>
+
+	<div class="dl-1-2">
+		<code class="command-line">composer global require laravel/installer</code>
+		<span class="description"></span>
+	</div>
+
+	<h1>Boiler Plate</h1>
+	<p>To build a new project run the following commands in the terminal</p>
+
+	<div class="dl-1-2">
+		<code class="command-line">laravel new &ltproject name&gt</code>
+		<span class="description">builds a new laravel project in the current directory</span>
+
+		<code class="command-line">php artisan serve</code>
+		<span class="description">builds up a server for the project</span>
+	</div>
+
+	<p>Create the following file</p>
+
+<div class="file">
+<div class="file-header">/resources/views/layouts/master.blade.php</div>
+<pre class="file-content">
+&lt!DOCTYPE html>
+&lthtml>
+&lthead>
+    &ltmeta charset="UTF-8">
+    &ltmeta http-equiv="X-UA-Compatible" content="IE=edge">
+    &ltmeta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lttitle>@yield('title')&lt/title>
+&lt/head>
+&ltbody>
+    @yield('content')
+&lt/body>
+&lt/html>
+</pre>
+</div>
+
+	<p>To bring in UI/Bootstrap</p>
+
+	<div class="dl-1-2">
+		<code class="command-line">composer require laravel/ui</code>
+		<span class="description"></span>
+
+		<code class="command-line">php artisan ui bootstrap</code>
+		<span class="description"></span>
+
+		<code class="command-line">npm install && npm run dev</code>
+		<span class="description"></span>
+	</div>
+
+<div class="file">
+<div class="file-header">Inside applications master layout or each view</div>
+<pre class="file-content">
+&lt!-- Bootstrap core CSS and JavaScript -->
+&ltlink href = {{ asset("css/app.css") }} rel="stylesheet"/>
+&ltscript src= {{ asset("js/app.js") }} type="text/javascript">&lt/script>
+</pre>
+</div>
+
+	<h1>Routes</h1>
+	<p>Path: /routes/web.php</p>
+
+	<div class="dl-1-2">
+		<code class="php">Route::get(<span class="datatype-string">String route</span>, <span class="datatype-function">Function route-closure</span>)</code>
+		<span class="description">the oute-closure function can return a view, json, ...</span>
+
+		<code class="php">Route::get(<span class="datatype-string">String route</span>, <span class="datatype-string">String controller-closure</span>)</code>
+		<span class="description">controller-closure can be in this format 'ControllerName@ClosureName' [Deprecated] or 'App\Http\Controllers\ControllerName@ClosureName' [Laravel 8+]</span>
+
+		<code class="php">use App\Http\Controllers\UserController; Route::get(<span class="datatype-string">String route</span>, [&ltControllerName&gt::class, <span class="datatype-string">STRING closure-name</span>])</code>
+		<span class="description">closure-name is the name of the closure in the used controller</span>
+	</div>
+
+	<h1>Views</h1>
+	<p>Path: /resources/views/</p>
+
+	<p>How to return views</p>
+	<div class="dl-1-2">
+		<code class="php">return view(<span class="datatype-string">String &ltviewFileName&gt</span>, <span class="datatype-arry">Array dataArray</span>)</code>
+		<span class="description">(FileName does not need the '.blade.php' part and '/' can be replaced by '.')<br>
+			dataArray is an array of key-value pairs
+		</span>
+
+		<code class="php">return view(<span class="datatype-string">String &ltviewFileName&gt</span>, <span class="datatype-function">Function compact()</span>)</code>
+		<span class="description">The compact function takes strings of variable names</span>
+	</div>
+
+	<h1>Controllers</h1>
+
+	<p>Path: /app/Http/Controllers</p>
+
+	<div class="dl-1-2">
+		<code class="command-line">php artisan make:controller &ltControllerName&gt</code>
+		<span class="description">&ltControllerName&gt is by convention is Pascal case and ends with the word 'Controller'</span>
+	</div>
+
+<div class="file">
+<div class="file-header">/app/Http/Controllers/MyController.php</div>
+<pre class="file-content">
+&lt?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class MyController extends Controller
+{
+    public function index() {
+        //
+    }
+}
+</pre>
+</div>
+</body>
+</html>

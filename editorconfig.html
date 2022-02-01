@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Editorconfig Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body class="container">
+	<h1>What to put in your editor config file</h1>
+<div class="file">
+<div class="file-header"><span class="filename">.editorconfig</span></div>
+<pre class="file-content">
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file (declares that this is the top-level configuration)
+root = true
+
+# all files
+[*]
+# set to lf (Unix-style \n), cr (\r), or crlf (Windows-style \r\n) to control how line breaks are represented
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+curly_bracket_next_line = false
+spaces_around_operators = true
+
+# Matches multiple files with brace expansion notation
+[*.{js,py}]
+# Set default charset
+charset = utf-8
+
+[*.{cpp,cs,gradle,java,kt,py,rs}]
+indent_size = 4
+
+# Python files
+[*.py]
+indent_style = space
+indent_size = 4
+
+[*.{js,ts}]
+quote_type = single
+
+# Makefiles (https://en.wikipedia.org/wiki/Make_(software)#Makefile)
+[Makefile]
+# Tab indentation (no size specified)
+indent_style = tab
+
+# Indentation override for all JS under lib directory
+[lib/**.js]
+indent_style = space
+indent_size = 2
+
+# Matches the exact files either package.json or .travis.yml
+[{package.json,.travis.yml}]
+indent_style = space
+indent_size = 2
+
+[*.bat]
+# Batch files can have unexpected behavior if they end with Unix line endings.
+# avoid this by setting end_of_line to crlf to ensure they have Windows line endings instead.
+end_of_line = crlf
+
+[*.cs]
+curly_bracket_next_line = true
+
+[*.md]
+# In Markdown, one can write a line break in the current paragraph by adding 2 spaces at the end of a line.
+# The following setting is to avoid having your editor remove those spaces when you save.
+trim_trailing_whitespace = false
+
+# TSV (Tab Separated Values)
+[*.tsv]
+# to avoid the delimiter from being replaced, otherwise your entire table might become a single column
+indent_style = tab
+</pre>
+</div>
+</body>
+</html>

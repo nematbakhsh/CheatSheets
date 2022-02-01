@@ -124,5 +124,25 @@ class MyController extends Controller
 }
 </pre>
 </div>
+
+	<h1>Production Tips</h1>
+
+	<p>Css and Js might not load due to not being https requests</p>
+
+<div class="file">
+<div class="file-header"> app >> Providers >> AppServiceProvider.php inside boot function</div>
+<div class="file-content">
+if (env('APP_ENV') != 'local') {
+    \URL::forceScheme('https');
+}
+
+// or do the following in the views
+@production
+    &ltlink rel="stylesheet" href="{{ secure_asset('css/AdminLTE.min.css') }}">
+@endproduction
+</div>
+</div>
+
+	<h1>Laravel API with Resources</h1>
 </body>
 </html>

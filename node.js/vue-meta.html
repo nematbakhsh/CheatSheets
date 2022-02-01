@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue-Meta Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Node.js Vue-Meta</h1>
+
+	<p>Manage HTML metadata in Vue.js components with SSR support</p>
+
+	<h1>Installation</h1>
+
+	<code class="line-command">npm install vue-meta --save</code>
+
+	<h1>Boiler Plate</h1>
+
+<div class="file">
+<div class="file-header">Inside main.js or router.js (better)</div>
+<pre class="file-content">
+import Vue from 'vue'
+import Router from 'vue-router'
+import VueMeta from 'vue-meta'
+
+Vue.use(Router)
+Vue.use(VueMeta, {
+  // optional pluginOptions
+  keyName: 'metaInfo',
+  refreshOnceOnNavigation: true
+})
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">Inside Component.Vue</div>
+<pre class="file-content">
+&lttemplate>
+  &ltdiv id="app">
+    &ltrouter-view>&lt/router-view>
+  &lt/div>
+&lt/template>
+ 
+&ltscript>
+  export default {
+    metaInfo: {
+      // if no subcomponents specify a metaInfo.title, this title will be used
+      title: 'My Example App',
+      // all titles will be injected into this template
+      titleTemplate: '%s - Yay!', // use null to override the parent template and just use the above title only
+      htmlAttrs: {
+        lang: 'en',
+        amp: true
+      },
+      meta: [
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "description", content: "website description" },
+        { charset: "utf-8" },
+        // The Open Graph protocol
+        { property: "og:title", content: "website title" },
+        { property: "og:site_name", content: "website name" },
+        { property: "og:type", content: "website" },
+        { property: "og:image", content: "image url"}
+        { property: "og:url", content: "website url" },
+        { property: "og:description", content: "website description" }
+      ]
+    }
+  }
+&lt/script> 
+</pre>
+</div>
+
+</body>
+</html>

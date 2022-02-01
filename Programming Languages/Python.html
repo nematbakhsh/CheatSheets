@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Python Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Python</h1>
+
+	<p>A multi-purpose language</p>
+
+	<h1>Installation</h1>
+
+	<p>Download the installer from <a href="https://www.python.org/" target="_blank">Python</a> official website.</p>
+	<p>Make sure the check the "Add Python to PATH" checkbox</p>
+	<p>Popular code editors for Python
+		<ul>
+			<li><a href="https://jetbrains.com/pycharm" target="_blank">PyCharm</a></li>
+		</ul>
+	</p>
+
+	<h1>Hello World</h1>
+
+<pre>
+print("Hello World")
+</pre>
+
+	<h1>Variables</h1>
+
+	<ul>
+		<li>Python is not tightly typed</li>
+		<li>Python is case sensitive</li>
+	</ul>
+
+	<h1>Comments</h1>
+
+	<p># sign represents in-line comments</p>
+
+	<h1>Data types</h1>
+
+	<div class="dl-1-2">
+		<code class="python">Number</code>
+		<div class="description"></div>
+
+		<code class="python">String</code>
+		<div class="description"></div>
+
+		<code class="python">Boolean</code>
+		<div class="description"></div>
+	</div>
+
+	<h2>Data Conversions</h2>
+
+	<div class="dl-1-2">
+		<code class="python">int()</code>
+		<div class="description">return numeric interpretation of the input</div>
+
+		<code class="python">float()</code>
+		<div class="description">return numeric interpretation of the input</div>
+
+		<code class="python">str()</code>
+		<div class="description">return string interpretation of the input</div>
+
+		<code class="python">bool()</code>
+		<div class="description">return boolean interpretation of the input</div>
+	</div>
+
+	<h1>I/O</h1>
+
+	<div class="dl-1-2">
+		<code class="python">&ltvariable-name> = input(<span class="datatype-string">STRING infomative-string</span>)</code>
+		<div class="description">returns the input as a string</div>
+		<code class="python">print()</code>
+		<div class="description"></div>
+	</div>
+
+	<h1>String Methods</h1>
+
+	<div class="dl-1-2">
+		<code class="python">str.upper()</code>
+		<div class="description"></div>
+
+		<code class="python">str.lower()</code>
+		<div class="description"></div>
+
+		<code class="python">str.find(<span class="datatype-string">STRING query-string</span>)</code>
+		<div class="description">returns first index of search string - returns -1 if failed</div>
+
+		<code class="python">str.replace(<span class="datatype-string">STRING query-string</span>)</code>
+		<div class="description"></div>
+
+		<code class="python"><span class="datatype-string">STRING query-string</span> in <span class="datatype-string">STRING target-string</span></code>
+		<div class="description">returns true or false based if query-string is found in target-string</div>
+
+		<code class="python"><span class="datatype-integer">INTEGER</span> * <span class="datatype-string">STRING</span></code>
+		<div class="description">concatenates copies of the string</div>
+	</div>
+
+	<h1>Operators</h1>
+
+	<h2>Arithmatic Operators</h1>
+
+	<div class="dl-1-2">
+		<code class="python">+, -, *, /</code>
+		<div class="description"></div>
+
+		<code class="python">//, %, **</code>
+		<div class="description">integer division, remainder, exponential</div>
+	</div>
+
+	<h2>boolean Operators</h2>
+
+	<div class="dl-1-2">
+		<code class="python">>, >=, <, <=, ==, !=</code>
+		<div class="description">comparison operators</div>
+
+		<code class="python">and, or, not</code>
+		<div class="description">logical operators</div>
+	</div>
+
+	<h2>Operator precedence</h2>
+
+	<ol>
+		<li>Parenthesis</li>
+	</ol>
+
+	<h1>Assignment</h1>
+
+	<div class="dl-1-2">
+		<code class="python">=</code>
+		<div class="description"></div>
+
+		<code class="python">+=, -=, *=</code>
+		<div class="description">augmentation</div>
+	</div>
+
+	<h1>Conditional statements</h1>
+
+	<div class="dl-1-2">
+<pre class="python">
+if &ltfirst-condition>:
+    &ltif-block> # indentation represents block of code
+elif &ltsecond-condition>:
+    &ltelif-block> 
+else:
+    &else-block>
+// rest of code
+</pre>
+<div class="description"></div>
+</div>
+
+	<h1>Loops</h1>
+
+	<div class="dl-1-2">
+<pre class="python">
+while &ltcondition>:
+    &ltwhile-block>
+</pre>
+	<div class="description"></div>
+
+<pre class="python">
+for item in list:
+    &ltfor-block
+</pre>
+<div class="description"></div>
+
+<pre class="python">
+for item in range(initial, terminal, steps):
+    &ltfor-block
+</pre>
+<div class="description"></div>
+	</div>
+
+	<h1>Other types</h1>
+
+	<div class="dl-1-2">
+		<div>lists</div>
+		<div class="description">lists are presented by []</div>
+
+		<div>Objects</div>
+		<div class="description"></div>
+
+		<div>Tupples</div>
+		<div class="description"></div>
+	</div>
+
+	<h1>Lists</h1>
+
+	<div class="dl-1-2">
+		<code class="python">list.append()</code>
+		<div class="description"></div>
+
+		<code class="python">list.insert(,)</code>
+		<div class="description"></div>
+
+		<code class="python">list.remove</code>
+		<div class="description"></div>
+
+		<code class="python">list.clear()</code>
+		<div class="description"></div>
+
+		<code class="python">value in list</code>
+		<div class="description"></div>
+
+		<code class="python">len(list)</code>
+		<div class="description"></div>
+	</div>
+
+	<h1>Other useful functions</h1>
+
+	<ul>
+		<li>range function</li>
+	</ul>
+
+</body>
+</html> 

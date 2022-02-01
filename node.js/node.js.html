@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Express Cheat Sheet</title>
+	<title>Node.js Cheat Sheet</title>
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
@@ -11,6 +11,21 @@
 <p>Install from <a href="https://nodejs.org/en/">nodejs.org</a></p>
 
 <h1>NPM</h1>
+
+<p>Where is it installed: By default, npm is installed alongside node in <span class="file-name">C:\Program Files (x86)\nodejs</span></p>
+<pre>npm's globally installed packages (including, potentially, npm itself) are stored separately in a user-specific directory (which is currently
+
+C:\Users\&ltusername>\AppData\Roaming\npm).
+
+Because the installer puts
+
+C:\Program Files (x86)\nodejs
+
+before
+
+C:\Users\&ltusername>\AppData\Roaming\npm
+
+on your PATH, it will always use the version of npm installed with node instead of the version of npm you installed using npm -g install npm@&ltversion>.</pre>
 
 <div class="dl-1-2">
 	<code class="command-line">node -v | node --version</code>
@@ -33,6 +48,21 @@
 
 	<code class="command-line">npm uninstall (--save || --save-dev) &ltPackage></code>
 	<span class="description">Uninstall a package</span>
+
+	<code class="command-line">npm install -g npm@latest</code>
+	<span class="description">installs the latest version of npm</span>
+
+	<code class="command-line">npm audit</code>
+	<span class="description">search for vulnerabilities)</span>
+
+	<code class="command-line">npm audit fix</code>
+	<span class="description">Scan your project for vulnerabilities and automatically install any compatible updates to vulnerable dependencies (use dangerous --force only if you know what you are doing)</span>
+
+	<code class="command-line">npm cache verify</code>
+	<span class="description"> Verifies the contents of the cache folder, garbage collecting any unneeded data, and verifying the integrity of the cache index and all cached data.</span>
+
+	<code class="command-line">npm cache clean --force</code>
+	<span class="description">--force is a mandatory flag</span>
 </div>
 
 <h1>package.json content</h1>

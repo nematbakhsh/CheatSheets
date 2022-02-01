@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Storyblok-Vue Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Node.js Storyblok-Vue</h1>
+	<p>Make any element editable with the Vue Storyblok directive. Just add v-editable="content" to a html element.</p>
+
+	<h1>Installation</h1>
+
+	<code class="line-command">npm install storyblok-vue --save-dev</code>
+
+<div class="file">
+<div class="file-header">In your entry point</div>
+<pre class="file-content">
+import StoryblokVue from 'storyblok-vue'
+
+Vue.use(StoryblokVue)
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">In the template</div>
+<pre class="file-content">
+&ltdiv v-editable="demo">
+  Test
+&lt/div>
+</pre>
+</div>
+</body>
+</html>

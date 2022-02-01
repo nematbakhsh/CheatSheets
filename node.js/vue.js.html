@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue.js Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Node.js Vue</h1>
+
+	<p>Vue.js is an open-source model–view–viewmodel front end JavaScript framework for building user interfaces and single-page applications.</p>
+
+	<h1>Installation</h1>
+	<p>Pre Installation: Add Vue.js devtools extension to chrome to add a Vue tab to chrome developer tools</p>
+	<p>Method 1: Use CDN from <a href="https://vuejs.org/" target="_blank">Vue.js</a></p>
+	<p>You have the optoin to bring in development version, or production version.</p>
+	<code class="line-command">npm install --save pug</code>
+
+	<h1>Boiler Plate</h1>
+	<h2>Method 1 (Using CDN)</h2>
+
+	<h3>Vue 2.0</h3>
+
+<div class="file">
+<div class="file-header">Inside <span class="filename">index.html</span></div>
+<pre class="file-content">
+&lt!DOCTYPE html>
+&lthtml>
+&lthead>
+&lt/head>
+&ltbody>
+    &ltdiv id="app">
+        {{ data }} // double curly braces can include javascript expresions
+    &lt/div>
+    &ltscript src="https://cdn.isdelivr.net/npm/vue/dist/vue.js">&lt/script>
+    &ltscript>
+        var app = new Vue({  // the Vue instance
+            el: '#app', // connecting to div#app element
+            data: {
+                data: 'Hello World!'
+            }
+        })
+    &lt/script>
+&lt/body>
+&lt/html>
+</pre>
+</div>
+
+
+	<h3>Vue 3.0</h3>
+
+<div class="file">
+<div class="file-header">Inside <span class="filename">index.html</span></div>
+<pre class="file-content">
+&lt!DOCTYPE html>
+&lthtml>
+&lthead>
+    &ltscript src="vue cdn">&lt/script>
+&lt/head>
+&ltbody>
+    &ltdiv id="app">
+        {{ data1 }} 
+    &lt/div>
+
+    &lt!-- Import JS --&gt
+    &ltscript src="./main.js">&lt/script>
+
+
+    &lt!-- Mount App --&gt
+    &ltscript>
+         const mountedApp = app.mount('#app')
+    &lt/script>
+&lt/body>
+&lt/html>
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">Inside <span class="filename">main.js</span></div>
+<pre class="file-content">
+const app = Vue.createApp({
+    data() {
+    	return {
+            data: 'Hello World!'
+        }
+    }
+})
+</pre>
+</div>
+
+	<h1>The Vue Instance</h1>
+
+<pre class="javascript">
+// Vue 2
+new Vue(<span class="datatype-object">OBJECT options</span>)
+//Vue 3
+const app = Vue.createApp(<span class="datatype-object">OBJECT options</span>)
+
+var app = new Vue({
+	el: <span class="datatype-string">STRING element</span>
+	// better to use a functio for data that returns an object
+	data: <span class="datatype-object">OBJECT data</span> // these data variables can be accessed as props of the app object
+	methods: <span class="datatype-object">OBJECT methods</span> // access to app object by 'this' keyword 
+	computed: <span class="datatype-object">OBJECT object-of-functions</span> \\computed properties are written as functions but should used only as data fields, but methods are actual functions - use methods for repeated procedures on data or when you need to pass data instead of a computed property
+})
+</pre>
+
+<div class="file">
+<pre class="html">
+&ltdiv id="app">
+	&ltp>{{ expression }}&lt/p> // double curly braces can include javascript expressions including data variables from Vue instance
+
+	// Attribute binding
+	&ltimg v-bind:src="&ltexpression>"> // binding data and atributes by v-bind directive
+	&ltimg :src="&ltexpression>"> // shorthand of v-bind
+	//
+	// Style Binding
+	&lth1 :style="<span class="datatype-object">Object styles</span>" // enter the styling options in form of an object of key-value pairs
+	// important note: either use camel case for css properties lik fontSize or give it as a string 'font-size'
+	//
+	// Class Binding
+	&ltbutton :disabled="isDisabled" :class="{ 'class-name': <span class="datatype-boolean">BOOLEAN isActive</span>}" class="class-names that we do not wat to bind">
+
+	// Conditional Rendering
+	&ltp v-if="&ltexpression1>">Renders when expression1 evaluates to true&lt/p>
+	&ltp v-else-if="&ltexpression2>">Renders when expression1 is false and expression2 evaluates to true&lt/p>
+	&ltp v-else>Renders otherwise&lt/p>
+	// v-show directive for toggling visibility
+	&ltp v-show="&ltexpression>">display property is none if expression is false&lt/p>
+
+	// List rendering
+	&ltul>
+		&ltli v-for="item in items">{{ item }}&lt/li> // items is a data variable which should be a collection
+		&ltli v-for="(item, index) in items">{{ item }}&lt/li> // we can pass the index as well
+	&lt/ul>
+	&ltdiv v-for="object in objects" :key="object.id"> // use a unique id for each node (recommended)
+		&ltp>{{ object.data }}&lt/p>
+	&lt/div>
+
+	// Event Handling
+	&ltbutton v-on:&ltevent>="javascript-code/method">Click Me&lt/button>
+	&ltbutton @&ltevent>="javascript-code/method">Click Me&lt/button> // shorthand notation for v-on
+&lt/div>
+</pre>
+</div>
+
+	<h1>Components</h1>
+
+<pre class="javascript">
+// making a tag-like element called &ltcomponen-name>
+Vue.component(<span class="datatype-string">STRING component-name</span>, {
+	template: `Template literal with backticks`, \\component template should contain exactly one root element 
+	                                              \\ Use /*html*/ if es6-string-html add-on is added to the VSCode before back ticks for syntax highlighting
+	data() {...}, \\ better to use a function that returns a data object, this way each copy can have its own data
+	props: <span class="datatype-array">ARRAY array-of-variables</span>, \\ a prop is a custom attribute for passing data into our components (its template)
+	// if willing to specify its type use a props object instead of an array
+	props:{
+		prop: {
+			type: String,
+			required: true,
+			default: "Hello",
+		}
+	}
+})
+</pre>
+
+<div class="file">
+<div class="file-header">Inside the html file</div>
+<pre class="file-content">
+&ltcomponent-name prop="prop-value">&lt/component-name>
+</pre>
+</div>
+	<p>To send data to the app instance from a component, use communicating events. That is emit an event and listen to it on the component tag, then add a method in your app insance for that event. (Use this.$emit('event-name', data-object))</p>
+	<p>Note that the variables and methods in the component tag live in the upper component</p>
+	<p>v-bind binds data from the data object to the template, to send data from template to the data object use v-model</p>
+	<p>Use v-model.number modifier to change string to number</p>
+
+	<h1>Forms and v-model</h1>
+	<p>In short, v-model is two-way data binding between data and template values</p>
+	<p>It seems that v-model binds a variable with the result of form elements like input, select, ...</p>
+<pre class="file-conent">
+&ltform class="form" @submit.prevent="onSubmit">
+	&ltp>
+		&ltlabel for="name">Name:&lt/label>
+		&ltinput id="name" v-model="name">
+	&lt/p>
+&lt/form>
+</pre>
+
+	<pre>You can use form validations in a methods object with a method like onSubmit()</pre>
+
+	<h1>V-Directives</h1>
+
+	<div class="dl-1-2">
+		<span>v-text</span>
+		<span class="description">puts out text in paragraph tags to avoid using curly brackets</span>
+	</div>
+
+	<h1>Laravel Mix</h1>
+
+	<h2>Boiler Plate</h2>
+	<div class="dl-1-2">
+		<code class="line-command">npm install laravel-mix --save-dev</code>
+		<p class="description"></p>
+		<code class="line-command">npm install cross-env --save-dev</code>
+		<p class="description">for watch/production environment change (optional)</p>
+		<code class="line-command">cp node_modiles/laravel-mix/setup/webpack.mix.js ./</code>
+		<p class="description">copies the file <span class="file-name">webpack.mix.js</span> into our project directory (current directory)</p>
+		
+		<code class="line-command">npm install laravel-mix --save-dev</code>
+		<p class="description"></p>
+		<code class="line-command">mkdir src</code>
+		<p class="description">// home of our javascript files</p>
+		<code class="line-command">npm install vue --save-dev</code>
+		<p class="description"></p>
+	</div>
+
+<div class="file">
+<div class="file-header">Inside <span class="file-name">package.json</span>, add the following scripts</div>
+<pre class="file-content">
+"scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+}
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">Inside <span class="file-name">app.js</span></div>
+<pre class="file-content">
+import Vue from 'vue'
+import Component "./components/component.vue"
+
+const app = new Vue({
+	components: {
+		Component,
+	}
+})
+</pre>
+</div>
+
+	<div class="dl-1-2">
+		<code class="line-command">npm run watch</code>
+		<p class="description">Run this and finally add your app.js file to your html in development</p>
+
+		<code class="line-command">npm run prod</code>
+		<p class="description">Run this in production</p>
+	</div>
+
+	<h1>Single component files</h1>
+
+<div class="file">
+<div class="file-header">Inside "component.vue"</div>
+<pre class="file-content">
+&lttemplate>
+
+&lt/template>
+
+&ltscript>
+    export default {
+    	name: "component",
+    	props: {...}/[...],
+    	data: function(){...}
+    }
+&lt/script>
+
+&ltstyle scoped>
+
+&lt/style>
+</pre>
+</div>
+
+	<h1>Http calls by Axios</h1>
+
+<div class="file">
+<div class="file-content">
+import Vue from 'vue'
+
+window.axios = require('axios')
+
+new Vue({
+	el: '#app',
+	components: {...},
+	data: {...},
+	mounted: function() {
+		axios.get(<span class="datatype-string">STRING url</span>)
+		     .then(response => console.log(response))
+		     .catch(error => console.log({error: request failed}))
+	}
+})
+</div>
+</div>
+
+	<h1>Vue CLI</h1>
+
+	<div class="dl-1-2">
+		<code class="command-line">npm install -g @vue/cli</code>
+		<span class="description">Installs Vue CLI - After installation, you will have access to the vue binary in your command line. </span>
+		<code class="line-command">npm update -g @vue/cli</code>
+		<span class="description">Updates the global Vue CLI package</span>
+	</div>
+
+	
+
+	<div class="dl-1-2">
+		<code class="line-command">vue create &ltproject-name&gt</code>
+		<span class="description">creates a new project (On windows+Git Bash: use winpty vue.cmd create &ltproject-name>)</span>
+		<code class="line-command">vue ui</code>
+		<span class="description">opens up vue ui</span>
+		<code class="command-line">cd &ltproject-name></code>
+		<span class="description">change directory to project folder</span>
+		<code class="command-line">npm run serve</code>
+		<span class="description">runs a local development server</span>
+	</div>
+
+	<h1>Routing</h1>
+
+<h2>Simple Routing</h2>
+<div class="file">
+<div class="file-header">Inside <span class="file-name">main.js</span></div>
+<pre class="file-content">
+import Vue from 'vue'
+import App from './App.vue'
+import OtherComponent from './components/OtherComponent'
+import NotFound from './components/NotFound'
+
+const routes = {
+	'/': App,
+	'/component': OtherComponent
+}
+
+new Vue({
+	data: {
+		currentRoute: window.location.pathname
+	}
+	computed: {
+		currentComponent() {
+			return routes[this.currentRoute] || NotFound
+		}
+	}
+	render: h => h(this.currentComponent),
+}).$mount('#app')
+</pre>
+</div>
+
+<h2>Single Page Applications (SPA) with Vue Router</h2>
+
+	
+	<pre>Install a new CLI Vue application as above</pre>
+
+	<code class="line-command">npm install vue-router --save</code>
+
+<div class="file">
+<div class="file-header">Inside main.js</div>
+<pre class="file-content">
+import Vue from 'vue'
+import App from './App.vue'
+import Component from './components/Component'
+import User from './components/User'
+import NotFound from './components/NotFound'
+
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+Vue.config.productionTip = false
+
+const router = new VueRouter({
+	// order of routes are important
+	routes: [
+		{ path: '/', component: App },
+		{ path: '/component', component: Component}
+		{ path: '/user:id', component: User} // access through $route.params.id //$route is the global instance of router class
+		...
+		{ path: '*', component: NotFound}
+	],
+	mode: 'history' //to get rid of # (hash) in the address-bar (support for older browsers)
+})
+
+new Vue({
+	router,
+	render: h => h(App,
+}).$mount('#app')
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">Inside App.vue</div>
+<pre class="file-content">
+&lttemplate>
+	&ltdiv id="app">
+	&ltul>
+		&ltli>
+			&ltrouter-link to="/">Home&lt/router-link>
+		&lt/li>
+		&ltli>
+			&ltrouter-link to="/component">Component&lt/router-link>
+		&lt/li>
+	&lt/ul>
+	&lt!-- this is where the component is placed
+		&ltrouter-view>&lt/router-view>
+	&lt/div>
+&lt/template>
+
+&ltscript>
+import ...
+
+export default {
+	name: 'app',
+	components: {...}
+}
+&lt/script>
+
+&ltstyle>&lt/style>
+</pre>
+</div>
+
+	<h1>Deployment</h1>
+
+	<div class="dl-1-2">
+		<code class="command-line">npm run build</code>
+		<span class="description">builds a dist folder (If app is created via Vue CLI)</span>
+	</div>
+
+	<h3>To preview locally</h3>
+
+	<p>You can not open index/html file directly over file:// protocol instead do as follows</p>
+
+	<div class="dl-1-2">
+		<code class="command-line">npm install -g serve</code>
+		<span class="description">Installs a Node.js static file server</span>
+
+		<code class="command-line">serve -s dist</code>
+		<span class="description"># -s flag means serve it in Single-Page Application mode # which deals with the routing problem for history mode in Vue Router (see vuejs.org deployment)</span>
+	</div>
+
+	<h1>Laravel + Vue</h1>
+
+<div class="file">
+<div class="file-header">Inside "/resources/assets/js/app.js</div>
+<pre class="file-content">
+require('./bootstrap')
+
+window.Vue = require('vue')
+
+Vue.component('example-component', require('./components/ExampleComponent'))
+Vue.component('navbar', require('./components/Navbar'))
+
+const app = new Vue({
+	el: '#app'
+})
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">Inside "/resources/views/welcome.blade.php"</div>
+<pre class="file-content">
+&lt!DOCTYPE html>
+&lthtml>
+&lthead>
+	...
+	&ltmeta name="csrf-token" content="{{ csrf_token() }}">
+	&ltscript>window.Laravel = { csrfToken: '{{ csrf_token() }}' }&lt/script>
+&lt/head>
+&ltbody>
+	&ltdiv id="app">
+		&ltnavbar>&lt/navbar>
+	&lt/div>
+
+	&ltscript src="{{ asset('js/app.js') }}">&lt/script>
+&lt/body>
+&lt/html>
+</pre>
+</div>
+
+<h2>CRUD App</h2>
+
+<div class="file">
+<div class="file-header">Inside Posts.vue component</div>
+<pre class="file-content">
+&lttemplate>
+	&ltdiv>
+		&ltdiv v-for="post in posts" v-bind:key="post.id">
+			&ltp>{{ post.title }}&lt/p>
+			&ltbutton @click="deletePost(post.id)">Delete&lt/button>
+			&ltbutton @click="editPost(post)">Edit&lt/button>
+		&lt/div>
+
+		&ltform @submit.prevent="addArticle()">
+			&ltinput type="text" v-model="post.title">
+			&ltbutton type="submit">Save&lt/button>
+		&lt/form>
+	&lt/div>
+%lt/template>
+
+&ltscript>
+	export default {
+		data() {
+			return {
+				posts: [],
+				post: {
+					id: '',
+					title: ''
+				}
+				edit: false,
+				post_id : 
+			}
+		},
+		created() { // runs automatically when the page louds
+			this.fetchPosts()
+		}
+
+		methods: {
+			fetchPosts() {
+				fetch('api/posts')
+					.then(res => res.json())
+					.then(res => {
+						console.log(res.data)
+						this.posts = res.posts
+					})
+					.catch(err => console.log(err ))
+			},
+
+			deletePost(id) {
+				if(confirm('Are you sure?')) {
+					fetch(`api/article/${id}`, {
+						method: 'delete'
+					})
+					.then(res => res.json())
+					.then(data => {
+						alert('Post removed')
+						this.fetchPosts()
+					})
+				}
+			}
+
+			addArticle() {
+				if (this.edit === false) {
+					// add
+					fetch('api/post', {
+						method: 'post',
+						body: JSON.stringify(this.post),
+						headers: {
+							'content-type': 'application/json'
+						}
+					})
+					.then(res => res.json())
+					.then(data => {
+						// clear form fields
+						this.post.title = ''
+						alert('Post added')
+						this.fetchPosts()
+					})
+					.catch(err => console.log(err))
+				} else {
+					// update
+					fetch('api/post', {
+						method: 'put',
+						body: JSON.stringify(this.post),
+						headers: {
+							'content-type': 'application/json'
+						}
+					})
+					.then(res => res.json())
+					.then(data => {
+						// clear form fields
+						this.post.title = ''
+						alert('Post Updated')
+						this.fetchPosts()
+					})
+					.catch(err => console.log(err))
+				}
+			}
+
+			editArticle(post) {
+				this.edit = true;
+				this.post.id = post.id
+				this.post.title = post.title
+				this.post_id = post.id
+			}
+		}
+	}
+&lt/script>
+</pre>
+</div>
+
+	<h1>Clean Code Tips</h1>
+
+	<p>Keep your template as clean as possible, by using methods or computed properties, and only use properties or methods as values of attributes, and avoid writing javascript code in attributes</p>
+</body>
+</html>

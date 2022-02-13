@@ -9,5 +9,81 @@
 	<h1>Node.js Vuelidate</h1>
 
 	<p>Simple, lightweight model-based validation for Vue.js</p>
+
+	<h1>Installation</h1>
+
+	<code class="line-command">npm install vuelidate --save</code>
+
+	<h1>Boiler Plate</h1>
+
+<div class="file">
+<div class="file-header">In .js files</div>
+<pre class="file-content">
+// You can import the library and use as a Vue plugin to enable the functionality globally on all components containing validation configuration.
+import Vue from 'vue'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
+// Alternatively it is possible to import a mixin directly to components in which it will be used.
+import { validationMixin } from 'vuelidate'
+
+var Component = Vue.extend({
+  mixins: [validationMixin],
+  validations: { ... }
+})
+
+// You can use require commands and destructuring syntax as well
+const { validationMixin, default: Vuelidate } = require('vuelidate')
+const { required, minLength } = require('vuelidate/lib/validators')
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">In Component.vue</div>
+<pre class="file-content">
+// For each value you want to validate, you have to create a key inside validations options. You can specify when input becomes dirty by using appropriate event on your input box.
+import { required, minLength, between } from 'vuelidate/lib/validators'
+
+export default {
+  data () {
+    return {
+      name: '',
+      age: 0
+    }
+  },
+  validations: {
+    name: {
+      required,
+      minLength: minLength(4)
+    },
+    age: {
+      between: between(20, 30)
+    }
+  }
+}
+</pre>
+</div>
+
+<div class="file">
+<div class="file-header">In template of html</div>
+<pre class="file-content">
+&ltdiv>
+  &ltdiv class="form-group" :class="{ 'form-group--error': $v.name.$error }">
+    &ltlabel class="form__label">Name&lt/label>
+    &ltinput class="form__input" v-model.trim="$v.name.$model"/>
+  &lt/div>
+  &ltdiv class="error" v-if="!$v.name.required">Field is required&lt/div>
+  &ltdiv class="error" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.&lt/div>
+  &lttree-view :data="$v.name" :options="{rootObjectKey: '$v.name', maxDepth: 2}">&lt/tree-view>
+  &ltdiv class="form-group" :class="{ 'form-group--error': $v.age.$error }">
+    &ltlabel class="form__label">Age&lt/label>
+    &ltinput class="form__input" v-model.trim.lazy="$v.age.$model"/>
+  &lt/div>
+  &ltdiv class="error" v-if="!$v.age.between">Must be between {{$v.age.$params.between.min}} and {{$v.age.$params.between.max}}&lt/div>&ltspan tabindex="0">Blur to see changes&lt/span>
+  &lttree-view :data="$v.age" :options="{rootObjectKey: '$v.age', maxDepth: 2}">&lt/tree-view>
+</div>
+</pre>
+</div>
+
 </body>
 </html>

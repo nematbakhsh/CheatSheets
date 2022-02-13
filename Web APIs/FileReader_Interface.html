@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FileReader Interface Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>FileReader Interface</h1>
+
+	<p>This object asynchronously reads the contents of files (or raw data buffers) from the users's computer, using File or Blob bjects.</p>
+
+	<h1>General Usage</h1>
+
+<div class="file">
+<div class="file-header">Inside .js file or script tag</div>
+<pre class="file-content">
+// constructor
+const fileReader = new FileReader()
+
+// handle load and error events
+//
+// upon load the result and error are in fileReader.result and fileReader.error properties
+fileReader.onload = function (event) {
+    // actions after load completes
+    // access result either as event.target.result or fileReader.result
+    console.log(event.target.result)
+}
+
+fileReader.onerror = function(event) {
+	// handle errors
+	alert("Load Failed!\n" + fileReader.error)
+}
+
+// start reading the contents of the specified Blob
+fileReader.readAsText(<span class="datatype-object">OBJECT File/Blob</span>)
+// this will trigger 'loadstart', 'progress', 'loadend', 'load'/'error' events sequentially which can be handled by either an event handler or by addEventListener() method.
+</pre>
+</div>
+</body>
+</html>

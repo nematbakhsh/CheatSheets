@@ -120,6 +120,7 @@ var app = new Vue({
 	//
 	// Class Binding
 	&ltbutton :disabled="isDisabled" :class="{ 'class-name': <span class="datatype-boolean">BOOLEAN isActive</span>}" class="class-names that we do not wat to bind">
+	// in addition it is ossible to use % like :class="class1 %{variable.classname}"
 
 	// Conditional Rendering
 	&ltp v-if="&ltexpression1>">Renders when expression1 evaluates to true&lt/p>
@@ -288,26 +289,28 @@ new Vue({
 	data: {...},
 	mounted: function() {
 		axios.get(<span class="datatype-string">STRING url</span>)
-		     .then(response => console.log(response))
-		     .catch(error => console.log({error: request failed}))
+		    .then(response => console.log(response))
+		    .catch(error => console.log({error: request failed}))
 	}
 })
 </div>
 </div>
 
-	<h1>Vue CLI</h1>
+	<h1>Vue CLI (3.0)</h1>
+
+	<h3>Installation</h3>
 
 	<div class="dl-1-2">
-		<code class="command-line">npm install -g @vue/cli</code>
+		<code class="line-command">npm install -g @vue/cli</code>
 		<span class="description">Installs Vue CLI - After installation, you will have access to the vue binary in your command line. </span>
 		<code class="line-command">npm update -g @vue/cli</code>
 		<span class="description">Updates the global Vue CLI package</span>
 	</div>
 
-	
+	<h3>Commands</h3>
 
 	<div class="dl-1-2">
-		<code class="line-command">vue create &ltproject-name&gt</code>
+		<code class="line-command">vue create &ltproject-name&gt // (on windows) winpty vue.cmd create &ltproject-name></code>
 		<span class="description">creates a new project (On windows+Git Bash: use winpty vue.cmd create &ltproject-name>)</span>
 		<code class="line-command">vue ui</code>
 		<span class="description">opens up vue ui</span>
@@ -384,6 +387,40 @@ new Vue({
 	router,
 	render: h => h(App,
 }).$mount('#app')
+
+
+// newer approach
+// inside router.js file
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
+
+Vue.use(VueRouter)
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    // for packing into the same chunk use the same named chunk in th special comment syntax
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  }
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router
 </pre>
 </div>
 
@@ -590,5 +627,29 @@ const app = new Vue({
 	<h1>Clean Code Tips</h1>
 
 	<p>Keep your template as clean as possible, by using methods or computed properties, and only use properties or methods as values of attributes, and avoid writing javascript code in attributes</p>
+
+	<h1>v-bind and v-model explained</h1>
+
+	<p>
+		v-bind directive is used to bind one or more attributes, or a component prop to an element. If the attribute is bound to a data, then dynamically changes can be seen as data changes.
+
+		<code>v-bind:attribute="expression"</code> the expression decides a value for the attribute
+	</p>
+
+	<p>it is one way data binding,means you can only bind data to input element but can't change bounded data changing input element. v-bind is used to bind html attribute</p>
+
+	<p>v-model: it is two way data binding, it is used to bind html input element when you change input value then bounded data will be change. v-model is used only for HTML input elements</p>
+
+	<p>
+		<code>&lt input v-model="something"></code>
+		is the same as
+<pre>
+&ltinput
+   v-bind:value="something"
+   v-on:input="something = $event.target.value"
+>
+</pre>
+	</p>
+	
 </body>
 </html>

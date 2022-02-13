@@ -21,8 +21,8 @@
 	<p>To build a new project run the following commands in the terminal</p>
 
 	<div class="dl-1-2">
-		<code class="command-line">laravel new &ltproject name&gt</code>
-		<span class="description">builds a new laravel project in the current directory</span>
+		<code class="command-line">laravel new &ltproject name&gt ?1--git ?1?--branch="main"</code>
+		<span class="description">builds a new laravel project in the current directory (optionally initialize a new Git repository for your project and automatically commit the base Laravel skeleton.)</span>
 
 		<code class="command-line">php artisan serve</code>
 		<span class="description">builds up a server for the project</span>
@@ -115,12 +115,51 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// import models here
+use App\Models\MyModel;
 
 class MyController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
         //
     }
+}
+</pre>
+</div>
+
+	<h1>Migrations</h1>
+
+	<p>Help creating tables in database through artisan</p>
+
+	<div class="dl-1-2">
+		<code class="cli">php artisan make:migration &ltmigration-name></code>
+		<span class="description">Makes migration: migration name convetion for creating table: create_&lttable-name(plural)>_table</span>
+
+		<code class="cli">php artisan migrate</code>
+		<span class="description">Creates tables</span>
+	</div>
+
+	<h1>Models</h1>
+
+<div class="file">
+<div class="file-header">app\Models\MyModel.php</div>
+<pre class="file-content">
+<?php
+
+namespace App\Models; \\makes this class as a model class
+
+\\ import classes
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class MyModel extends Model
+{
+	use HasFactory; \\creates new factory instance for the model
+
+	// fields the user can change
+	protected $fillable = [
+		// name of columns in the corresponding table as strings
+	];
 }
 </pre>
 </div>

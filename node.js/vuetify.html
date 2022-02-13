@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vuetify Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Vue.js Vuetify Plugin</h1>
+	<p>A Material Design Framework for Vue.js</p>
+
+	<h1>Installation</h1>
+
+	<code class="line-command">vue add vuetify // (on windows) winpty vue.cmd vue add vuetify</code>
+	<p>Above command will change some on the files and adds the vuetify.js in the plugin folder</p>
+
+	<h1>Useful Props</h1>
+
+	<div class="dl-1-2">
+		<code class="html"></code>
+		<div class="description"></div>
+
+		<code class="html">app</code>
+		<div class="description">in the v-toolbar makes it fixed</div>
+
+		<code class="html">dark/light</code>
+		<div class="description">boolean prop</div>
+
+		<code class="html">height="&ltvalue>"</code>
+		<div class="description"></div>
+
+		<code class="html">left, right</code>
+		<div class="description">boolean - pulls the object to left or right</div>
+
+		<code class="html">router</code>
+		<div class="description">makes it like an anchor tag - then use to prop</div>
+
+		<code class="html">to</code>
+		<div class="description">somehow like href attribute - bind it if the address is coming from a data variable</div>
+
+		<code class="html">fluid, block</code>
+		<div class="description"></div>
+
+		<code class="html">outline</code>
+		<div class="description">shows the outline of tag element</div>
+	</div>
+
+	<p>It seems that props override classes</p>
+
+	<h1>Useful Classes</h1>
+
+	<div class="dl-1-2">
+
+		<h5>Colors</h5><span></span>
+		<code class="html">.&ltcolor></code>
+		<div class="description">like indigo, red, blue</div>
+
+		<code class="html">.&ltcolor>--text</code>
+		<div class="description"></div>
+
+		<code class="html">.lighten-1 ... .lighten-4 / .darker-1 .. .darker-4</code>
+		<div class="description">lighter or darker background color</div>
+
+		<code class="html">.text--lighter-1 ... .text--lighter-4 / .text--darker-1 ... .text--darker-4</code>
+		<div class="description">lighter or darker text color</div>
+
+		<h5>Fonts</h5><span></span>
+
+		<code class="html">.display-1 ... .display-4</code>
+		<div class="description">display texts all bigger than h1</div>
+
+		<code class="html">.headline, .title, .subheading, .body-2, .body-1, .caption</code>
+		<div class="description">different font sizes ordered by size reducing</div>
+
+		<code class="html">.font-weight-bold, .font-italic, .text-lowercase, .text-uppercase</code>
+		<div class="description"></div>
+
+		<code class="html">.font-weight-light</code>
+		<div class="description">skinnier font .. nice for patching two words</div>
+
+		<h5>Visibility</h5><span></span>
+
+		<code class="html">hidden-{breakpoint}-{conditoin}</code>
+		<div class="description">breakpoint: xs, sm, md, lg, xl, condition: only, and-down, and-up</div>
+
+		<h5>Themes</h5><span></span>
+		<code class="html">success, error, warning, info --- primary, secondary, accent</code>
+		<div class="description">explanatory themes</div>
+
+
+		<h5>Margin and Padding</h5><span></span>
+		<code class="html">{property}{direction}-{size}</code>
+		<div class="description">property:m/p, direction:t/b/l/r/x/y/a, size:auto,0..5</div>
+	</div>
+
+	<h1>Vuetify Components</h1>
+
+	<div class="dl-1-2">
+		<code class="html">navigation components</code>
+		<div class="description dl-1-2">
+			<code class="html">v-app-bar (v-toolbar deprecated)</code>
+			<div class="description"></div>
+
+			<code class="html">v-toolbar-title</code>
+			<div class="description"></div>
+
+			<code class="html">v-app-bar-nav-icon (v-toolbar-side-icon deprecated)</code>
+			<div class="description"></div>
+
+			<code class="html">v-navigation-drawer</code>
+			<div class="description"></div>
+		</div>		
+
+		<code class="html">v-btn</code>
+		<div class="description dl-1-2">
+			<h5>Props</h5><span></span>
+
+			<code class="html">color</code>
+			<div class="description">values can be any color name</div>
+
+			<code class="html">depressed</code>
+			<div class="description">makes it without shadow, boolean prop</div>
+
+			<code class="html">flat</code>
+			<div class="description">makes the background transparent - color prop now controls text-color and hover-color</div>
+
+			<code class="html">small, large</code>
+			<div class="description">different size buttons - boolean</div>
+
+			<code class="html">fab</code>
+			<div class="description">turns it into a round button (favourite bitton)</div>
+		</div>
+
+		<code class="html">v-icon</code>
+		<div class="description dl-1-2">
+			<p>Material design icons</p><span></span>
+			<h5>Keywords</h5><span>Useful keywords:email, favorite, exit_to_app ... (material design icons are preceded by mdi-, like mdi-email mdi-view-dashboard)</span>
+		</div>
+
+		<code class="html">v-spacer</code>
+		<div class="description">fills up the space between two objects useful in toolbars</div>
+
+		<code class="html">v-list</code>
+		<div class="description dl-1-2">
+			<code class="html">v-list-item (v-list-tile deprecated)</code>
+			<div class="description"></div>
+			<code class="html">v-list-item-content (v-list-tile-content)</code>
+			<div class="description"></div>
+			<code class="html">v-list-item-title (v-list-tile-title)</code>
+			<div class="description"></div>
+			<code class="html">v-list-item-action (v-list-tile-action)</code>
+			<div class="description"></div>
+		</div>
+
+		<code class="html">v-container</code>
+		<div class="description dl-1-2">
+			<span>responsive content + use the grid inside a v-container</span><span></span>
+			<code class="html">v-layout</code>
+			<div class="description">with row/column, wrap, justify-center, justify-end, justify-space-between, justify-space-around  props</div>
+
+			<code class="html">v-flex</code>
+			<div class="description">with xs12, md6 , ...</div>
+		</div>
+
+		<code class="html">v-card</code>
+		<div class="description"></div>
+
+		<code class="html"></code>
+		<div class="description"></div>
+	</div>
+
+	<h1>Grid System</h1>
+
+	<div class="dl-1-2">
+		
+	</div>
+
+	<h1>Setup</h1>
+
+<div class="file">
+<div class="file-header">Inside vuetify.js</div>
+<pre class="file-content">
+import Vue from 'vue';
+import Vuetify from 'vuetify/lib/framework';
+
+Vue.use(Vuetify);
+
+export default new Vuetify({
+  // optional settings
+  icons: {
+    iconfont: 'mdiSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
+  },
+  theme: {
+    themes: {
+      light: {
+        primary: '#3f51b5',
+        secondary: colors.grey.darken1,
+        accent: colors.shades.black,
+        error: colors.red.accent3,
+      },
+      dark: {
+        primary: colors.blue.lighten3,
+      },
+    },
+  },
+})
+</pre>
+</div>
+</body>
+</html>

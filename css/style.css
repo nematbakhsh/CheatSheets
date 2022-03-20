@@ -33,6 +33,27 @@
 	grid-template-columns: 1fr 1fr 2fr;
 }
 
+.definitions {
+	display: grid;
+	grid-template-columns: 1fr 10fr;
+	border: solid #333;
+    border-width: 1px 1px 0 0;
+}
+
+.definitions > :nth-child(odd) {
+	padding: 5px 5px;
+    background: #333;
+    text-align: right;
+    color: #fff;
+}
+
+.definitions > :nth-child(even) {
+	flex-grow: 1;
+    margin: 0;
+    padding: 5px 5px;
+    border-bottom: 1px solid #333;
+}
+
 .datatype-string {
 	color: orange;
 	padding: 1pt;
@@ -67,6 +88,16 @@
 	color: blue;
 	padding: 1pt;
 	border-radius: 5px;
+}
+
+.datatype-type {
+	color: purple;
+	padding: 1pt;
+	border-radius: 5px;
+}
+
+.datatype-type::before {
+	content: "Type ";
 }
 
 .datatype-css-proxy {

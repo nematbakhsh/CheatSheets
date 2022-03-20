@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Probability Notes</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+	<!--MathJax-->
+	<script>
+		MathJax = {
+		  tex: {
+		    inlineMath: [['$', '$'], ['\\(', '\\)']]
+		  }
+		};
+	</script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	
+	<!--
+	<link href="https://cdn.jsdelivr.net/npm/prismjs@v1.x/themes/prism.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@1.26.0/prism.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/components/prism-core.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/plugins/autoloader/prism-autoloader.min.js"></script>
+	-->
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Probability</h1>
+
+	<h2>Concepts:</h2>
+
+	<dl class="definitions">
+		<dt>experiment</dt>
+		<dd>a process which produces (different) outcomes</dd>
+		<dt>outcome</dt>
+		<dd>any result of the experiment</dd>
+		<dt>sample space</dt>
+		<dd>the set of all possible outcomes, usually denoted by S (or, the set of all possible numerical values of the random variable.)</dd>
+		<dt>event</dt>
+		<dd>any subset A of the sample space</dd>
+	</dl>
+
+	<p>Probabilities can be be determined in 3 ways
+		<ul>
+			<li>subjectively</li>
+			<li>empirically (by experimentatoin)</li>
+			<li>theoretically</li>
+		</ul>
+	</p>
+
+	<h2>Betting odds</h2>
+
+	<p>When someone bets A to B (denoted A/B) on the occurance of an event E, this means that they are willing to pay A if E does not happen and gain B otherwise. Furthermore, he/she thinks that the probability $P(E) = \frac{A}{A+B}$. The ration$A/B = p/(1-p)$ is called the fractional odds.</p>
+
+	<h2>Combinatorial Analysis</h2>
+
+	<dl>
+		<p>$n!$</p>
+		<p>
+			<ul>
+				<li>number of permutation of $n$ (distinct) objects</li>
+				<li>number of all (ordered) $n$-tuples of $n$ distict elements</li>
+			</ul>
+		</p>
+
+		<p>$P(n,r) = \frac{n!}{(n-r)!}$</p>
+		<p>
+			<ul>
+				<li>number of permutations of length $r$ from $n$ (distint) objects</li>
+				<li>number of all (ordered) $r$-tuples of $n$ distinct elements</li>
+				<li>number of different ways to put $n$ distinct elements into $r$ distinct boxes, multiple elements not allowed</li>
+			</ul>
+		</p>
+
+		<p>$C(n,r) = \binom{n}{r} = \frac{n!}{r!(n-r)!}$</p>
+		<p>
+			<ul>
+				<li>number of combinations of $r$ elements from $n$ (distinct) elements</li>
+				<li>number of all subsets of cardinality $r$ of a set of cardinality $n$</li>
+				<li>number of permutations of n indistinct elements for which $r$ and $n-r$ elements are similar</li>
+				<li>number of different ways to put $n$ indistinct elements into $r$ distinct boxes, multiple elements not allowed</li>
+				<li>coefficient of $x^ky^{n-k}$ in $(x+y)^n$ (binomial coefficient)</li>
+			</ul>
+		</p>
+
+		<p>$n^r$</p>
+		<p>
+			<ul>
+				<li>number of $r$-permutations of $n$ (distinct) letters with repetition</li>
+				<li>number of different ways to put $n$ distinct elements into $r$ distinct boxes, multiple elements allowed</li>
+			</ul>
+		</p>
+
+		<p>$C(n, \bar r) = \binom{n+r-1}{r}$</p>
+		<p>
+			<ul>
+				<li>number of different ways to put $n$ indistinct elements into $r$ distinct boxes, multiple elements allowed</li>
+				<li>number of non-negative integer solutions of the equation $X_1 + X_2 + \cdots + X_n = r$</li>
+				<li>number of $r$-combinations of $n$ (distinct) letters with repetition</li>
+			</ul>
+		</p>
+
+		<p>$\binom{n}{n_1,n_2,\ldots,n_k} = \frac{n!}{n_1!n_2!\cdots n_k!}$</p>
+		<p>
+			<ul>
+				<li>number of permutations of $n$ indistinct elements, for which $n_1,\ldots,n_k$ elements are similar and $n_1+\cdots+n_k = 0$</li>
+				<li>coefficient of $x_1^{n_1}\cdots x_k^{n_k}$ in $(x_1+\cdots+x_k)^n$ (k-nomial coefficient)</li>
+			</ul>
+		</p>
+	</dl>
+
+	<h2>Kolmogorov Probability Model</h2>
+
+	<dl class="definitions">
+		<dt>sigma field</dt>
+		<dd>Let $S$ be a set. A nonempty collection $B$ of subsets of $S$, closed under taking set completion and countable unions is called a sigma field (one can show that $B$ is also closed under finite unions and countable intersections, and $\emptyset, S \in B$).</dd>
+
+		<dt>probability space</dt>
+		<dd>a triple $(S, B, P)$ is called a probability space where $B$ is a sigma field over $S$ and $P : B \to \mathbb R$ is a function called the probability measure such that
+			<ul>
+				<li>$P(S) = 1$</li>
+				<li>$\forall E \in B, P(E) \geq 0$</li>
+				<li>$P(\cup_{i=1}^\infty E_i) = \sum_{i=1}^\infty P(E_i)$, where for all $i\neq j$, $E_i \cap E_j = \emptyset$</li>
+			</ul>
+		</dd>
+
+		<dt>event</dt>
+		<dd>Any element of $B$, in a probability space is called an event</dd>
+
+		<dt>Theorem 1</dt>
+		<dd>$P(\emptyset) = 0$</dd>
+
+		<dt>Theorem 2</dt>
+		<dd>For mutually distinct events $E_1,\ldots, E_n$, $P(\cup_{i=1}^n E_i) = \sum_{i=1}^n P(E_i)$</dd>
+
+		<dt>Theorem 3</dt>
+		<dd>$P(E^c) = 1 - P(E)$</dd>
+
+		<dt>Theorem 4</dt>
+		<dd>$P(E - F) = P(E) - P(E \cap F)$</dd>
+
+		<dt>Corollary 1</dt>
+		<dd>If $F\subseteq E$, $P(E - F) = P(E) - P(F)$ and $P(F) \leq P(E)$</dd>
+
+		<dt>Corollary 2</dt>
+		<dd>For any event $E$, $0 \leq P(E) \leq 1$</dd>
+
+		<dt>Theorem 5</dt>
+		<dd>For events $E,F$, $P(E\cup F) = P(E) + P(F) - P(E\cap F)$</dd>
+
+		<dt>Uniform Probability Model</dt>
+		<dd>If the sample space is finite and all of the outcomes are equally likly, then P(A) = |A|/|S|</dd>
+	</dl>
+
+	<h2>Conditional Probability</h2>
+
+	<dl class="definitions">
+		<dt>Conditional Probability</dt>
+		<dd>Probability of event $A$ happening provided that event $B$ ($P(B) \neq 0$) happend is called conditional probability denoted by $P(A|B)$ and defined as $P(A|B) = \frac{P(A\cap B)}{P(B)}$</dd>
+		<dt>condition probability space</dt>
+		<dd>Let $(S,B,P)$ be a probability space and $C$ be an event, $(S, B, P(-|C))$ is a probability space called the conditional probability space</dd>
+
+		<dt>Probability multiplication rule</dt>
+		<dd>P(A\cap B) = P(A|B)P(B) = P(B|A)P(A)</dd>
+
+		<dt>Partition theorem</dt>
+		<dd>If $B_1,\ldots, B_k$ form a partition of $S$, then $P(A) = \sum_{i=1}^k P(A\cap B_i) = \sum_{i=1}^k P(A|B_i)P(B_i)
+			<p>Special case, P(A) = P(A\cap B) + P(A\cap B^c) = P(A|B)P(B) + P(A|B^c)P(B^c)</p>
+		</dd>
+
+		<dt>Bayes' Theorem</dt>
+		<dd>$P(B|A) = \frac{P(A|B)P(B)}{P(A)}$, or more generally, for a partition $\{B_i\}_{i=1}^k$, $P(B_j|A) = \frac{P(A|B_j)P(B_j)}{\sum_{i=1}^k P(A|B_j)P(B_j)}$</dd>
+
+		<dt>Chains of events</dt>
+		<dd>$P(A_1\cap A_2\cap\ldots\cap A_n) = P(A_1)P(A_2|A_1)P(A_3|A_2\cap A_1)\ldots P(A_n|A_{n-1}\cap\ldots\cap A_1)$</dd>
+
+		<dt>Independent events</dt>
+		<dd>Event $A$ and $B$ are independent iff any of the following holds
+			<ul>
+				<li>$P(A\cap B) = P(A)P(B)$</li>
+				<li>$P(A|B) = P(A)$</li>
+				<li>$P(B|A) = P(B)$</li>
+			</ul>
+			Furthermore, events $A_1,\ldots,A_n$ are independent if, for any $2\leq k\leq n$, we have $P(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = P(A_{i_1})P(A_{i_2})\cdots P(A_{i_n})$
+		</dd>
+		<dt>Product Probability Space</dt>
+		<dd>Let $(S_1, B_1, P)$ and $(S_2,B_2,P)$ be two probability spaces, the space $(S_1\times S_2, B_1\times B_2, P)$ is called the product space, where the product measure is defined by $P(E\times F) = P(E)P(F)$ for events $E$ and $F$ in $S_1$ and $S_2$ respectively.</dd>
+	</dl>
+
+
+	<h2>Random Variables</h2>
+
+	<dl class="definitions">
+		<dt>random variable</dt>
+		<dd>A random variable is a function from the elementary outcomes in the sample space $S$ to real numbers. (can be discrete or continuous)
+		Random variables are usually denoted by capital letters, $X, Y, Z, \ldots$ and $x,y,z, \ldots$ are used for particular values of random variables. We denote its range by $S_X$.
+			<p>For a subset $A$ of real numbers, the event $(X\in A) = \{e \in S | X(e) \in A\}$ and its probability is denoted by $P(X\in A)$.</p>
+		</dd>
+
+		<dt>discrete random variabe</dt>
+		<dd>$X$ is called discrete if $S_X$ is a countable set.</dd>
+
+		<dt>continuous random variable</dt>
+		<dd>$X$ is called continuous if $S_X$ is a union of intervals</dd>
+
+		<dt>Distribution Function</dt>
+		<dd>Suppose $X$ is random variable over a probability model, $F_X(x) = P(X \leq x)$ is called the distribution function of $X$.</dd>
+
+		<dt>Properties of distribution function</dt>
+		<dd>$F_X : \mathbb R \to \mathbb R$ has the following properties:
+			<ul>
+				<li>$\forall x, 0 \leq F(x) \leq 1$</li>
+				<li>$F_X$ is non-decreasing</li>
+				<li>$F(-\infty) = 0, F(\infty) =1$</li>
+				<li>$F_X$ is right continuous at any point $x=a$</li>
+			</ul>
+		</dd>
+
+		<dt>Types of distribution function</dt>
+		<dd>
+			<ul>
+				<li><strong>$X$ discrete</strong> $F_X$ is a step function, and probability is concentrated in jump points</li>
+				<li><strong>$X$ continuous</strong> graph of $F_X$ is continuous and probability is distributed on one or several intervals (where the graph is not constant)</li>
+				<li><strong>$X4 mixed</strong> $F_X$ is continuous with a finite number of jumps</li>
+			</ul>
+		</dd>
+
+		<dt>Identically distributed variables</dt>
+		<dd>Random variables $X$ and $Y$ are identically distributed, if $\forall z$, $P(X\leq z) = P(Y \leq z)$, or equivalently $F_X = F_Y$</dd>
+		
+	</dl>
+
+
+	<h2>Expectation</h2>
+
+
+		
+		
+
+		mass of probability
+		<dt>expectation:</dt> long-run average of a random variable
+			<p>($X$ discrete) $E(X) = \sum_{i=1}^n x_i p(x_i)$</p>
+			<p>E(X) = \bar(X) (sample mean of a sample distribution)</p>
+
+	<h1>Distributions</h1>
+
+<dt>distribution</dt>
+		<dd>a probability distribution is the complete set of sample space values with their associated probabilities which must sum to 1 for discrete random variables.</dd>
+		<dt>(discrete) uniform distribution</dt>
+		<dd>a distribution is uniform if we have the same probability of occurrence for each sample space value.
+
+			<dt>Degenerate distribution</dt>
+			<dd>all probability is concentrated at one point, $P(X=c) = 1$.</dd>
+
+
+</body>
+</html>

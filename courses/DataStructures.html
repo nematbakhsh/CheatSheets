@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Data Structures Notes</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+	<link href="https://cdn.jsdelivr.net/npm/prismjs@v1.x/themes/prism.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@1.26.0/prism.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/components/prism-core.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/plugins/autoloader/prism-autoloader.min.js"></script>
+
+	<!--MathJax-->
+	<script>
+		MathJax = {
+		  tex: {
+		    inlineMath: [['$', '$'], ['\\(', '\\)']]
+		  }
+		};
+	</script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Data Structures</h1>
+
+	<h1>Binary Search Trees (BST)</h1>
+
+	<p>It is a linked data structure such that
+		<ul>
+			<li>each node is an object and has the attributes node.key, node.left, node.right, and ?node.parent an maybe some satellite data. Misssing left, right and parent attributes is set to be NIL</li>
+			<li>It satidfies the <strong>binary-search-tree propery</strong>, i.e. for any node $x$, if $y$ is a node in the left subtree of $x$, then $y.key \leq x.key$, and if $y$ is a node in the right subtree, then $y.key \geq x.key$</li>
+		</ul>	
+		Therefore, a BST is a reference to a root node.
+	</p>
+
+	<h2>BST API</h2>
+
+<table class="table table-striped table-bordered table-hover text-center">
+	<thead class="thead-dark">
+		<tr>
+			<th>Method</th>
+			<th>Best</th>
+			<th>Average</th>
+			<th>Worst</th>
+			<th>Remarks</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th scope="row">recursive_search(key)</th>
+			<td></td>
+			<td>&theta;(log_2(n))</td>
+			<td>&theta;(n)</td>
+			<td class="text-start">in general O(h), where h is the height of tree</td>
+		</tr>
+
+		<tr>
+			<th scope="row">iterative_search(key)</th>
+			<td></td>
+			<td>&theta;(log_2(n))</td>
+			<td>&theta;(n)</td>
+			<td class="text-start">in general O(h), where h is the height of tree<br>mostly, more efficient than the recursive_search()</td>
+		</tr>
+	</tbody>
+</table>
+
+	<h2>Pseudo Code</h2>
+
+<div class="nav nav-tabs" id="BST-tab">
+<button class="nav-link active" id="BST-search-tab" data-bs-toggle="tab" data-bs-target="#BST-search" type="button">Search</button>
+<button class="nav-link" id="BST-insertion-tab" data-bs-toggle="tab" data-bs-target="#BST-insertion" type="button">Insertion</button>
+<button class="nav-link" id="BST-deletion-tab" data-bs-toggle="tab" data-bs-target="#BST-deletion" type="button">Deletion</button>
+
+
+</div>
+<div class="tab-content" id="BST-tabContent">
+    <div class="tab-pane fade show active" id="BST-search">
+<div class="file">
+<div class="file-header">Tree-Search</div>
+<pre class="file-content"><code class="lang-python">Tree_Search(key)
+	return Iterative_Tree_Search(Tree.Root, key)
+
+Iterative_Tree_Search(node, key)
+	while (node &ne; NIL and key &ne; node.key)
+		if (key < node.key) node = node.left                     # go to the left subtree
+		else node = node.right                                   # go to the right subtree
+	return node
+
+Recursive_Tree_Search(node, key)
+	if (node == NIL or key == node.key) return node              # either key found or not found
+	if (key < node.key) return Tree_Search(node.left, key)       # go to the left subtree 
+	else return Tree_Search(node.right, key)                     # go to the right subtree
+</code></pre>
+</div>
+	</div>
+
+    <div class="tab-pane fade" id="BST-insertion">
+
+<div class="file">
+<div class="file-header">Tree-Insert</div>
+<pre class="file-content"><code class="lang-python">Tree_Insert(new_node)
+	node = Tree.Root
+	while (node &ne; NIL)
+		parent = node
+		if (new_node.key < node.key) node = node.left                                      # go to the left subtree
+		else if (new_node.key = node.key) &ltUpdate node data by new_node data and return>   # remove if duplicate keys are allowed
+		else node = node.right                                                             # go to the right subtree
+
+	if (parent == NIL) T.Root = new_node                                                   #tree is empty
+	else if (new_node.key < parent.key) parent.left = new_node                             # set new node as the left child
+	else parent.right = new_node                                                           # or set it as the right child
+</code></pre>
+</div>
+	</div>
+
+    <div class="tab-pane fade" id="BST-deletion">
+
+<div class="file">
+<div class="file-header">Tree-Delete</div>
+<pre class="file-content"><code class="lang-python">Tree_Delete(key)
+	
+</code></pre>
+</div>
+    </div>
+</div>
+
+
+	<h2>Implmentation</h2>
+
+<div class="file" style="visibility: hidden;">
+<div class="file-header">BinarySearchTree.java</div>
+<div class="file-content">
+<pre><code class="lang-java">public class BinarySearchTree&ltKey extends Comparable&ltKey>, Value> {
+	private Node root; // root of BST
+
+	public static class Node
+	{
+		// satellite data can be added to node like
+		// private Value value;
+		private Key key;
+		private Node left, right;
+		public Node(Key key)
+		{
+			this.key = key;
+		}
+	}
+
+	public Node recursive_search(Key key) {
+		recursive_search(root, key);
+	}
+	private Node recursive_search(Node node, Key key) {
+		if (node == null) return node;
+		int cmp = key.compareTo(node.key);
+		if (cmp < 0) return recursive_search(node.left, key);
+		else if (cmp > 0) return recursive_search(node.right, key);
+		else return node;
+	}
+
+	public Node iterative_search(Key key) {
+		Node node = root;
+		while (node != null) {
+			int cmp = key.compareTo(node.key);
+			if (cmp < 0) node = node.left;
+			else if (cmp > 0) node = node.right;
+			else return node;
+		}
+		return null;
+	}
+
+	public void insert(Node input) {
+		root = insert(root, input);
+	}
+	private Node insert(Node node, Node input) {
+		if (node == null) return input;
+		int cmp = input.key.compareTo(node.key);
+		if (cmp < 0) node.left = insert(node.left, input);
+		else if (cmp > 0) node.right = insert(node.right, input);
+		else update(node, input) // updates the satellite data of node with htose in the input node
+	}
+}
+</code></pre>
+</div>
+</div>
+
+
+
+	<h1>Graphs</h1>
+
+	<div class="nav nav-tabs" id="graphs-tab">
+<button class="nav-link active" id="graphs-BFS-tab" data-bs-toggle="tab" data-bs-target="#graphs-BFS" type="button">Breadth First search (BFS)</button>
+<button class="nav-link" id="graphs-DFS-tab" data-bs-toggle="tab" data-bs-target="#graphs-DFS" type="button">Depth First Search</button>
+<button class="nav-link" id="graphs-SingleSourceShortestPath-tab" data-bs-toggle="tab" data-bs-target="#graphs-SingleSourceShortestPath" type="button">Single Source Shortest Path</button>
+<button class="nav-link" id="graphs-Dijkstra-tab" data-bs-toggle="tab" data-bs-target="#graphs-Dijkstra" type="button">Dijkstra's Algorithm</button>
+
+
+	</div>
+<div class="tab-content" id="graphs-tabContent">
+    <div class="tab-pane fade show active" id="graphs-BFS">
+<div class="file">
+<div class="file-header">Breadth_First_Search</div>
+<pre class="file-content"><code class="lang-python">Breadth_First_Search(source)
+	foreach vertex u in G.V - {s}
+		u.discovered = false
+		u.distance = +infinity
+		u.pi = NIL
+	source.discovered = true
+	source.distance = 0
+	source.pi = NIL
+	initialize new Queue Q
+	Q.enqueue(source)
+	while Q is nonempty
+		u = Q.dequeue()
+		foreach v in G.Adj[u]
+			if v.discovered == false
+				v.discovered = true
+				v.distance = u.distance + 1
+				v.pi = u
+				Q.enqueue(v)
+
+Breadth_First_Tree(source)
+	Breadth_First_Search(source)
+	V_pi = { v in G.V | v.pi != NIL} union {source}
+	E_pi = { (v.pi, v) | v in V_pi - {source}}
+	return new Graph(V_pi, E_pi)
+
+Print_Path(source, v)
+	if v == source print source
+	elseif v.pi == NIL print "No path exists from {source} to {v}"
+	else 
+		Print_Path(source, v.pi)
+		print v
+
+</code></pre>
+</div>
+	
+	<h3>Loop Invariants</h3>
+	<ul>
+		<li>during execution, if the queue $Q = \{v_1,\ldots,v_r\}$, then for all $i, 1 < i < r-1$, $v_i.d \leq v_{i+1}.d$ and $v_r.d \leq v_1.d + 1$.</li>
+	</ul>
+	</div>
+
+
+	<div class="tab-pane fade" id="graphs-DFS">
+<div class="file">
+<div class="file-header">Depth_First_Search</div>
+<pre class="file-content"><code class="lang-python">Depth_First_Search()
+	foreach vertex u in G.V
+		u.discoverd = false
+		u.predecessor = NIL
+	time = 0
+	foreach vertex u in G.V
+		if !u.discovered Depth_First_Visit(u)
+
+Depth_First_Visit(u)
+	time = time + 1
+	u.d = time
+	u.discovered = true
+	foreach vertex v in G.Adj[u]
+		if !v.discovered
+			v.predecessor = u
+			Depth_First_Serach(v)
+	time = time + 1
+	u.f = time
+
+Depth_First_Forest()
+	G.Depth_First_Search()
+	E_pi = { (v.predecessor, v) | v in G.v - {v in G.V | v.predecessor == NIL}}
+	return new Graph(V, E_pi)
+
+Topological_Sort()
+	G.Depth_First_Serach() # to compute finishing times u.f
+		as each vertex is finished, insert it into a FILO stack
+	return the stack # i.e. the finishing times in decreasing order gives a topological sort
+
+Strongly_Connected_Components()
+	G.Depth_First_Search() # to compute finishing times u.f
+	G_transpose = G.transpose()
+	G' = G_transpose.Depth_First_Search() such that, in the main loop of DFS, vertices are fed in order of decreasing finishing attributes
+	return the vertices of the G'.Depth_First_Forest()
+</code></pre>
+</div>
+	
+	<h3>Loop Invariants</h3>
+	<ul>
+		
+	</ul>
+	</div>
+
+	<div class="tab-pane fade" id="graphs-SingleSourceShortestPath">
+<div class="file">
+<div class="file-header">Bellman-Ford</div>
+<pre class="file-content"><code class="lang-python">Bellman_Ford()
+
+</code></pre>
+</div>
+	
+	<h3>Loop Invariants</h3>
+	<ul>
+		<li>Monotonicity of distance: $d[u] \geq d^\ast[u]$, where $d^\ast[u]$ is the shortest path from the source to vertex $u$.</li>
+		<li>If $d[u] \neq \infty$, there exists a path from source to vertex $u$ of that weight.</li>
+		<li>After $i$ iteration, $d[u]$ must be at most equal to the weigth of shortest path of $i$ edges or fewer.</li>
+	</ul>
+	</div>
+
+	<div class="tab-pane fade" id="graphs-Dijkstra">
+<div class="file">
+<div class="file-header">Dijkstra Algorithm</div>
+<pre class="file-content"><code class="lang-python">Dijkstra()
+
+</code></pre>
+</div>
+	
+	<h3>Loop Invariants</h3>
+	<ul>
+		<li>For any visited vertex $v$, $v.d = d^\ast[v]$</li>
+	</ul>
+	</div>
+</div>
+
+	<h2>Tables</h2>
+
+<table class="table table-striped table-bordered table-hover text-center">
+	<thead class="thead-dark">
+		<tr>
+			<th>Method</th>
+			<th>Best</th>
+			<th>Average</th>
+			<th>Worst</th>
+			<th>Remarks</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th scope="row">Breadth_First_Search</th>
+			<td></td>
+			<td></td>
+			<td>O(|V|+|E|) <br> (since we might not reach all vertices)</td>
+			<td class="text-start">Used to compute distances from the source vertex (after termination, delta(s,v) = v.distance for any vertex v)<br>Used to produce a breadth-first tree rooted at the source vertex<br>provides a shortest path from the source vertex to any other reachable vertex<br>practically, only limited to one source vertex</td>
+		</tr>
+		<tr>
+			<th scope="row">Print_Path</th>
+			<td></td>
+			<td></td>
+			<td>&theta;(path length)</td>
+			<td class="text-start"></td>
+		</tr>
+
+		<tr>
+			<th scope="row">Depth_First_Search</th>
+			<td></td>
+			<td>&theta;(|V|+|E|)</td>
+			<td>&theta;(|V|+|E|)</td>
+			<td class="text-start">
+				the attributes d and f depend on the order of vertices of G as well as order of neighbors of each vertex
+				<br>
+				predecessor subgraph forms a forest
+				<br>
+				it has the parenthesis structure (nesting of descendants' intervals)
+				<br>
+				white-path theorem
+				<br>
+				classification of edges (tree, back, forward and cross edges) based on the depth-first forest or intervals
+				<br>
+				a directed graph G is acyclic if and only if a depth-first search of G yields no back edges
+			</td>
+		</tr>
+
+		<tr>
+			<th scope="row">Topological_Sort</th>
+			<td></td>
+			<td>&theta;(|V|+|E|)</td>
+			<td>&theta;(|V|+|E|)</td>
+			<td class="text-start"></td>
+		</tr>
+
+		<tr>
+			<th scope="row">Strongly_Connected_Components</th>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td class="text-start">
+				the component graph of $G$, $G^SCC$, is a directed accyclic graph (dag)
+				<br>
+				for any two SCC $C$ and $C'$ in a directed graph $G$ and any edge $(u,v)$ in $G^T$, with $u \in C$ and $v\in C'$, $f(C) < f(C')$, where $f(C)$ is the maximum of finishing time of all elements of $C$
+			</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

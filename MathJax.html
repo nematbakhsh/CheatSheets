@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MathJax Cheat Sheet</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="container">
+	<h1>MathJax</h1>
+	<p>Beautiful and accessible math in all browsers</p>
+
+	<h1>Installation</h1>
+
+	<p>Snippet integration using a <a href="https://www.mathjax.org/#gettingstarted">CDN</a></p>
+
+	<head>Configuration</head>
+
+<div class="file">
+<div class="file-header">Inside your html file</div>
+<pre class="file-content">
+&ltscript>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+&lt/script>
+&lt!-- It is important that the configuration above comes before the script that loads MathJax component-->
+&ltscript id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+&lt/script>
+</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Statistics Cheat Sheets</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+	<!--MathJax-->
+	<script>
+		MathJax = {
+		  tex: {
+		    inlineMath: [['$', '$'], ['\\(', '\\)']]
+		  }
+		};
+	</script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	
+	<!--
+	<link href="https://cdn.jsdelivr.net/npm/prismjs@v1.x/themes/prism.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@1.26.0/prism.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/components/prism-core.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/plugins/autoloader/prism-autoloader.min.js"></script>
+	-->
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+		<h1>Statistics</h1>
+
+	<h6>Types of variables (Stevens scales)</h6>
+	<dl class="definitions">
+		<dt>categorical variables</dt>
+		<dl class="definitions">
+				<dt>nominal variables</dt>
+				<dd>Used only for identification and usually is a natural number
+					<ul>
+						<li>can be transformed by any 1-to-1 function</li>
+					</ul>
+				</dd>
+				<dt>ordinal variables</dt>
+				<dd>Used to to show superiority
+					<ul>
+						<li>can be used for comparison</li>
+						<li>ordinal categorical variables have rank orders</li>
+						<li>arithmatic operations are meaningless</li>
+						<li>can be transformed by any (strictly) increasing function</li>
+					</ul>
+				</dd>
+		</dl>
+		<dt>measurable variables</dt>
+		<dl class="definitions">
+			<dt>interval-level</dt>
+			<dd>keeps the ratio of difference measurred by two different scales
+				<ul>
+					<li>can be transformed by any linear function f(x) = ax + b (a > 0)</li>
+				</ul>
+			</dd>
+			<dt>ratio-level</dt>
+			<dd> keeps the ratio fixed
+				<ul>
+					<li>arithmetic operations are allowed</li>
+					<li>can be transformed by linear functions of the form f(x) = ax (a > 0)</li>
+				</ul>
+			</dd>
+		</dl>
+	</dl>
+	
+
+	<h2>Data Visualization</h2>
+
+	<h3>Frequency Table</h3>
+
+	<h3>Histogram</h3>
+
+	<h3>Frequency curve</h3>
+
+	<h2>Measures of central tendency</h2>
+
+	<p>Suppose we have a sample data of cardinality $n$ comprising of $X_1,\ldots, X_k$ with frequencies $f_1,\ldots, f_k$ respectively. (For continuous data $X_i$'s are class representatives)</p>
+
+	<ul>
+		<li>(Sample Arithmetic) Mean
+			<p><strong>Formula</strong> $\bar{X} = \frac{\sum_{i=1}^k f_iX_i}{n}$</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>$\sum_{i=1}^n (X_i - \bar{X}) = 0$</li>
+					<li>let C be a constant, $\sum_{i=1}^n (X_i - C)^2$ is minimal when $C = \bar{X}$</li>
+					<li>Sensitive to outliers (better using the trimmed mean instead if outliers are present)</li>
+					<li>Not useful for categorical variables</li>
+				</ul>
+			</p>
+		</li>
+		<li>Weighted Mean
+			<p><strong>Formula</strong>
+				Let $w_1, \ldots, w_k$ be weights, i.e. $0 < w_i < 1$ and $\sum_{i=1}^k w_i = 1$, then $\bar{X}_w = \sum_{i=1}^k w_i X_i$
+			</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>Arithmetic mean is a weighted mean with $w_i = f_i/n$</li>
+				</ul>
+			</p>
+		</li>
+
+		<li>Geometric Mean
+			<p><strong>Formula</strong>
+				Suppose $X_i > 0$, then $G = \sqrt[n]{X_1^{f_1}\cdots X_k^{f_k}}$
+			</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>Logarithm of geometric mean equals the arithmetic mean of logarithm of $X_i$'s</li>
+					<li>Used when X_i are percentages or ratios</li>
+				</ul>
+			</p>
+		</li>
+
+		<li>Harmonic Mean
+			<p><strong>Formula</strong>
+				Suppose $X_i \neq 0$, then $H = \frac{n}{\sum_{i=1}^k \frac{f_i}{x_i}}$
+			</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>Equals the inverse of arithmetic mean of $1/x_1, \ldots, 1/x_n$</li>
+				</ul>
+			</p>
+		</li>
+
+		<li>Root Mean of order $r$
+			<p><strong>Formula</strong>
+				$M_r = \sqrt[r]{\sum_{i=1}^k \frac{f_ix_i^r}{n}}$
+			</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>$M_r$ is an increasing function of $r$</li>
+					<li>for $r=2$ it is called the root mean square</li>
+					<li>for $r=-1, 1, 2$ we get the harmonic, arithmetic and root mean square respectively.</li>
+					<li>One can show that $H \leq G \leq \bar{x} \leq M_2$</li>
+				</ul>
+			</p>
+		</li>
+
+		
+		<li>(Sample) Median: The median is a number that approximately is bigger that half of data
+			<p><strong>Formula</strong>
+			(Discrete) $m  = \begin{cases} X_{(\frac{n+1}{2})} & n \text{ odd}\\ (X_{\frac{n}{2}} + X_{\frac{n}{2}+1})/2 & n \text{ even}\end{cases}$
+			(Continuous) $m = L_{0.5} + \frac{0.5n - f^{-}_{0.5}}{f_{0.5}}w$
+			</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>From a table of frequencies, the median is the value for which the cumulative percentage first reaches 50% (or, if a cumulative % is exactly 50%, the average of the corresponding value of X and the next highest value).</li>
+				</ul>
+			</p>
+		</li>
+
+		<li>Quantiles
+			<p>$Q_p$ for $0 < p < 1$ is called the quantile of order $p$, if approximately, %100p of data are less than it.</p>
+
+			<p><strong>Formula</strong>
+				(Discrete) $Q_p = (1-w)X_r + wX_{r+1}$ where $(n+1)p = r + w, r \in \mathbb Z, 0 \leq w < 1$
+				(Continuous) $Q_p = L_p + \frac{pn - f^-_p}{f_p}w$
+			</p>
+
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>Q_{0.5} = median</li>
+					<li>the area under the frequency curve and to the left of line $x = Q_p$ equals $p$ square unit</li>
+					<li>The 4-quantiles $Q_{.25}, Q_{.5}, Q_{75}$ are called quartiles usually denoted by $Q_1, Q_2, Q_3$</li>
+					<li>The 10-quantiles $Q_{.1},\ldots, Q_{.9}$ are called deciles denoted by $D_1,\ldots,D_9$</li>
+					<li>The 100-quantiles are called percentiles</li>
+				</ul>
+			</p>
+		</li>
+		
+		<li>(Sample) Mode $M$ = the value which has the highest frequency (for continuous data we choose the representative of the class with highest frequency)
+
+			<p><strong>Formula</strong> the data that has the highest frequency (can be more than one) - if the data has two consecutive modes, usually their mean is take as the mode.</p>
+
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>The mode is not very useful for continuous variables which have many different values, such as GDP per capita.</li>
+					<li>The mode is the only measure of central tendency which can be used even when the values of a variable have no ordering, such as for the (nominal) variable.</li>
+					<li>A variable can have several modes (i.e. be multimodal).</li>
+					<li>If skewness of frequency curve is small then approximately we have $\bar X - M \sim 3(\bar X - m)$</li>
+				</ul>
+			</p>
+
+		</li>
+	</ul>
+
+	<h2>Relationships</h2>
+	<ul>
+		<li>If the frequency curve is skewed to right, then $M < m < \bar X$, and if it is skewed to left, then $\bar X < m < M$</li>
+		<li>If skewness of frequency curve is small then approximately we have $\bar X - M \sim 3(\bar X - m)$</li>
+		<li>The line $x = M$ goes through the maximum of the frequency curve, the line $x = m$ halves the area under the curve and the line $x = \bar X$ is the balancing axis of the curve</li>
+	</ul>
+
+	<h2>Measures of Dispersion (Spread)</h2>
+	<ul>
+		<li>(Sample) Range
+			<p><strong>Formula</strong> $R = X_{(n)} - X_{(1)}$</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>Not a very good measure, since it only depends on the smallest and biggest numbers in our data.</li>
+					<li>$X_{(1)} + X_{(n)}/2$ is a measure of central tendency called range mean</li>
+				</ul>
+			</p>
+		</li>
+
+		<li>Deviation Mean (about Mean or Median)
+			<p><strong>Formula</strong>
+				$d = \frac{1}{n} \sum_{i=1}^k f_i|X_i - \bar X|$
+			</p>
+		</li>
+		<li>(Sample) Variance
+			<p><strong>Formula</strong> $S^2 = \frac{1}{n} \sum_{i=1}^k f_i(X_i - \bar{X})^2$ or $S^2_u = \frac{1}{n-1} \sum_{i=1}^k f_i(X_i - \bar{X})^2$</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>Note that $\sum (X_i - \bar{X})^2 = \sum X_i^2 - n\bar{X}^2$, therefore,</li>
+					<li>$S^2 = \big(\frac{1}{n} \sum_{i=1}^k f_iX_i^2\big) - \bar{X}^2$ abbreviated as $S^2 = \bar{X^2} - \bar{X}^2$</li>
+				</ul>
+			</p>
+		</li>
+		<li>(Sample) Standard Deviation 
+			<p><strong>Formula</strong> $S = \sqrt{S^2}$</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>Both $S$ and $S^2$ are non-negative and S = S^2 = 0 iff all X_i observations are the same</li>
+					<li>For many symmetric distributions:
+						<ul>
+							<li>about 2/3 of the observations are between $\bar X − S$ and $\bar X + S$, that is, within one (sample) standard deviation about the (sample) mean</li>
+							<li>about 95% of the observations are between $\bar X − 2S$ and $\bar X + 2S$, that is, within two (sample) standard deviations about the (sample) mean.</li>
+						</ul>
+					</li>
+					<li>Let $Y_i = \frac{X_i - b}{a}$ or $X_i = aY_i + b$, then $\bar X = a \bar Y + b$, $S^2_X = a^2S^2_Y$, and $S_X = aS_Y$</li>
+				</ul>
+			</p>
+
+		</li>
+
+		<li>Coefficient of Variation
+			<p><strong>Formula</strong> $V = \frac{S}{\bar X}$</p>
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>It is independent of the unit of measurement, and usually used for comparison</li>
+					<li>Usually stated as a percentage</li>
+				</ul>
+			</p>
+		</li>
+
+		<li>Quartile Half-range
+			<p><strong>Formula</strong> $Q = \frac{Q_3 - Q_1}{2}$</p>
+
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>The number $\frac{Q_1+Q_3}{2}$ is a measure of central tendency called quartile mean</li>
+				</ul>
+			</p>
+		</li>
+		
+		<li>Boxplots</li>
+	</ul>
+
+	<h1>Other Measurements</h1>
+
+	<ul>
+		<li>(Sample) Moment and Central Moment
+			<p><strong>Formula</strong>
+				($r$-th Moment) $m'_r = \frac{1}{n} \sum_{i=1}^k f_i X_i^r$
+			</p>
+			<p><strong>Formula</strong>
+				($r$-th moment about the mean (central moment)) $m_r = \frac{1}{n} \sum_{i=1}^k f_i (X_i-\bar X)^r$
+			</p>
+
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>$m'_1 = \bar X$ and $m_1 = 0$</li>
+					<li>m_2 = S^2 (Variance)</li>
+					<li>If data is symmetric about the mean, then m_{odd} = 0</li>
+				</ul>
+			</p>
+		</li>
+
+		<li>Skewness: Measures how symmetric is the frequency curve
+			<p><strong>Formula</strong> Pearson's first skewness coefficient (mode skewness) $b_1 = \frac{\bar X - M}{S}$</p>
+			<p><strong>Formula</strong> Pearson's second skewness coefficient (median skewness) $b_2 = \frac{3(\bar X - M)}{S}$</p>
+			<p><strong>Formula</strong> Pearson's moment coefficient of skewness $g = \frac{m_3}{S^3}$</p>
+
+			<p><strong>Remarks</strong>
+				<ul>
+					<li>S  is used in the above formula to make the coefficients not depending on the unit of measurement</li>
+					<li>Based on the sign, the frequency curve is either skewed to right (positive) or left (negative)</li>
+				</ul>
+			</p>
+		</li>
+
+		<li>Kurtosis: A measure for wideness of the frequency curve in respect to the standard normal curve
+			<p><strong>Formula</strong> $k = \frac{m_4}{S^4} - 3$</p>
+		</li>
+	</ul>
+
+	<h1>Sampling</h1>
+
+	<dl class="definitions">
+		<dt>Statistics</dt>
+		<dd>The discipline of collecting, organizating, analysing, interpreting, and presenting data.</dd>
+		<dt>Population</dt>
+		<dd> The aggregate of all the elements, sharing some common set of characteristics, which comprise the universe for the purpose of the problem being investigated.</dd>
+		<dt>Census</dt>
+		<dd>A complete enumeration of the elements of a population or study objects.</dd>
+		<dt>Sample</dt>
+		<dd>A subgroup of the elements of the population selected (based on some criteria) for participation in the study.</dd>
+		<dt>Measuring</dt>
+		<dd>By measuring a property t of an element of our population, we mean assigning a real number.</dd>
+		<dt>Scale of measurement</dt>
+		<dd>The function or ways that assigns numbers to elements of a population</dd>
+		<dt>data</dt>
+		<dd>all the numbers collected after measuring a property t of a population</dd>
+		<dt>discrete data</dt>
+		<dd>data gained from categorical variables or by counting</dd>
+		<dt>continuous data</dt>
+		<dd>data gained by measurable variables</dd>
+		<dt>Frequency</dt>
+		<dd></dd>
+		<dt>relative frequency</dt>
+		<dd></dd>
+		<dt>cumulative frequency</dt>
+		<dd></dd>
+		<dt>relative cumulative frequency</dt>
+		<dd></dd>
+	</dl>
+
+	<p>Bring in the sampling factors table</p>
+
+	<h3>Sampling techniques</h3>
+
+	<ul>
+		<li>non-probability sampling techniques</li>
+		<li>probability sampling techniques</li>
+	</ul>
+
+</body>
+</html>

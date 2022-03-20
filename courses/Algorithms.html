@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Algorithms Notes</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+	<link href="https://cdn.jsdelivr.net/npm/prismjs@v1.x/themes/prism.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@1.26.0/prism.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/components/prism-core.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/plugins/autoloader/prism-autoloader.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body class="container">
+	<h1>Analysis of Algorithms</h1>
+	<p>Learn the following key notions</p>
+
+	<ul>
+		<li>Algorithms, Instance of a problem, Correctness of an algorithm, Data structures</li>
+		<li>Loop invariant, Initialization, Maitenance and Termination for correctness check</li>
+		<li>Pseudocode</li>
+		<li>Analysis of algorithms, Random-access machine (RAM), "running time" and "size of input"</li>
+		<li>Best case, worst case and average case</li>
+		<li>Asymptotic analysis, Order of Growth, Asymptotic notations: Big O - Big Omega, Big Theta, and tilda</li>
+		<li>Sorting Algorithms
+			<ul>
+				<li>Selection sort</li>
+				<li>Insertion sort</li>
+				<li>Bubble sort</li>
+				<li>Merge sort</li>
+				<li>Shell's sort</li>
+			</ul>
+		</li>
+		<li>Seraching Algorithms
+			<ul>
+				<li>Linear serach</li>
+				<li>Binary search</li>
+			</ul>
+		</li>
+		<li>recursive algorithms, divide-and-conquer, solving recurrence equation</li>
+
+
+	</ul>
+
+<h1>Sorting Algorithms</h1>
+
+<table class="table table-striped table-bordered table-hover text-center">
+	<thead class="thead-dark">
+		<tr>
+			<th>Algorithm</th>
+			<th>Best</th>
+			<th>Average</th>
+			<th>Worst</th>
+			<th>In Place</th>
+			<th>Stable</th>
+			<th>Remarks</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th scope="row">Bubble Sort</th>
+			<td>&theta;(n)</td>
+			<td>&theta;(n^2)</td>
+			<td>&theta;(n^2)</td>
+			<td>&check;</td>
+			<td>&check;</td>
+			<td class="text-start">inefficient</td>
+		</tr>
+
+		<tr>
+			<th scope="row">Selection Sort</th>
+			<td>&theta;(n^2)</td>
+			<td>&theta;(n^2)</td>
+			<td>&theta;(n^2)</td>
+			<td>&check;</td>
+			<td></td>
+			<td class="text-start">Minimal data movement (n exchanges)<br>Running time insensitive to input</td>
+		</tr>
+
+		<tr>
+			<th scope="row">Insertion Sort</th>
+			<td>&theta;(n)</td>
+			<td>&theta;(n^2)</td>
+			<td>&theta;(n^2)</td>
+			<td>&check;</td>
+			<td>&check;</td>
+			<td class="text-start">Usually used for small arrays<br>Running time for partially sorted arrays (i.e. arrays for which number of inversions is <= cN) is linear.</td>
+		</tr>
+
+		<tr>
+			<th scope="row">Shell Sort</th>
+			<td>depends on increments</td>
+			<td>uknown</td>
+			<td>depends on increments</td>
+			<td>&check;</td>
+			<td></td>
+			<td class="text-start">Mostly subquadratic runtime<br>It can be interpreted as a generalization of sorting by exchange (bubble sort) as well as sorting by insertion (insertion sort).</td>
+		</tr>
+
+		<tr>
+			<th scope="row">Merge Sort</th>
+			<td>&theta;(n log<sub>2</sub>(n))</td>
+			<td>&theta;(n log<sub>2</sub>(n))</td>
+			<td>&theta;(n log<sub>2</sub>(n))</td>
+			<td></td>
+			<td>&check;</td>
+			<td class="text-start">Linearithmic guarantee</td>
+		</tr>
+
+		<tr>
+			<th scope="row">Quick Sort</th>
+			<td>&theta;(n log<sub>2</sub>(n))</td>
+			<td>&theta;(n log<sub>2</sub>(n))</td>
+			<td>&theta;(n^2)</td>
+			<td>&check;</td>
+			<td></td>
+			<td class="text-start">Linearithmic probabilistic guarantee <br>Fastest in practice</td>
+		</tr>
+
+		<tr>
+			<th scope="row">Heap Sort</th>
+			<td>&theta;(n)<br> &theta;(n log<sub>2</sub>(n)) if all keys are distinct</td>
+			<td>&theta;(n log<sub>2</sub>(n))</td>
+			<td>&theta;(n log<sub>2</sub>(n))</td>
+			<td>&check;</td>
+			<td></td>
+			<td class="text-start">Linearithmic guarantee</td>
+		</tr>
+		
+	</tbody>
+</table>
+
+	<h2>Code</h2>
+
+<div class="accordion" id="sortingAccordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+        Bubble Sort
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#sortingAccordion">
+      <div class="accordion-body">
+
+<div class="nav nav-tabs" id="bubbleSort-tab">
+<button class="nav-link active" id="bubbleSort-java-tab" data-bs-toggle="tab" data-bs-target="#bubbleSort-java" type="button">Java</button>
+<button class="nav-link" id="bubbleSort-python-tab" data-bs-toggle="tab" data-bs-target="#bubbleSort-python" type="button">Python</button>
+</div>
+<div class="tab-content" id="bubbleSort-tabContent">
+    <div class="tab-pane fade show active" id="bubbleSort-java">
+    	<div class="file">
+<div class="file-header">BubbleSort.java</div>
+<pre class="file-content"><code class="lang-java">public class BubbleSort
+{
+    public static void sort(Comparable[] a)
+    {
+        int n = a.length;
+        for (int i = 0; i < n - 1; i++)
+        	for (int j = n - 1; j > i ; j--)
+        		if (a[j].compareTo(a[j - 1]) < 0)
+        			swap(a, j, j - 1)
+    }
+}
+    private static void swap(Comparable[] a, int i, int j)
+    { 
+        Comparable temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}
+</code></pre>
+</div>
+    </div>
+    <div class="tab-pane fade" id="bubbleSort-python">...</div>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Selection Sort
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#sortingAccordion">
+      <div class="accordion-body">
+
+
+<div class="nav nav-tabs" id="selectionSort-tab">
+    <button class="nav-link active" id="selectionSort-java-tab" data-bs-toggle="tab" data-bs-target="#selectionSort-java" type="button">Java</button>
+    <button class="nav-link" id="selectionSort-python-tab" data-bs-toggle="tab" data-bs-target="#selectionSort-python" type="button">Python</button>
+</div>
+<div class="tab-content" id="selectionSort-tabContent">
+    <div class="tab-pane fade show active" id="selectionSort-java">
+    	<div class="file">
+<div class="file-header">SelectionSort.java</div>
+<pre class="file-content"><code class="lang-java">public class SelectionSort
+{
+    public static void sort(Comparable[] a)
+    {
+        int n = a.length;
+        for (int i = 0; i < n - 1; i++)
+        {
+            int min_index = i;
+            for (int j = i + 1; j < n; j++)
+                if (a[j].compareTo(a[min_index]) < 0)
+                    min_index = j;
+            swap(a, i, min_index);
+        }
+    }
+}
+    private static void swap(Comparable[] a, int i, int j)
+    { 
+        Comparable temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}
+</code></pre>
+</div>
+    </div>
+    <div class="tab-pane fade" id="selectionSort-python">
+
+    </div>
+</div>
+
+<p><strong>Loop Invariants:</strong>
+	<ul>
+		<li>Entries with index strictly less than i are in final position.</li>
+		<li>No entry with index greater or equal to i is smaller than any entry with index less than i.</li>
+	</ul>
+</p>
+
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Insertion Sort
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#sortingAccordion">
+      <div class="accordion-body">
+        
+<div class="nav nav-tabs" id="insertionSort-tab">
+    <button class="nav-link active" id="insertionSort-java-tab" data-bs-toggle="tab" data-bs-target="#insertionSort-java" type="button">Java</button>
+    <button class="nav-link" id="insertionSort-python-tab" data-bs-toggle="tab" data-bs-target="#insertionSort-python" type="button">Python</button>
+</div>
+<div class="tab-content" id="insertionSort-tabContent">
+    <div class="tab-pane fade show active" id="insertionSort-java">
+    	<div class="file">
+<div class="file-header">InsertionSort.java</div>
+<pre class="file-content"><code class="lang-java">public class InsertionSort
+{
+    public static void sort(Comparable[] a)
+    {
+        int n = a.length;
+        for (int i = 1; i < n; i++)
+            for (int j = i; j > 0; j--)
+                if (a[j].compareTo(a[j - 1]) < 0)
+                    swap(a, j, j - 1);
+                else break;
+    }
+}
+    private static void swap(Comparable[] a, int i, int j)
+    { 
+        Comparable temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}
+</code></pre>
+</div>
+    </div>
+    <div class="tab-pane fade" id="insertionSort-python">...</div>
+</div>
+
+<p><strong>Loop Invariants:</strong>
+	<ul>
+		<li>Entries in subarray a[0..(i-1)] consists of the elements of the original unsorted subarray a[0..(i-1)], but in sorted order.</li>
+		<li>Entries with index greater or equal to i have not yet been seen.</li>
+	</ul>
+</p>
+
+      </div>
+    </div>
+  </div>
+
+	<!--Item 4 -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingFour">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+        Shell Sort
+      </button>
+    </h2>
+    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#sortingAccordion">
+      <div class="accordion-body">
+        
+<div class="nav nav-tabs" id="shellSort-tab">
+<button class="nav-link active" id="shellSort-java-tab" data-bs-toggle="tab" data-bs-target="#shellSort-java" type="button">Java</button>
+<button class="nav-link" id="shellSort-python-tab" data-bs-toggle="tab" data-bs-target="#shellSort-python" type="button">Python</button>
+</div>
+<div class="tab-content" id="shellSort-tabContent">
+    <div class="tab-pane fade show active" id="shellSort-java">
+    	<div class="file">
+<div class="file-header">ShellSort.java</div>
+<pre class="file-content"><code class="lang-java">public class ShellSort
+{
+	private static void swap(Comparable[] a, int i, int j)
+    { 
+        Comparable temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+    // auxiliary methods for increments
+    // here we use the Knuth's 3x+1 increment sequence
+    // Knuth sequence, recursive formula f(h) = 3f(h-1) + 1, closed-form f(h) = (3^(h+1) + 1) / 2
+    // 1, 4, 13, 40, 121, 364, ...
+    private int first_increment(int n)
+    {
+    	int h = 1;
+    	while (h < n/3) h = 3 * h + 1;
+    	return h;
+    }
+    private int next_increment(int n)
+    {
+    	return h/3;
+    }
+	public static void sort(Comparable[] a)
+	{
+		int n = a.length;
+		h = first_increment(n);
+		while (h >= 1)
+		{ 
+			// h-sorting the array.
+			for (int i = h; i < N; i++)
+			{
+				for (int j = i; j >= h && a[j].compareTo(a[j - h] < 0); j -= h)
+					swap(a, j, j-h);
+			}
+			h = next_increment(h);
+		}
+	}
+}
+</code></pre>
+</div>
+</div>
+<div class="tab-pane fade" id="shellSort-python">...</div>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Item 5 -->
+    <div class="accordion-item">
+    <h2 class="accordion-header" id="headingFive">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+        Merge Sort
+      </button>
+    </h2>
+    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#sortingAccordion">
+      <div class="accordion-body">
+<div class="nav nav-tabs" id="mergeSort-tab">
+<button class="nav-link active" id="mergeSort-java-tab" data-bs-toggle="tab" data-bs-target="#mergeSort-java" type="button">Java</button>
+<button class="nav-link" id="mergeSort-python-tab" data-bs-toggle="tab" data-bs-target="#mergeSort-python" type="button">Python</button>
+</div>
+<div class="tab-content" id="mergeSort-tabContent">
+    <div class="tab-pane fade show active" id="mergeSort-java">
+    	<div class="file">
+<div class="file-header">MergeSort.java</div>
+<pre class="file-content"><code class="lang-java">public class MergeSort
+{
+	private static void merge(Comparable[] a, Comparable[] aux, int left, int mid, int right)
+	{
+		assert isSorted(a, left, mid); // test precondition
+		assert isSorted(a, mid+1, right); // test precondition
+
+		// copy data to aux array
+		for (int k = left; k <= right; k++)
+			aux[k] = a[k];
+
+		int i = left, j = mid+1;
+		for (int k = left; k <= right; k++)
+		{
+			if (i > mid) a[k] = aux[j++];
+			else if (j > right) a[k] = aux[i++];
+			else if (aux[j].compareTo(aux[i]) < 0) a[k] = aux[j++];
+			else a[k] = aux[i++];
+		}
+		assert isSorted(a, left, right); // test postcondition
+	}
+	private static boolean isSorted(Comparable[] a)
+	{
+		for (int i = 1; i < a.length; i++)
+			if (a[i].compareTo(a[i - 1])) return false;
+		return true;
+	}
+	private static void sort(Comparable[] a, Comparable[] aux, int left, int right)
+	{
+		if (right <= left) return;
+		int mid = left + (right - left) / 2;
+		sort(a, aux, left, mid);
+		sort(a, aux, mid+1, right);
+		merge(a, aux, left, mid, right);
+	}
+	public static void sort(Comparable[] a)
+	{
+		aux = new Comparable[a.length];
+		sort(a, aux, 0, a.length - 1);
+	}
+}
+</code></pre>
+</div>
+</div>
+<div class="tab-pane fade" id="mergeSort-python">...</div>
+</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Item 6 -->
+    <div class="accordion-item">
+    <h2 class="accordion-header" id="headingSix">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+        Quick Sort
+      </button>
+    </h2>
+    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#sortingAccordion">
+      <div class="accordion-body">
+<div class="nav nav-tabs" id="quickSort-tab">
+<button class="nav-link active" id="quickSort-java-tab" data-bs-toggle="tab" data-bs-target="#quickSort-java" type="button">Java</button>
+<button class="nav-link" id="quickSort-python-tab" data-bs-toggle="tab" data-bs-target="#quickSort-python" type="button">Python</button>
+</div>
+<div class="tab-content" id="quickSort-tabContent">
+    <div class="tab-pane fade show active" id="quickSort-java">
+    	<div class="file">
+<div class="file-header">QuickSort.java</div>
+<pre class="file-content"><code class="lang-java">import KnuthShuffle;
+
+public class QuickSort
+{
+	// in this algorithm we the first element of subarrays as pivot element
+	private static int partition(Comparable[] a, int lo, int hi)
+	{
+		int i = lo, j = hi+1;
+		while (true)
+		{
+			while (less(a[++i], a[lo])) // finding index i on left to swap
+				if (i == hi) break;
+			while (less(a[lo], a[--j])) // finding index j on right to swap
+				if (j == lo) break;
+	
+			if (i >= j) break;
+			exch(a, i, j);
+		}
+		exch(a, lo, j);
+		return j;
+	}
+	public static void sort(Comparable[] a)
+	{
+		KnuthShuffle.shuffle(a); // shuffling the array (see shuffling below)
+		sort(a, 0, a.length - 1);
+	}
+	private static void sort(Comparable[] a, int lo, int hi)
+	{
+		if (hi <= lo) return;
+		int j = partition(a, lo, hi);
+		sort(a, lo, j-1);
+		sort(a, j+1, hi);
+	}
+}
+</code></pre>
+</div>
+</div>
+<div class="tab-pane fade" id="quickSort-python">...</div>
+</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+	<h1>Shuffling Algorithm</h1>
+
+	<ul>
+		<li><strong>Runtime:</strong> linear</li>
+	</ul>
+
+	<h2>Code</h2>
+<div class="accordion" id="shufflingAccordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="shufflingHeadingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#shufflingCollapseOne" aria-expanded="true" aria-controls="shufflingCollapseOne">
+        Knuth Shuffling
+      </button>
+    </h2>
+    <div id="shufflingCollapseOne" class="accordion-collapse collapse" aria-labelledby="shufflingHeadingOne" data-bs-parent="#shufflingAccordion">
+      <div class="accordion-body">
+	<div class="nav nav-tabs" id="knuthShuffle-tab">
+    <button class="nav-link active" id="knuthShuffle-java-tab" data-bs-toggle="tab" data-bs-target="#knuthShuffle-java" type="button">Java</button>
+    <button class="nav-link" id="knuthShuffle-python-tab" data-bs-toggle="tab" data-bs-target="#knuthShuffle-python" type="button">Python</button>
+</div>
+<div class="tab-content" id="knuthShuffle-tabContent">
+    <div class="tab-pane fade show active" id="knuthShuffle-java">
+    	<div class="file">
+<div class="file-header">KnuthShuffle.java</div>
+<pre class="file-content"><code class="lang-java">
+import java.util.Random;
+
+public class KnuthShuffle
+{
+    public static void shuffle(Object[] a)
+	{
+		int n = a.length;
+		Random rd = new Random();
+		for (int i = 0; i < n; i++)
+		{
+			int r = rd.nextInt(i + 1); // returns a uniformly random number between 0 (inclusive) and i + 1 (exclusive)
+			swap(a, i, r);
+		}
+	}
+}
+    private static void swap(Comparable[] a, int i, int j)
+    { 
+        Comparable temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}
+</code></pre>
+</div>
+    </div>
+    <div class="tab-pane fade" id="knuthShuffle-python">...</div>
+</div>
+
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+	<h1>Selection Algorithms</h1>
+
+	<h2>Quick-Select</h2>
+
+<div class="accordion" id="selectingAccordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="selectingHeadingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#selectingCollapseOne" aria-expanded="true" aria-controls="selectingCollapseOne">
+        Quick-Select
+      </button>
+    </h2>
+    <div id="selectingCollapseOne" class="accordion-collapse collapse" aria-labelledby="selectingHeadingOne" data-bs-parent="#selectingAccordion">
+      <div class="accordion-body">
+
+<div class="nav nav-tabs" id="knuthShuffle-tab">
+<button class="nav-link active" id="knuthShuffle-java-tab" data-bs-toggle="tab" data-bs-target="#knuthShuffle-java" type="button">Java</button>
+<button class="nav-link" id="knuthShuffle-python-tab" data-bs-toggle="tab" data-bs-target="#knuthShuffle-python" type="button">Python</button>
+</div>
+<div class="tab-content" id="knuthShuffle-tabContent">
+    <div class="tab-pane fade show active" id="knuthShuffle-java">
+    	<div class="file">
+<div class="file-header">KnuthShuffle.java</div>
+<pre class="file-content"><code class="lang-java">import KnuthShuffle;
+import QuickSort;
+
+public class QuickSelect {
+	public static Comparable select(Comparable[] a, int k)
+	{
+		KnuthShuffle.shuffle(a);
+		int lo = 0, hi = a.length - 1;
+		while (hi > lo)
+		{
+			int j = partition(a, lo, hi);
+			if (j < k) lo = j + 1;
+			else if (j > k) hi = j - 1;
+			else return a[k];
+		}
+		return a[k];
+	}
+}
+</code></pre>
+</div>
+    </div>
+    <div class="tab-pane fade" id="knuthShuffle-python">...</div>
+</div>	
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+	
+	<h1>Amortized Analysis</h1>
+
+<dl class="definitions">
+<dt>Aggregate Analysis</dt>
+<dd>Compute the total cost of n operations in the worst case O(T(n)) (does not necessarily mean to consider the operation that have the worst running time n times), then the avarage cost, or amortized cost per operation would be O(T(n))/n (Note that T(n) should be a tight bound) <br>
+All operations have the same amortized cost
+</dd>
+
+<dt>Accounting Method</dt>
+<dd>Here the amortized cost of each operation can be less or more than its actual cost. Then we show that the total amortized cost of a sequence of operations gives an upper bound on the total actual cost of the sequence in the worst case. Then we can get an average cost per operation (which usually is the highest amortized time among operations).
+<br>
+The extra cost for some operations is stored as credit in the data structure (within specific objects) and will conpensate for other operations that have a lower amortized cost than their actual cost.
+<br>
+Total credit should never become negative at any stage of performing n operations
+</dd>
+
+<dt>Potential Method</dt>
+<dd>
+The difference with acoounting method is that the extra prepaid work is associated to the whole data structure rather than within objects in the data structure.
+<br>
+Let $D_0$ be the initial data structure and $D_i$ the data structure after performing the i-th operation. A potential function maps each data structure $D_i$ to a real number, then the amortized cost $\hat c_i$ is defined by $\hat c_i = c_i + \Phi(D_i) - \Phi(D_{i-1})$, i.e the actual cost plus the change in potantial.
+<br>
+If the potential function is defined such that $\Phi(D_i) \geq \Phi(D_0) ~ \forall i$, then the total amortized cost gives an upper bound for the total actual cost.
+<br>
+Obviousley, different potentail functios rise different amortized costs.
+</dd>
+</dl>
+
+
+
+	<h1>Acknowledgement</h1>
+
+<p class="caption">
+	These notes are collectively based on the following resources:
+	<ul>
+		<li>coursera.org online course entitled "Algorithms, Part I" by Robert Sedgewick, et. al.</li>
+		<li>CLRS Book</li>
+		<li>geeksforgeeks.com</li>
+	</ul>
+</p>
+
+</body>
+</html>

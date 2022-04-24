@@ -70,11 +70,23 @@
 
 	<h2>Data Visualization</h2>
 
-	<h3>Frequency Table</h3>
+	<p>Familiarize yourself with Frequency Tables, Histogram and Frequency curve</p>
 
-	<h3>Histogram</h3>
+	<ul>
+		<li>for dividing the data into classes the following formulas are usually used
+			<ul>
+				<li>number of classes = 1 + 3.322 log(size of data collection)</li>
+				<li>class length = Range / number of classes</li>
+			</ul>
+		</li>
+	</ul>
 
-	<h3>Frequency curve</h3>
+	<dl class="definitoins">
+		<dt>class borders</dt>
+		<dd></dd>
+		<dt>class representative</dt>
+		<dd></dd>
+	</dl>
 
 	<h2>Measures of central tendency</h2>
 
@@ -88,7 +100,10 @@
 					<li>$\sum_{i=1}^n (X_i - \bar{X}) = 0$</li>
 					<li>let C be a constant, $\sum_{i=1}^n (X_i - C)^2$ is minimal when $C = \bar{X}$</li>
 					<li>Sensitive to outliers (better using the trimmed mean instead if outliers are present)</li>
-					<li>Not useful for categorical variables</li>
+					<li>One can use the trimmed mean to remove the outliers.</li>
+					<li>Not useful for categorical variables (use median and mode instead)</li>
+					<li>if $Y_i = aX_i + b$, then $\bar{Y} = a\bar{X} + b$</li>
+					<li>among different samples from a population, mean is usually more stable than median and mode</li>
 				</ul>
 			</p>
 		</li>
@@ -143,12 +158,14 @@
 		
 		<li>(Sample) Median: The median is a number that approximately is bigger that half of data
 			<p><strong>Formula</strong>
-			(Discrete) $m  = \begin{cases} X_{(\frac{n+1}{2})} & n \text{ odd}\\ (X_{\frac{n}{2}} + X_{\frac{n}{2}+1})/2 & n \text{ even}\end{cases}$
-			(Continuous) $m = L_{0.5} + \frac{0.5n - f^{-}_{0.5}}{f_{0.5}}w$
+			(Discrete) $m  = \begin{cases} X_{(\frac{n+1}{2})} & n \text{ odd}\\ (X_{\frac{n}{2}} + X_{\frac{n}{2}+1})/2 & n \text{ even}\end{cases}$</p>
+			<p>
+			(Continuous) $m = L_{0.5} + \frac{0.5n - g^{-}_{0.5}}{f_{0.5}}w$, in which $L_{0.5}$, $f_{0.5}$ and $w$ are the lower bound, frequency and the length of the median class respectively, $n$ is the sample size and $g^{-}_{0.5}$ is the cumulative frequency of the preceding class.
 			</p>
 			<p><strong>Remarks</strong>
 				<ul>
 					<li>From a table of frequencies, the median is the value for which the cumulative percentage first reaches 50% (or, if a cumulative % is exactly 50%, the average of the corresponding value of X and the next highest value).</li>
+					<li>let C be a constant, $\sum_{i=1}^n |X_i - C|$ is minimal when $C = median$</li>
 				</ul>
 			</p>
 		</li>
@@ -157,8 +174,10 @@
 			<p>$Q_p$ for $0 < p < 1$ is called the quantile of order $p$, if approximately, %100p of data are less than it.</p>
 
 			<p><strong>Formula</strong>
-				(Discrete) $Q_p = (1-w)X_r + wX_{r+1}$ where $(n+1)p = r + w, r \in \mathbb Z, 0 \leq w < 1$
-				(Continuous) $Q_p = L_p + \frac{pn - f^-_p}{f_p}w$
+				(Discrete) $Q_p = (1-w)X_r + wX_{r+1}$ where $(n+1)p = r + w, r \in \mathbb Z, 0 \leq w < 1$</p>
+			<p>
+				(Continuous) $Q_p = L_p + \frac{pn - g^-_p}{f_p}w$, in which $L_{p}$, $f_{p}$ and $w$ are the lower bound, frequency and the length of the $Q_p$ class respectively, $n$ is the sample size and $g^{-}_{p}$ is the cumulative frequency of the preceding class.
+				$Q_p$ class is the first class for which its cumulative frequency is greater or equal to $np$.
 			</p>
 
 			<p><strong>Remarks</strong>
@@ -174,7 +193,9 @@
 		
 		<li>(Sample) Mode $M$ = the value which has the highest frequency (for continuous data we choose the representative of the class with highest frequency)
 
-			<p><strong>Formula</strong> the data that has the highest frequency (can be more than one) - if the data has two consecutive modes, usually their mean is take as the mode.</p>
+			<p><strong>Formula</strong> the data that has the highest frequency (can be more than one) - if the data has two consecutive modes, usually their mean is take as the mode.
+				For continuous data, we can take the epresentative of the class with the highest frequency as the sample mode.
+			</p>
 
 			<p><strong>Remarks</strong>
 				<ul>
@@ -198,11 +219,13 @@
 	<h2>Measures of Dispersion (Spread)</h2>
 	<ul>
 		<li>(Sample) Range
-			<p><strong>Formula</strong> $R = X_{(n)} - X_{(1)}$</p>
+			<p><strong>Formula</strong> $R = X_{(n)} - X_{(1)} = X_{max} - X_{min}$</p>
+			<p><strong>Formula</strong> $R = X_{(n)} - X_{(1)} + \alpha$ (when data is rounded by precision $\alpha$)</p>
 			<p><strong>Remarks</strong>
 				<ul>
 					<li>Not a very good measure, since it only depends on the smallest and biggest numbers in our data.</li>
 					<li>$X_{(1)} + X_{(n)}/2$ is a measure of central tendency called range mean</li>
+					<li>if $Y = aX +b$, then $R_Y = aR_X + b$</li>
 				</ul>
 			</p>
 		</li>
@@ -233,6 +256,7 @@
 						</ul>
 					</li>
 					<li>Let $Y_i = \frac{X_i - b}{a}$ or $X_i = aY_i + b$, then $\bar X = a \bar Y + b$, $S^2_X = a^2S^2_Y$, and $S_X = aS_Y$</li>
+					<li>Let $X_1,\ldots,X_n$ be a sample data with mean $\bar X$ and standard deviation $S$, then new transformed data set, $z_i = \frac{X_i - \bar X}{S}$ are called standard data. One can show that for satndard data $\bar X_Z=0$ and $S_Z = 1$. Useful for comparing different data sets.</li>
 				</ul>
 			</p>
 
@@ -296,6 +320,12 @@
 
 		<li>Kurtosis: A measure for wideness of the frequency curve in respect to the standard normal curve
 			<p><strong>Formula</strong> $k = \frac{m_4}{S^4} - 3$</p>
+
+			<p><strong>Remarks</strong> 
+				<ul>
+					<li>Based on the sign, the frequency curve taller (positive) or wider (negative) than the normal curve.</li>
+				</ul>
+			</p>
 		</li>
 	</ul>
 
@@ -306,6 +336,8 @@
 		<dd>The discipline of collecting, organizating, analysing, interpreting, and presenting data.</dd>
 		<dt>Population</dt>
 		<dd> The aggregate of all the elements, sharing some common set of characteristics, which comprise the universe for the purpose of the problem being investigated.</dd>
+		<dt>statistic</dt>
+		<dd>a single datum in a collection of statistics</dd>
 		<dt>Census</dt>
 		<dd>A complete enumeration of the elements of a population or study objects.</dd>
 		<dt>Sample</dt>
@@ -321,23 +353,264 @@
 		<dt>continuous data</dt>
 		<dd>data gained by measurable variables</dd>
 		<dt>Frequency</dt>
-		<dd></dd>
+		<dd>Suppose we have $n$ data in our sample space of $k$ different types $T_1,\ldots,T_k$, the number of times $f_i$ that $T_i$ appears in the data sample is called its frequency.</dd>
 		<dt>relative frequency</dt>
-		<dd></dd>
+		<dd>The ratio $r_i = f_i/n$ iscalled the relative frequenc of $T_i$.</dd>
 		<dt>cumulative frequency</dt>
-		<dd></dd>
+		<dd>For each $1\leq i\leq k$, $g_i = \sum_{j=1}^i f_j$ is called the cumulative frequency of $T_i$.</dd>
 		<dt>relative cumulative frequency</dt>
-		<dd></dd>
+		<dd>For each $1\leq i\leq k$, $s_i = \sum_{j=1}^i r_j$ is called the relative cumulative frequency of $T_i$.</dd>
 	</dl>
 
-	<p>Bring in the sampling factors table</p>
+	<p>Sampling design consists of the answering the following questions:
+		<ul>
+			<li>Sample or census?</li>
+			<li>What technique?</li>
+		</ul>
+	</p>
+
+	<h3>Sample vs. Census</h3>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Factors</th>
+				<th>Sample</th>
+				<th>Census</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Budget</td>
+				<td>Small</td>
+				<td>Large</td>
+			</tr>
+			<tr>
+				<td>Time available</td>
+				<td>Short</td>
+				<td>Long</td>
+			</tr>
+			<tr>
+				<td>Population size</td>
+				<td>Large</td>
+				<td>Small</td>
+			</tr>
+			<tr>
+				<td>Variance of the (measuring) characteristic</td>
+				<td>Small</td>
+				<td>Large</td>
+			</tr>
+			<tr>
+				<td>Cost of sampling errors</td>				
+				<td>Low</td>
+				<td>High</td>
+			</tr>
+			<tr>
+				<td>Cost of non-sampling errors</td>
+				<td>High</td>
+				<td>Low</td>
+			</tr>
+			<tr>
+				<td>Nature of measurement</td>
+				<td>Destructive</td>
+				<td>Non-destructive</td>
+			</tr>
+			<tr>
+				<td>Attenstion to individual cases (in-depth interviews)</td>
+				<td>Yes</td>
+				<td>No</td>
+			</tr>
+
+
+		</tbody>
+	</table>
 
 	<h3>Sampling techniques</h3>
 
 	<ul>
-		<li>non-probability sampling techniques</li>
-		<li>probability sampling techniques</li>
+		<li>non-probability sampling techniques
+			<p>These are the techniques for which some members of the population no chance of being selected, and the rest have an unknown probability of being selected for the sample set.</p>
+			
+			Examples of such techniques are:
+			<ul>
+				<li>Convenience sampling</li>
+				<li>Judgemental sampling</li>
+				<li>Quota sampling</li>
+				<li>Snowball sampling</li>
+			</ul>
+		</li>
+		<li>probability sampling techniques
+			<p>In this sampling technique every member of the population has a non-zero probability of being selected. Therfore, a list of all population members is needed, called a sampling frame. Statistical techniques to estimate the sampling error can be applied.</p>
+			
+			Examples of such techniques are:
+			<ul>
+				<li>Simple random sampling (SRS)</li>
+				<li>Systematic sampling</li>
+				<li>Stratified sampling</li>
+				<li>Cluster sampling</li>
+				<li>Multistage sampling</li>
+			</ul>
+		</li>
 	</ul>
+
+	<h3>Types of error</h3>
+
+	<ul>
+		<li>Sampling error
+			<ul>
+				<li>For probability sampling, we can estimate this error, by means of hypothesis testing and construction of confidence intervals</li>
+			</ul>
+		</li>
+		<li>Non-sampling error
+			<ul>
+				<li>It is hard to quantify.</li>
+				<li>Non-sampling error itself deides into two groups
+					<ul>
+						<li>Selection bias</li>
+						<li>Response bias</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	<h1>Statistical Inference</h1>
+
+<dl class="definitions">
+	<dt>Random sample</dt>
+	<dd>Let $X$ be a ransom variable. Random variables $X_1,\ldots,X_n$ form a random sample of size $n$ of $X$, if they are independent of each other and identically distributed as $X$.</dd>
+
+	<dt>data of random sample</dt>
+	<dd>When we make an observation on the random sample as above, the numbers $x_1,\ldots, x_n$ are called the data of the random sample.</dd>
+
+	<dt>Statistic</dt>
+	<dd>Let $X$ be a random variable with density function $f(x;\theta)$ where $\theta = (\theta_1,\ldots,\theta_k)$ is an unknown parameter. A function $U = g(X_1,\ldots,X_n)$ of the above random sample is called a statistic. Note that the statistic is a random variable which its distrubution may or may not depend on the unknown parameter $\theta$</dd>
+
+	<dt>Estimate</dt>
+	<dd>The estimate of the statistic $U$ is the number $u = g(x_1, \ldots,x_n)$.</dd>
+
+	<dt>Estimator</dt>
+	<dd>If the estimate $u = g(x_1, \ldots,x_n)$ of the statistic $U = g(X_1,\ldots,X_n)$, provides an approximation for the unknown parameter $\theta$, then $U$ is called an estimator and $u$ is called an estimate for the parameter $\theta$. Note that not any statistic is an estimator for $\theta$.</dd>
+</dl>
+
+	<h2>Point Estimation Methods</h2>
+
+	<h3>Method of Moments Estimation</h3>
+
+	<p>Let $X$ be a random variable with density function $f(x;\theta)$. We have
+		<ul>
+			<li>$k$-th moment of $X$, $\mu_k = E(\bar{X^k}) = \int x^k f(x;\theta)dx = g_k(\theta)$</li>
+			<li>$k$-th moment of the random sample $X_1,\ldots,X_n$, $\bar{X^k} = \frac{1}{n} \sum_i=1^n X_i^k$</li>
+			<li>$k$-th moment of data sample $x_1,\ldots,x_n$, $\bar{x^k} = \frac{1}{n} \sum_i=1^n x_i^k$</li>
+		</ul>
+		Now by the law of big numbers, we have
+		<p>$\bar{X^k} \stackrel{P}{\rightarrow} E(X^k) = \mu_k = g_k(\theta)$</p>
+		That is, $\bar{x^k}$ is an estimate for the $k$-th moment $\mu_k = g_k(\theta)$, and by solving $g_k(\theta) = \bar{x^k}$ we get an estimate of $\theta$.
+	</p>
+
+	<p>
+		Let $X\sim N(\mu,\sigma^2)$ (or more generally any random variable with expectation $\mu$ and variance $sigma^2$) and $X_1,\ldots,X_n$ be a random sample. Then $\mu \simeq \bar{x}$ and $\sigma^2 \simeq \bar{x^2} - \bar{x}^2 = S^2$ are moment estimates of parameters $\mu$ and $\sigma^2$, and $\mu \simeq \bar{X}$ and $\sigma^2 \simeq \bar{X^2} - \bar{X}^2$ are their moment estimators.
+	</p>
+
+	<h3>Maximum Likelihood Estimation (MLE)</h3>
+
+	<p>
+		Let $X_1,\ldots,X_n$ be a random sample of the random variable $X$ with density function $f(x;\theta)$. Suppose parameter $\theta$ ranges in a parameter space $A$. Let $x_1,\ldots,x_n$ be a data sample. The joint density of $x_i$, that is
+		<p>$L(\theta) = f(x_1; \theta) \cdots f(x_n;\theta) = \prod_{i=1}^n f(x_i; \theta)$</p>
+		is called the likelihood funtion. The maximum likelihood estimate (MLE) of $\theta$ is the number $\hat \theta \in A$ which maximizes the likelihood function.
+	</p>
+
+	<h3>Least Squares Estimation</h3>
+
+	<p>To be added ...</p>
+
+	<h2>Confidence Interval</h2>
+
+	<p>Consider a random sample with density function $f(x;\theta)$. Let $U$ be an estimotor of $\theta$. The random interval $(g_1(U), g_2(U))$ for which 
+		<p>$P(g_1(U) < \theta < g_2(U)) = \gamma$</p>
+		is called a confidence interval with confidence level $\gamma$ of $\theta$. Usually $\gamma$ is taken to be $.9, .95, .99$.
+	</p>
+
+	<p>To compute the confidence interval, one should design a function $Q=q(U, \theta)$ called the axis function, such that its distribution does not depend on $\theta$. Then numbers $a < b$ are chosen such that $P(a < q(U,\theta) < b) = \gamma$.</p>
+
+	<h2>Hypothesis Testing of a parameter</h2>
+
+	<p>A hypothesis test consists of two competing hypotheses
+		<p>
+			$\begin{cases}
+				H_0: & \text{the null hypothesis}\\
+				H_1: & \text{the alternative hypothesis}
+			\end{cases}$
+		</p>
+		and we have to make a binary decision whether to "reject $H_0$" or "fail to reject $H_0$".
+	</p>
+
+	<p>Two inferential decision errors could coccur in hypothesis testing, and we usually wish that the probability of these errors does not exceed a certain amount.
+		<p>Type I error: $\alpha = P(H_0 \text{ rejected }| H_0 \text{ true})$</p>
+		<p>Type II error: $\beta = P(H_0 \text{ not rejected }| H_1 \text{ true})$</p>
+	</p>
+	The number $100\alpha$ is called the significance level of the test and it can be viewed as the complement of the confidence level of the confidence interval, and it usually is taken to be $5\%$. In a test if other factors are equal, $\alpha$ and $\beta$ have reverse ratio, i.e if you decrease $\alpha$ you increase $\beta$ and vice-versa.
+	The probability of correctly rejecting $H_0$ if $H_1$ is true is called power of the test.
+	<p>Test power: $\pi = P(H_0 \text{ rejected } | H_1 \text{ true}) = 1 - \beta$</p>
+
+	<h2>p-Value</h2>
+<dl class="definitions">
+	<dt>p-value</dt>
+	<dd>A $p-value$ is the probability that the test statistic (estimator) takes the observed value or a more extreme value than the value under $H_0$.</dd>
+
+	<dt>effect size</dt>
+	<dd>The effect size is the difference between the expected value of a parameter with its estimate (observed value), i.e $E(U) - u$ = E(g(X_1,\ldots, X_n)) - g(x_1,\ldots,x_n)$</dd>
+
+	<dt>sample size</dt>
+	<dd>The size of the random sample</dd>
+
+	<dt>Remarks</dt>
+	<dd>
+		<ul>
+			<li>There is an inverse relationship between the effect size and the p-value</li>
+			<li>There is an inverse relationship between the sample size and the p-value</li>
+		</ul>
+	</dd>
+</dl>
+
+	<h3>Computing the p-value</h3>
+
+	<p>
+		Let $X$ be a random variable with density function $f(x;\theta)$, and we want to perform a statistical test on $\theta$. Let $X_1,\ldots, X_n$ be a random sample with sample data $x_1,\ldots,x_n$. Let $U=g(X_1,\ldots,X_n)$ be a test statistic (estimator) for $\theta$ and $u=g(x_1,\ldots,x_n)$ be the test statistic value (estimate). Here, $P_{\theta_0}(-) = P(-| \theta = \theta_0) = P(-|H_0 \text{ true})$.
+
+		<ul>
+			<li>For a right direction test
+			<p>
+				$\begin{cases}
+					H_0: \theta = \theta_0\\
+					H_1: \theta > \theta_0
+				\end{cases}$
+			</p>
+			we have $p-value = P_{\theta_0} (U \geq u)$</li>
+
+			<li>For a left direction test
+			<p>
+				$\begin{cases}
+					H_0: \theta = \theta_0\\
+					H_1: \theta < \theta_0
+				\end{cases}$
+			</p>
+			we have $p-value = P_{\theta_0} (U \leq u)$</li>
+
+			<li>For a bi-direction test
+			<p>
+				$\begin{cases}
+					H_0: \theta = \theta_0\\
+					H_1: \theta \neq \theta_0
+				\end{cases}$
+			</p>
+			we have $p-value = 2 \min\{ P_{\theta_0} (U \leq u), P_{\theta_0} (U \geq u)\}$
+			<p>Some text take $p-value = P_{\theta_0}(U \geq |u|)$</p>
+		</li>
+		</ul>
+	</p>
+
+
 
 </body>
 </html>

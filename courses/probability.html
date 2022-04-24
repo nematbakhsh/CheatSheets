@@ -8,6 +8,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 	<!--MathJax-->
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<script>
 		MathJax = {
 		  tex: {
@@ -15,8 +17,6 @@
 		  }
 		};
 	</script>
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	
 	<!--
 	<link href="https://cdn.jsdelivr.net/npm/prismjs@v1.x/themes/prism.css" rel="stylesheet" />
@@ -45,14 +45,14 @@
 	<p>Probabilities can be be determined in 3 ways
 		<ul>
 			<li>subjectively</li>
-			<li>empirically (by experimentatoin)</li>
+			<li>empirically (by experimentatoin as relative frequency)</li>
 			<li>theoretically</li>
 		</ul>
 	</p>
 
 	<h2>Betting odds</h2>
 
-	<p>When someone bets A to B (denoted A/B) on the occurance of an event E, this means that they are willing to pay A if E does not happen and gain B otherwise. Furthermore, he/she thinks that the probability $P(E) = \frac{A}{A+B}$. The ration$A/B = p/(1-p)$ is called the fractional odds.</p>
+	<p>When someone bets A to B (denoted A/B) on the occurance of an event E, this means that they are willing to pay A if E does not happen and gain B otherwise. Furthermore, he/she thinks that the (subjective) probability $p = P(E) = \frac{A}{A+B}$. The ration$A/B = p/(1-p)$ is called the fractional odds.</p>
 
 	<h2>Combinatorial Analysis</h2>
 
@@ -62,6 +62,7 @@
 			<ul>
 				<li>number of permutation of $n$ (distinct) objects</li>
 				<li>number of all (ordered) $n$-tuples of $n$ distict elements</li>
+				<li><strong>Sterling Formula</strong> $n! \sim (n/e)^n \sqrt{2\pi n}$, and relative error is at most $\frac{1}{12n - 1}$</li>
 			</ul>
 		</p>
 
@@ -152,6 +153,12 @@
 
 		<dt>Uniform Probability Model</dt>
 		<dd>If the sample space is finite and all of the outcomes are equally likly, then P(A) = |A|/|S|</dd>
+
+		<dt>Boole's inequality</dt>
+		<dd>$P(\bigcup_{i=1}^n E_i) \leq \sum_{i=1}^n P(E_i)$</dd>
+
+		<dt>Bonferroni's inequality</dt>
+		<dd>$P(\bigcap_{i=1}^n E_i) \geq \sum_{i=1}^n P(E_i) - n + 1$</dd>
 	</dl>
 
 	<h2>Conditional Probability</h2>
@@ -163,11 +170,14 @@
 		<dd>Let $(S,B,P)$ be a probability space and $C$ be an event, $(S, B, P(-|C))$ is a probability space called the conditional probability space</dd>
 
 		<dt>Probability multiplication rule</dt>
-		<dd>P(A\cap B) = P(A|B)P(B) = P(B|A)P(A)</dd>
+		<dd>$P(A\cap B) = P(A|B)P(B) = P(B|A)P(A)$</dd>
+
+		<dt>Complement Rule</dt>
+		<dd>$P(A|B) + P(A^c|B) = 1$</dd>
 
 		<dt>Partition theorem</dt>
-		<dd>If $B_1,\ldots, B_k$ form a partition of $S$, then $P(A) = \sum_{i=1}^k P(A\cap B_i) = \sum_{i=1}^k P(A|B_i)P(B_i)
-			<p>Special case, P(A) = P(A\cap B) + P(A\cap B^c) = P(A|B)P(B) + P(A|B^c)P(B^c)</p>
+		<dd>If $B_1,\ldots, B_k$ form a partition of $S$, then $P(A) = \sum_{i=1}^k P(A\cap B_i) = \sum_{i=1}^k P(A|B_i)P(B_i)$
+			<p>Special case, $P(A) = P(A\cap B) + P(A\cap B^c) = P(A|B)P(B) + P(A|B^c)P(B^c)$</p>
 		</dd>
 
 		<dt>Bayes' Theorem</dt>
@@ -185,8 +195,21 @@
 			</ul>
 			Furthermore, events $A_1,\ldots,A_n$ are independent if, for any $2\leq k\leq n$, we have $P(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = P(A_{i_1})P(A_{i_2})\cdots P(A_{i_n})$
 		</dd>
+		<dt>Remarks on independent events</dt>
+		<dd>Suppose $A$ and $B$ are independent events
+			<ul>
+				<li>$A$ and $B^c$ are independent.</li>
+				<li>$A^c$ and $B^c$ are independent.</li>
+			</ul>
+		</dd>
 		<dt>Product Probability Space</dt>
-		<dd>Let $(S_1, B_1, P)$ and $(S_2,B_2,P)$ be two probability spaces, the space $(S_1\times S_2, B_1\times B_2, P)$ is called the product space, where the product measure is defined by $P(E\times F) = P(E)P(F)$ for events $E$ and $F$ in $S_1$ and $S_2$ respectively.</dd>
+		<dd>Let $(S_1, B_1, P)$ and $(S_2,B_2,P)$ be two probability spaces, the space $(S_1\times S_2, B_1\times B_2, P)$ is called the product space, where the product measure is defined by $P(E\times F) = P(E)P(F)$ for events $E$ and $F$ in $S_1$ and $S_2$ respectively.
+			<br>
+			The probability model of repetition of an experiment is a product probability model.
+		</dd>
+
+		<dt>Prior and Posterior probability</dt>
+		<dd></dd>
 	</dl>
 
 
@@ -203,9 +226,12 @@
 		<dd>$X$ is called discrete if $S_X$ is a countable set.</dd>
 
 		<dt>continuous random variable</dt>
-		<dd>$X$ is called continuous if $S_X$ is a union of intervals</dd>
+		<dd>$X$ is called continuous if $S_X$ is a union of intervals
+			<br>
+			$P(X = x) = 0$, i.e. probability at exactly one point is always zero.
+		</dd>
 
-		<dt>Distribution Function</dt>
+		<dt>(Cumulative) Distribution Function</dt>
 		<dd>Suppose $X$ is random variable over a probability model, $F_X(x) = P(X \leq x)$ is called the distribution function of $X$.</dd>
 
 		<dt>Properties of distribution function</dt>
@@ -216,6 +242,7 @@
 				<li>$F(-\infty) = 0, F(\infty) =1$</li>
 				<li>$F_X$ is right continuous at any point $x=a$</li>
 			</ul>
+			Conversely, any function with above properties is a distribution function of some random variable.
 		</dd>
 
 		<dt>Types of distribution function</dt>
@@ -223,37 +250,450 @@
 			<ul>
 				<li><strong>$X$ discrete</strong> $F_X$ is a step function, and probability is concentrated in jump points</li>
 				<li><strong>$X$ continuous</strong> graph of $F_X$ is continuous and probability is distributed on one or several intervals (where the graph is not constant)</li>
-				<li><strong>$X4 mixed</strong> $F_X$ is continuous with a finite number of jumps</li>
+				<li><strong>$X$ mixed</strong> $F_X$ is not entirely continuous and is not a step function.</li>
+			</ul>
+		</dd>
+
+		<dt>Computation of probability by distribution function</dt>
+		<dd>
+			<ul>
+				<li>$P(a< X\leq b) = P(X \leq b) - P(X\leq a) = F(b) - F(a)$</li>
+				<li>$P(a < X < b) = F(b^-) - F(a)$</li>
+				<li>$P(a \leq  X \leq b) = F(b) - F(a^-)$</li>
+				<li>$P(a \leq X < b) = F(b^-) - F(a^-)$</li>
+				<li>$P(X < b) = F(b^-)$</li>
+				<li>$P(X>a) = 1 - F(a)$</li>
+				<li>$P(X = x) = F(x) - F(x^-)$</li>
 			</ul>
 		</dd>
 
 		<dt>Identically distributed variables</dt>
-		<dd>Random variables $X$ and $Y$ are identically distributed, if $\forall z$, $P(X\leq z) = P(Y \leq z)$, or equivalently $F_X = F_Y$</dd>
+		<dd>Random variables $X$ and $Y$ are identically distributed, if $\forall z$, $P(X\leq z) = P(Y \leq z)$, or equivalently $F_X = F_Y$. This relation is denoted as $X \stackrel{D}{=} Y$</dd>
+
+		<dt>Probability Density Function</dt>
+		<dd>Suppose $X$ is random variable over a probability model, the density function is a function that gives the density of probability at each point. More precisely,
+			<br>
+			<strong>Discrete random variable</strong> If $X$ is a discrete random variable, then probability at each point gives a real function $f = f_X$ with the following properties, called the density function:
+			<ul>
+				<li>$f(x) > 0$ if $x \in S_X$</li>
+				<li>$f(x) = 0$ if $x \notin S_X$</li>
+				<li>$\sum_{x\in S_x} f(x) = 1$</li>
+			</ul>
+			conversely, any function with above properties is the density function of a discrete random variable.
+			<br>
+			<strong>Continuous random variable</strong> If $X$ is a continuous random variable. Then the density of probability at each point gives a real function $f = f_X$ such that,
+			<ul>
+				<li>$\forall x, f(x) \geq 0$</li>
+				<li>$\int_{-\infty}^{\infty} f(x) dx = \int_{S_X} f(x) dx = 1$</li>
+			</ul>
+			conversely, any function with above properties is the density function of a continuous random variable.
+			<br>
+			<strong>Remark</strong> Note that for a random variable, $f(x)$ is not the probabilty at the point $x$ (recall that the probability at a point for a continuous variable is zero), and we might even have $f(x) > 1$ at some points.
+			<br>
+			<strong>Mixed random variable</strong>
+			In this case, the density function is given by $f(x) = pf_d(x) + (1-p) f_c(x)$, where $0 \leq p \leq 1$, and $f_d$ and $f_c$ are discrete and continuous density functions respectively.
+		</dd>
+
+		<dt>Relations between distribution and density function</dt>
+		<dd>
+			<strong>Discrete random variable</strong>
+				<br>
+				$F(x) = P(X \leq x) = \sum_{x_i \leq x} f(x_i)$
+				<br>
+				$f(x) = P(X = x) = F(x) - F(x^-)$
+			<br>
+			<strong>Continuous random variable</strong>
+				<br>
+				$F(x) = \int_{-\infty}^x f(t)dt$
+				<br>
+				$f(x) = F'(x)$
+		</dd>
 		
 	</dl>
 
 
 	<h2>Expectation</h2>
 
+	<dl class="definitions">
+		<dt>expectation</dt>
+		<dd>
+			long-run average of a random variable
+			<p>$E(X) = \bar X$ (sample mean of a sample distribution)</p>
+			<p>($X$ discrete) $E(X) = \sum_x x P(X = x) = \sum_x xf(x)$</p>
+			<p>($X$ continuous) $E(X) = \int_{-\infty}^\infty x f(x)dx$</p>
+			<br>
+			<p>Sometime expection of $X$ is denoted by $\mu$ and it is called the mean of $X$ or mean value of density $f(x)$.</p>
+		</dd>
 
-		
-		
+		<dt>expection of a function</dt>
+		<dd>Let $X$ be a random variable and $Y=g(X)$, then the expection of the random variable $Y$ is
+			<ul>
+				<li>($X$ discrete) $E(g(X)) = \sum_x g(x)f(x)$</li>
+				<li>($X$ continuous) $E(g(X)) = \int_{-\infty}^\infty g(x)f(x)dx$</li>
+			</ul>
+		</dd>
 
-		mass of probability
-		<dt>expectation:</dt> long-run average of a random variable
-			<p>($X$ discrete) $E(X) = \sum_{i=1}^n x_i p(x_i)$</p>
-			<p>E(X) = \bar(X) (sample mean of a sample distribution)</p>
+		<dt>Properties of expectation</dt>
+		<dd>
+			<ul>
+				<li>$E(a_0 + a_1X + \cdots +a_n X^n) = a_0 + a_1 E(X) + \cdots+ a_n E(X^n)$</li>
+				<li>$E(c) = c$, $c$ constant</li>
+				<li>(Jensen's inequality) if $X$ is a random variable,$\phi$ is a convex function and $\psi$ is a concave function, then
+					<ul>
+						<li>$E(\phi(X)) \geq \phi(E(X))$</li>
+						<li>$E(\psi(X)) \leq \psi(E(X))$</li>
+					</ul>
+				</li>
+			</ul>
+		</dd>
+
+		<dt>Expectation of joint distribution</dt>
+		<dd>Let $X$ and $Y$ be random variables with a joint density $f(x,y)$. Let $h(x,y)$ be a two variable function. The expectation of the random variable $Z = h(X,Y)$ is
+			<ul>
+				<li>($X, Y$ discrete) $E[h(X,Y)] = \sum_x \sum_y h(x,y) f(x,y)$</li>
+				<li>($X, Y$ continuous) $E[h(X,Y)] = \int_{-\infty}^\infty \int_{-\infty}^\infty h(x,y) f(x,y) dx dy$</li>
+			</ul>
+			<strong>Remarks</strong>
+			<ul>
+				<li>for $h(x,y) = x$, $E[h(X,Y)] = E(X)$</li>
+				<li>for $h(x,y) = y$, $E[h(X,Y)] = E(Y)$</li>
+				<li>by taking $h(x,y) = x+y$, we have $E(X+Y) = E(X) + E(Y)$</li>
+				<li>$E(a_1X_1 + \cdots + a_nX_n) = a_1E(X_1) +\cdots+ a_nE(X_n)$</li>
+				<li>if $X$ and $Y$ are <strong>independent</strong>, then 
+					<ul>
+						<li>$E(XY) = E(X)E(Y)$</li>
+						<li>for single variable functions $u$ and $v$, $E(u(X),v(Y)) = E(u(X))E(v(Y))$</li>
+					</ul>
+				</li>
+
+				<li>if $X \stackrel{D}{=} Y$, then for every one variable function $h$, $E[h(X)] = E[h(Y)]$</li>
+				<li>(Cauchy-Schwarz Inequality) For any two random variables $X$ and $Y$,
+					<p>$E(XY) \leq \sqrt{E(X^2)E(Y^2)}$</p>
+				</li>
+			</ul>
+		</dd>
+		<dt>Conditional expectation</dt>
+		<dd>if $f(x|y)$ is a conditional density function. Then the conditional expectation of $X$ with respect to $Y$ is
+			<ul>
+				<li>$E(X|Y=y) = \int_x xf_{X|Y}(x|y) dx = \int_x x\frac{f_{X,Y}(x,y)}{f_Y(y)}dx$ (continuous case)</li>
+				<li>$E(X|Y=y) = \sum_x xf_{X|Y}(x|y) = \sum_x x\frac{f_{X,Y}(x,y)}{f_Y(y)}dx$ (discrete case)</li>
+			</ul>
+			and for a function $g = g(X,Y)$,
+			<ul>
+				<li>$E(g(X,Y)|Y=y) = \int_x g(x,y)f_{X|Y}(x|y) dx = \int_x g(x,y)\frac{f_{X,Y}(x,y)}{f_Y(y)}dx$ (continuous case)</li>
+				<li>$E(g(X,Y)|Y=y) = \sum_x g(x,y)f_{X|Y}(x|y) = \sum_x g(x,y)\frac{f_{X,Y}(x,y)}{f_Y(y)}dx$ (discrete case)</li>
+			</ul>
+		</dd>
+
+		<dt>Properties of conditional expectation</dt>
+		<dd>
+			<ul>
+				<li>if $X$ and $Y$ are independent, $E(X|Y=y) = E(X)$</li>
+				<li>$E(E(X|Y)) = E(X)$</li>
+				<li>$E(cX_1+X_2|Y=y) = cE(X_1|Y=y) + E(X_2|Y=y)$</li>
+			</ul>
+		</dd>
+
+		<dt>Variance</dt>
+		<dd>
+			Variance is the mean of the random variable $(X - \mu)^2$, and is sometimes denoted by $\sigma^2$ or $\sigma^2_X$.
+			<br>
+			$Var(X) = E((X-\mu)^2) = E(X^2) - E^2(X)$
+		</dd>
+
+		<dt>Properties of variance</dt>
+		<dd>
+			<ul>
+				<li>$Var(aX+b) = a^2 Var(X)$</li>
+				<li>$Var(c) = 0$, $c$ a constant</li>
+				<li>if $Var(X) = 0$ then $P(X=\mu) = 1$, i.e. $X$ is degenerate</li>
+				<li>if $X$ is a continuous random variable and $F(x)$ is its cumulative distribution function, then
+					<p>$V(X) = \int_0^\infty 2x[1-F(x) + F(-x)]dx - E^2(X)$</p>
+				</li>
+			</ul>
+		</dd>
+
+		<dt>Standard Deviation</dt>
+		<dd>$\sigma_X = \sigma = \sqrt{Var(X)}$</dd>
+
+		<dt>Properties of standard deviation</dt>
+		<dd>
+			<ul>
+				<li>If $Y = aX + b$, then $\sigma^2_Y = a^2\sigma^2_X$ and $\sigma_Y = |a|\sigma_X$</li>
+			</ul>
+		</dd>
+
+		<dt>Standard Random Variable</dt>
+		<dd>Let $X$ be a random variable with mean $\mu$ and varaince $\sigma^2$. The random variable $Z = \frac{X-\mu}{\sigma}$ is called a standard random variable.</dd>
+
+		<dt>Covariance</dt>
+		<dd>Let $X$ and $Y$ be two random variables,
+			<br>
+			$Cov(X,Y) = \sigma_{XY} = E[(X-\mu_X)(Y - \mu_Y)] = E(XY) - E(X)E(Y)$
+			which based on its sign (positive or negative) shows that $X$ and $Y$ are changing in the same direction or opposite directions (on average).
+		</dd>
+
+		<dt>Properties of Covariance</dt>
+		<dd>
+			<ul>
+				<li>$Var(X+Y) = Var(X) + Var(Y) + 2 Cov(X,Y)$</li>
+				<li>$Cov(X,Y) = Cov(Y,X)$</li>
+				<li>$Cov(X,c) = 0$, $c$ a constant</li>
+				<li>$Cov(aX+b, cY+d) = acCov(X,Y)$</li>
+				<li>$Cov(X_1+X_2, Y) = Cov(X_1,Y) + Cov(X_2,Y)$</li>
+				<li>$Cov(X,X) = Var(X)$</li>
+			</ul>
+		</dd>
+
+		<dt>Correlation Coefficient</dt>
+		<dd>Even though covariance is a good tool for measuring the changes of random variables $X$ and $Y$ against each other, but it depends on the measuring unit. Correlation coefficient does not depend on the unit of measurement.
+			<br>
+			$\begin{align}
+				\rho(X,Y) & = Cov(\frac{X}{\sigma_X},\frac{Y}{\sigma_Y})  \\
+  				& = \frac{Cov(X,Y)}{\sigma_X \sigma_Y} \\
+  				& = \frac{\sigma_{XY}}{\sigma_X \sigma_Y}
+			\end{align}$
+		</dd>
+
+		<dt>Properties of correlation coefficient</dt>
+		<dd>
+			<ul>
+				<li>$\rho(aX +b, cY+d) = sign(ac) \rho(X,Y)$, i.e. correlation coefficient does not depend on the origin and unit of measurement.</li>
+				<li>$-1\leq \rho \leq 1$</li>
+				<li>$\rho = \pm 1$ if and only if $\frac{X-\mu_X}{\sigma_X} = \pm \frac{Y-\mu_Y}{\sigma_Y}$
+					<br>
+					In other words, $\rho = 1$ iff the pairs $(X,Y)$ are on the line $\frac{x-\mu_X}{\sigma_X} = \frac{y-\mu_Y}{\sigma_Y}$, and $\rho=-1$ iff the pairs $(X,Y)$ are on the line $\frac{x-\mu_X}{\sigma_X} = - \frac{y-\mu_Y}{\sigma_Y}$.
+				</li>
+				<li>If $\rho$ is close to $1$ or $-1$, then $(X,Y)$ pairs are around a line and there is a high linear correlation between $X$ and $Y$.</li>
+				<li>If $\rho = 0$, then $X$ and $Y$ are not correlated. Note that this does not mean that $X$ and $Y$ are independent.</li>
+			</ul>
+		</dd>
+
+		<dt>Moment-generating function</dt>
+		<dd>Let $X$ be a random variable. The moment generating function of $X$ is $M_X(t) = E(e^{tX})$.</dd>
+
+		<dt>Properties of moment-generating function</dt>
+		<dd>Let $X$ be a random variable
+			<ul>
+				<li>$M_X(t) = 1 + tE(X) + \frac{t^2}{2!} E(X^2) + \cdots+ \frac{t^n}{n!} E(X^n) + \cdots$</li>
+				<li>for any $n$, $\frac{d^n M_X(t)}{dt^n}|_{t=0} = E(X^n)$</li>
+				<li>if $X_1,\ldots,X_n$ are independent random variables, 
+					<ul>
+						<li>for $Y = \sum_{i=1}^n X_i$, $M_Y(t) = \prod_{i=1}^n M_{X_i}(t)$</li>
+						<li>for $\bar{X} = 1/n \sum_{i=1}^n X_i$, where $X_i$ are independent identically distributated variables, then $M_{\bar X}(t) = \prod_{i=1}^n M_X(t/n) = (M_X(t/n))^n$</li>
+					</ul>
+
+				</li>
+			</ul>
+		</dd>
+	</dl>
+		
+		 
 
 	<h1>Distributions</h1>
+<dl class="definitions">
+	<dt>distribution</dt>
+	<dd>a probability distribution is the complete set of sample space values with their associated probabilities which must sum to 1 for discrete random variables.</dd>
+	<dt>(discrete) uniform distribution</dt>
+	<dd>a distribution is uniform if we have the same probability of occurrence for each sample space value.
+	<dt>Degenerate distribution</dt>
+	<dd>all probability is concentrated at one point, $P(X=c) = 1$.</dd>
+</dl>
 
-<dt>distribution</dt>
-		<dd>a probability distribution is the complete set of sample space values with their associated probabilities which must sum to 1 for discrete random variables.</dd>
-		<dt>(discrete) uniform distribution</dt>
-		<dd>a distribution is uniform if we have the same probability of occurrence for each sample space value.
+	<h2>Bernoulli Distribution</h2>
 
-			<dt>Degenerate distribution</dt>
-			<dd>all probability is concentrated at one point, $P(X=c) = 1$.</dd>
+<dl class="definitions">
+	<dt>Bernoulli experiment</dt>
+	<dd>A Bernouli experiment is an experiment with only two outcomes SUCCESS and FAILURE usually denoted by S and F.</dd>
 
+	<dt>Bernouli random variable</dt>
+	<dd>A Bernouli random variavle is a discrete random variable with only two values, X(F) = 0, X(S) = 1. Therefore, the support of $X$ is $S_X = \{0,1\}$, and $P(X=1) = p$ and $P(X=0) = 1-p =q$, where $0 < p <1$ and $p+q=1$. $p$ is called the parameter of Bernoulli distributoin.</dd>
+
+	<dt>Density function</dt>
+	<dd>$f(x;p) = \begin{cases}
+		p^x(1-p)^{1-x} & x = 0,1 \\
+		0 & \text{otherwise}
+	\end{cases}$</dd>
+
+	<dt>Cumulative distribution function</dt>
+	<dd>$F(x;p) = \begin{cases}
+		0 & x < 0\\
+		1-p & 0 \leq x < 1\\
+		1 & x \geq 1 
+	\end{cases}$</dd>
+
+	<dt>Mean</dt>
+	<dd>$E(X)= p$</dd>
+
+	<dt>Variance</dt>
+	<dd>$Var(X) = \sigma^2_X = p(1-p) = pq$</dd>
+</dl>
+
+	<h2>Binomial Distribution</h2>
+
+<dl class="definitions">
+	<dt>Binomial random variable</dt>
+	<dd>If we iterate a Bernoulli experiment and $X$ be the number of successes, the $X$ is called a binary random variable. The number of iterarions $n$ and the probability of success are called the parameters of the binomial distribution. We write $X \sim Binom(n,p)$. Obviously the number of outcomes of such a random experiment is $2^n$ and $S_X = \{0,1,\ldots, n\}$.</dd>
+
+	<dt>Density function</dt>
+	<dd>$f(x;n,p) = \begin{cases}
+		\binom{n}{x} p^x (1-p)^{n-x} & x = 0, 1, \ldots, n\\
+		0 & \text{otherwise}
+	\end{cases}$</dd>
+
+	<dt>Cumulative distribution function</dt>
+	<dd>$B(x;n,p) = \sum{k=0}^x \binom{n}{k} p^k (1-p)^{n-k}$</dd>
+
+	<dt>Mean</dt>
+	<dd>$E(X) = np$</dd>
+
+	<dt>Variance</dt>
+	<dd>$Var(X) = \sigma^2_X = np(1-p) = npq$</dd>
+
+	<dt>Remarks</dt>
+	<dd>
+		<ul>
+			<li>By central limit theorem, for big $n$,
+				$X \sim B(n,p) \sim N(np, np(1-p) = npq)$,
+				<br>
+				Furthermore, the random variable $U = \frac{X-np}{\sqrt{npq}}$ approximately, has a standard normal distribution.
+			</li>
+			<li>Continuity Correction: For small $n$, one can still use the approximation above, by computing $P(a - 0.5 \leq X \leq b + 0.5)$ instead of $P(a \leq X \leq b)$.</li>
+		</ul>
+	</dd>
+</dl>
+
+	<h2>Poisson Distribution</h2>
+
+<dl class="definitions">
+	<dt>Poisson random variable</dt>
+	<dd>Any (discrete) random variable with the following density function is called a Poisson random variable with parameter $\lambda$, denoted by $X \sim Poisson(\lambda)$. $S_X = \{0,1,\ldots\}$.</dd>
+
+	<dt>Density function</dt>
+	<dd>$f(x;\lambda) = \begin{cases}
+		e^{-\lambda} \frac{\lambda^x}{x!} & x = 0, 1, 2 , \ldots \\
+		0 & \text{otherwise}
+	\end{cases}$</dd>
+
+	<dt>Cumulative distribution function</dt>
+	<dd>$P(x;\lambda) = \sum_{k=0}^x e^{-\lambda} \frac{\lambda^k}{k!}$</dd>
+
+	<dt>Mean</dt>
+	<dd>$E(X) = \lambda$</dd>
+
+	<dt>Variance</dt>
+	<dd>$Var(X) = \sigma^2_X = \lambda$</dd>
+
+	<dt>Remarks</dt>
+	<dd>
+		<ul>
+			<li>if when $n \to \infty$, $np_n \to \lambda$, then 
+				$\lim_{n \to \infty} \binom{n}{x} p_n^x (1-p_n)^{n-x} = e^{-\lambda} \frac{\lambda^x}{x!}$
+				<br>
+				In other words, if $n$ is big and $p$ is small, then one can use Poisson distribution to estimate binomial distribution.
+			</li>
+		</ul>
+	</dd>
+</dl>
+	
+	<h2>Normal Distribution</h2>
+
+<dl class="definitions">
+	<dt>Normal random variable</dt>
+	<dd>Any random variable $X$, with the following density function is called a normal random variable with parameters $\mu$ and $\sigma^2$, denoted b $N(\mu,\sigma^2)$</dd>
+
+	<dt>Density function</dt>
+	<dd>$f(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2}(x-\mu)^2}$</dd>
+
+	<dt>Cumulative distribution fnction</dt>
+	<dd>$N(x; \mu, \sigma^2) = \int_{-\infty}^x \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{1}{2\sigma^2}(t-\mu)^2} dt$</dd>
+
+	<dt>Mean</dt>
+	<dd>$E(X) = \mu$</dd>
+
+	<dt>Variance</dt>
+	<dd>$Var(X) = \sigma^2$</dd>
+
+	<dt>Standard normal distribution</dt>
+	<dd>A normal distribution with $\mu=0$ and $\sigma^2=1$ is called a standard normal distribution, usually denoted by $Z$.
+		<br>Density function $\phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}$
+		<br>Cumulative distribution function $\Phi(z) = P(Z \leq z) = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt$
+		<br>Remarks
+		<ul>
+			<li>$\Phi(-z) = 1 - \Phi(z)$</li>
+			<li>$\Phi(0) = 1/2$</li>
+			<li>$P(-z_{1-\alpha/2} < Z < z_{1-\alpha/2}) = 1 - \alpha$
+				<p>where $z_{1-\alpha/2}$ is the number such that $P(Z \leq z_{1-\alpha/2}) = 1 - \alpha/2$</p>
+				This is useful for finding the suitable coefficient $z$ in confidence intervals.
+			</li>
+		</ul>
+	</dd>
+</dl>
+
+	<h3>Properties of Nomal curve</h3>
+	<ul>
+		<li>The line $x = \mu$ is the axis of symmetry of the curve.</li>
+		<li>It has a maximum at the point $(\mu, 1/\sqrt{2\pi \sigma^2})$</li>
+		<li>It is asymptotic to the $s$-axis</li>
+		<li>It is bell-shaped.</li>
+		<li>smaller $\sigma^2$ gives a denser curve.</li>
+	</ul>
+
+	<h2>Central Limit Theorem (CLT)</h2>
+
+	<p>Let $X_1,\ldots, X_n$ be a random sample (from a population distribution) of $n$ identically distributed random variables with cumulativ distrubution function $F(x)$, mean $\mu$, and variance $\sigma^2$, such that $\sigma^2$ is finite. For big enough $n$,
+		<ul>
+			<li>The sum $T = X_1 + \cdots + X_n$ approximately has a normal distribution $T \sim N(n \mu, n\sigma^2)$</li>
+			<li>The average $\bar X = \frac{X_1+\cdots+X_n}{n}$ approximately has a normal distribution $\bar X \sim N(\mu, \sigma^2/n)$ (we say $\bar X$ is asymptotically normally distributed)</li>
+		</ul>
+
+		Or equivalently
+		<p>
+			$\lim_{n\to \infty} P(\frac{\bar X - \mu}{\sigma/\sqrt{n}} \leq z) = \Phi(z)$
+		</p>
+	</p>
+
+	<p>Usually for many distributions $n > 50$ is large enough for the approximation to be reasonably accurate.</p>
+
+	<h2>Joint Distribution</h2>
+
+	<p>Let $X$ and $Y$ be two discrete random variables, the joint random variable is denoted by $(X,Y)$.</p>
+
+	<dl class="definitions">
+		<dt>Joint density</dt>
+		<dd>$f(x,y) = P(X = x, Y = y)$</dd>
+
+		<dt>Properties of density function</dt>
+		<dd>
+			<ul>
+				<li>$f(x,y) \geq 0$</li>
+				<li>$\sum_x \sum_y f(x,y) = 1$</li>
+				<li>$f_X(x) = \sum_y f(x,y)$</li>
+				<li>$f_Y(y) = \sum_x f(x,y)$</li>
+			</ul>
+			For continuous random variables, the sums are replaced by integrations.
+		</dd>
+
+		<dt>Properties</dt>
+		<dd>
+			<ul>
+				<li>For continuous random variables $X$ and $Y$,
+					<p>(density function of X) $f_X(x) = \int_y f_{X,Y}(x,y)dy$, and</p>
+					<p>(density function of Y) $f_Y(y) = \int_x f_{X,Y}(x,y)dx$</p>
+				</li>
+			</ul>
+		</dd>
+
+		<dt>Joint distribution</dt>
+		<dd>$F(x,y) = P(X \leq x, Y\leq y)$</dd>
+
+		<dt>Independent (discrete) random variables</dt>
+		<dd>Two random variables are independent iff $P(X=x, Y=y) = P(X=x) P(Y=y)$
+			or equivalently (also for continuous random variables) $f(x,y) = f_X(x) f_Y(y)$.
+			<br>
+			In other words, $X$ and $Y$ are independent iff the joint probability distribution is the product distribution.
+		</dd>
+	</dl>
 
 </body>
 </html>

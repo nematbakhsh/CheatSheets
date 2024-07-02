@@ -1,61 +1,35 @@
 # Django App Boilerplate
+> [!NOTE]  
+> Django version 5.0.6.
 
 ## Step 1: Set Up Virtual Environment and Django Project
 
 ### Create a Virtual Environment
 
-1. First, ensure you have `virtualenv` installed. If not, you can install it using pip:
+Choose an appropriate directory where you want to create it:
 
-    ```sh
-    pip install virtualenv
-    ```
+```sh
+# Create a new virtual environment
+python3 -m venv 'venv' # Replace 'venv' with your preferred virtual environment name 
 
-2. Create a new virtual environment for your Django project. Choose an appropriate directory where you want to create it:
-
-    ```sh
-    # Replace 'venv' with your preferred name for the virtual environment
-    virtualenv venv
-    ```
-
-### Activate the Virtual Environment
-
-3. Activate the virtual environment. This step is platform-specific:
-
-   - **On Windows**:
-
-     ```sh
-     venv\Scripts\activate
-     ```
-
-   - **On macOS and Linux**:
-
-     ```sh
-     source venv/bin/activate
-     ```
-
-   Your command prompt should now show the name of the virtual environment (`(venv)` in this case).
+# Activate the virtual environment
+venv\Scripts\activate # On Windows
+source venv/bin/activate # On macOS and Linux
+```
+Your command prompt should now show the name of the virtual environment (`(venv)` in this case).
 
 ### Install Django and Create Project
 
-4. Install Django inside the virtual environment:
-
-    ```sh
-    pip install django
-    ```
-
-5. Create a new Django project using the `django-admin` command:
-
-    ```sh
-    django-admin startproject myproject
-    ```
-
-   Replace `myproject` with the name of your project.
-
-6. Move into the project directory:
-
-    ```sh
-    cd myproject
-    ```
+```sh
+pip install --upgrade pip
+# Install Django inside the virtual environment
+pip install django
+# Create a new Django project
+django-admin startproject myproject # Replace `myproject` with the name of your project
+cd myproject
+python manage.py startapp myapp # Replace `myapp` with your preferred name for the application
+code .
+```
 
 ## Step 2: Configure Django Project
 
@@ -64,21 +38,28 @@
 Your project structure should now look something like this:
 
 ```
-myproject/
-├── myproject/
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-└── myapp/
-    ├── migrations/
-    ├── __init__.py
-    ├── admin.py
-    ├── apps.py
-    ├── models.py
-    ├── tests.py
-    └── views.py
+myproject/            # Root directory of your Django project
+│
+├── manage.py         # Command-line utility for administrative tasks
+│
+├── myproject/        # Django project settings and configuration directory
+│   ├── __init__.py   # An empty file that tells Python this directory should be considered a Python package
+│   ├── settings.py   # Project settings and configuration
+│   ├── urls.py       # URL routing configuration for the project
+│   ├── wsgi.py       # WSGI config for deployment (Web Server Gateway Interface)
+│   └── asgi.py       # ASGI config for deployment (Asynchronous Server Gateway Interface)
+│
+└── myapp/            # Example Django app directory (you can have multiple apps)
+    ├── migrations/  # Database migrations for this app
+    ├── __init__.py  # Package initializer
+    ├── admin.py     # Django admin configuration for this app
+    ├── apps.py      # AppConfig for this app
+    ├── models.py    # Database models for this app
+    ├── tests.py     # Unit tests for this app
+    ├── views.py     # Views (controller logic) for this app
+    ├── urls.py      # URL routing for this app
+    └── templates/   # HTML templates for this app
+
 ```
 
 ### Configure Settings
@@ -106,18 +87,18 @@ INSTALLED_APPS = [
 In `myproject/urls.py`, define your project-level URLs:
 
 ```python
-from django.urls import path, include
 from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('myapp.urls')),
+    path('myapp', include('myapp.urls')), # use `''` if this is your main app
 ]
 ```
 
 ### Define App URLs and Views
 
-1. In `myapp/urls.py`, define URLs specific to your app:
+1. In `myapp/urls.py` (cretae it!), define URLs specific to your app:
 
     ```python
     from django.urls import path
@@ -141,29 +122,15 @@ urlpatterns = [
 
 ## Step 4: Run Migrations and Start Server
 
-1. Apply initial migrations to set up your database (SQLite by default):
-
-    ```sh
-    python manage.py migrate
-    ```
-
-2. Create a superuser to access the Django admin interface (optional):
-
-    ```sh
-    python manage.py createsuperuser
-    ```
-
-   Follow the prompts to create a superuser account.
-
-3. Start the Django development server:
-
-    ```sh
-    python manage.py runserver
-    ```
+```sh
+python manage.py migrate # Apply initial migrations to set up your database (SQLite by default)
+python manage.py createsuperuser # Create a superuser to access the Django admin interface (optional)
+python manage.py runserver [8000] # Start the Django development server
+```
 
 ## Step 5: Access the App
 
-Open a web browser and go to `http://localhost:8000/` to see your Django app in action.
+Open a web browser and go to `http://localhost:8000/myapp` to see your Django app in action.
 
 ### Additional Steps
 
@@ -172,17 +139,9 @@ Open a web browser and go to `http://localhost:8000/` to see your Django app in 
 
 ## Step 6: Set Up Git Repository
 
-### Initialize Git Repository
-
-1. Initialize a new Git repository in your project directory (`myproject`):
-
-    ```sh
-    git init
-    ```
-
 ### Create `.gitignore` File
 
-2. Create a `.gitignore` file to specify which files and directories to ignore in version control. Example `.gitignore` for a typical Django project:
+Create a `.gitignore` file to specify which files and directories to ignore in version control and place it in the root directory. Example `.gitignore` for a typical Django project:
 
     ```plaintext
     # Ignore virtual environment
@@ -193,6 +152,7 @@ Open a web browser and go to `http://localhost:8000/` to see your Django app in 
 
     # Ignore Django static files
     staticfiles/
+    static/
 
     # Ignore IDE/Editor specific files
     .vscode/
@@ -202,37 +162,56 @@ Open a web browser and go to `http://localhost:8000/` to see your Django app in 
     # Ignore local settings
     myproject/settings_local.py
     ```
+    
+### Initialize Git Repository and First Commit
 
-3. Save the `.gitignore` file in the root of your project directory (`myproject`).
+Initialize a new Git repository in your project directory (`myproject`):
 
-### Commit Initial Changes
+```sh
+cd .. # Go to main directory (with 'venv' folder) I find it good practice to initialize there
+echo "# MyProject" >> README.md
+git init
+git config [--global] user.name "Your Name"
+git config [--global] user.email "your.email@example.com"
+git add .
+git commit -m "Initial commit: Setup Django project"
+git branch -M main
+git remote add origin <remote-repository-url> # Replace `<remote_repository_url>` with the URL of your remote Git repository
+git push -u origin main
+```
+## Step 7: Configure an IDE (vscode)
 
-4. Add all files to the staging area and commit them:
+```sh
+mkdir .vscode
+cd .vscode
+touch settings.json
+```
 
-    ```sh
-    git add .
-    git commit -m "Initial commit: Setup Django project"
-    ```
+### Create the `settings.json` file
+```json
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python", // on linux
+    // "python.defaultInterpreterPath": "${workspaceFolder}/venv/Scripts/python.exe", // on windows
+    "python.terminal.activateEnvironment": true,
+    "python.envFile": "${workspaceFolder}/.env"
+}
+```
 
-### Additional Git Configuration (Optional)
+### Verify Python Interpreter in VSCode:
 
-5. If you haven't already, set up your Git username and email:
+To ensure that VSCode is using the correct Python interpreter from your virtual environment:
 
-    ```sh
-    git config --global user.name "Your Name"
-    git config --global user.email "your.email@example.com"
-    ```
+1. Open the Command Palette:
+    Press Ctrl+Shift+P (Windows/Linux) or Cmd+Shift+P (macOS) to open the Command Palette.
 
-6. Optionally, connect your local repository to a remote repository on GitHub, GitLab, etc., and push your changes:
+2. Select Python Interpreter:
+    Type Python: Select Interpreter and select it from the dropdown.
 
-    ```sh
-    git remote add origin <remote_repository_url>
-    git push -u origin master
-    ```
+3. Choose the Interpreter:
+    You should see a list of available Python interpreters. Look for the one that points to your virtual environment (e.g., ${workspaceFolder}/venv/bin/python or ${workspaceFolder}/venv/Scripts/python.exe) and select it.
 
-Replace `<remote_repository_url>` with the URL of your remote Git repository.
-
-
+4. Relaunch your terminal
+    
 ## Conclusion
 
 This boilerplate provides a basic structure for starting a Django project and app with a virtual environment. You can expand upon it by adding models, forms, additional views, templates, static files, and more as your project grows. Make sure to refer to the [Django documentation](https://docs.djangoproject.com/en/stable/) for detailed information on each component and for advanced configurations.

@@ -14,9 +14,9 @@ Look for new images (containers are instances of images) in [Docker Hub]{hub.doc
 
 - `docker ps` show running containers
     - `-a` see all available containers on you machine
-- `docker images` or `docke image ls` show all images
+- `docker images` or `docker image ls` show all images
 - `docker rm` remove container
-- `docker rmi <image-ID>` remove image
+- `docker rmi <image-ID>` remove image (all related container should be removed first)
 - `docker image`
   - `ls` list images
   - `pull <software-name:tag>` pulling the image from the hub
@@ -24,3 +24,9 @@ Look for new images (containers are instances of images) in [Docker Hub]{hub.doc
   - `-i` (or `--interactive`): Keeps STDIN open, allowing you to interact with the container.
   - `-t` (or --tty): Allocates a pseudo-TTY, which allows for interactive terminal sessions.
   - `-it` usuallly used together
+- `docker exec <container-name> <command>`
+
+## Dockerize Django App
+After making your Dockerfile and your docker-compose yaml file
+`docker-compose build`
+`docker-compose up`

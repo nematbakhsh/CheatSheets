@@ -25,6 +25,10 @@ Look for new images (containers are instances of images) in [Docker Hub]{hub.doc
   - `-t` (or --tty): Allocates a pseudo-TTY, which allows for interactive terminal sessions.
   - `-it` usuallly used together
 - `docker exec <container-name> <command>`
+- `docker network`
+  - `ls`
+- `docker volume`
+  - `ls`
 
 ## Dockerize Django App
 After making your Dockerfile and your docker-compose yaml file
